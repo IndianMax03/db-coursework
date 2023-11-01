@@ -7,7 +7,7 @@ create table if not exists users (
     login varchar(32) not null,
     name varchar(128) not null,
     password varchar(128) not null,
-    karma integer default 0,
+    karma integer default 0 not null,
     timezone text,
     telegram_tag varchar(32),
     vk_tag varchar(32),
@@ -27,8 +27,8 @@ create table if not exists reviews (
     reviewer_user_id integer references users (id) on delete restrict,
     recipient_user_id integer references users (id) on delete restrict,
     content text,
-    date timestamp,
-    rating smallint,
+    date timestamp not null,
+    rating smallint not null,
     primary key (reviewer_user_id, recipient_user_id)
 );
 
@@ -56,8 +56,8 @@ create table if not exists games (
     game_system_id integer references game_systems (id) on delete restrict, --  ссылка на новую таблицу
     picture bytea,
     master_id integer references users (id) on delete restrict, --  instead of user_id
-    creation_date timestamp,
-    current_status game_status, --  instead of varchar(32)
+    creation_date timestamp not null,
+    current_status game_status not null, --  instead of varchar(32)
     --  game_type убрана в пользу такого же поля в lobbies
     finish_date timestamp,
     description text --  instead of content
