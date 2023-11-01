@@ -53,7 +53,7 @@ create type game_status as enum ('not-started', 'started', 'finished');
 create table if not exists games (
     id serial primary key,
     name varchar(32) not null,
-    board_game_system integer references game_systems (id) on delete restrict, --  ссылка на новую таблицу
+    game_system_id integer references game_systems (id) on delete restrict, --  ссылка на новую таблицу
     picture bytea,
     master_id integer references users (id) on delete restrict, --  instead of user_id
     creation_date timestamp,
