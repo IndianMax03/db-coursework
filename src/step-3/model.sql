@@ -29,7 +29,8 @@ create table if not exists reviews (
     content text,
     date timestamp not null,
     rating smallint not null,
-    primary key (reviewer_user_id, recipient_user_id)
+    primary key (reviewer_user_id, recipient_user_id),
+    constraint valid_rating check (rating >= 0 and rating <= 5)
 );
 
 create table if not exists roles (
@@ -60,7 +61,8 @@ create table if not exists games (
     current_status game_status not null, --  instead of varchar(32)
     --  game_type убрана в пользу такого же поля в lobbies
     finish_date timestamp,
-    description text --  instead of content
+    description text, --  instead of content
+    constraint valid_dates check (finish_date >= creation_date)
 );
 
 create table if not exists tags (
