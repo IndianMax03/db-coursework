@@ -17,15 +17,15 @@ create table if not exists users (
 create type request_status as enum ('on-review', 'rejected', 'approved');
 
 create table if not exists friendships (
-    sender_user_id integer references users (id),
-    receiver_user_id integer references users (id),
+    sender_user_id integer references users (id) on delete restrict,
+    receiver_user_id integer references users (id) on delete restrict,
     current_status request_status not null,
     primary key (sender_user_id, receiver_user_id)
 );
 
 create table if not exists reviews (
-    reviewer_user_id integer references users (id),
-    recipient_user_id integer references users (id),
+    reviewer_user_id integer references users (id) on delete restrict,
+    recipient_user_id integer references users (id) on delete restrict,
     content text,
     date timestamp,
     rating smallint,
@@ -38,8 +38,8 @@ create table if not exists roles (
 );
 
 create table if not exists user_roles (
-    user_id integer references users (id),
-    role_id integer references roles (id),
+    user_id integer references users (id) on delete restrict,
+    role_id integer references roles (id) on delete cascade,
     primary key (user_id, role_id)
 );
 
@@ -50,7 +50,7 @@ create table if not exists games (
     name varchar(32) not null,
     board_game_system varchar(32), --  мб enum/новую таблу?
     picture bytea,
-    master_id integer references users (id), --  instead of user_id
+    master_id integer references users (id) on delete restrict, --  instead of user_id
     creation_date timestamp,
     current_status game_status, --  instead of varchar(32)
     game_type varchar(32), --  мб enum/новую таблу?
@@ -64,8 +64,8 @@ create table if not exists tags (
 );
 
 create table if not exists games_tags (
-    game_id integer references games (id),
-    tag_id integer references tags (id),
+    game_id integer references games (id) on delete restrict,
+    tag_id integer references tags (id) on delete cascade,
     primary key (game_id, tag_id)
 );
 
@@ -73,21 +73,21 @@ create table if not exists characters (
     id serial primary key,
     board_game_system varchar(32),
     --  lobby_request_id
-    user_id integer references users (id),
+    user_id integer references users (id) on delete restrict,
     --  status
     stats bytea
 );
 
 create table if not exists lobbies (
     id serial primary key,
-    game_id integer references games (id),
+    game_id integer references games (id) on delete restrict,
     lobby_type varchar(32) --  мб enum/новую таблу?
 );
 
 create table if not exists lobby_requests (
     id serial primary key,
-    lobby_id integer references lobbies (id),
-    character_id integer references characters (id),
+    lobby_id integer references lobbies (id) on delete restrict,
+    character_id integer references characters (id) on delete cascade,
     current_status request_status
 );
 
