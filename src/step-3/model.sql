@@ -43,17 +43,22 @@ create table if not exists user_roles (
     primary key (user_id, role_id)
 );
 
+create table if not exists game_systems ( --  новая таблица (d&d, pf, ...)
+    id serial primary key,
+    name varchar(32) not null
+);
+
 create type game_status as enum ('not-started', 'started', 'finished');
 
 create table if not exists games (
     id serial primary key,
     name varchar(32) not null,
-    board_game_system varchar(32), --  мб enum/новую таблу?
+    board_game_system integer references game_systems (id) on delete restrict, --  ссылка на новую таблицу
     picture bytea,
     master_id integer references users (id) on delete restrict, --  instead of user_id
     creation_date timestamp,
     current_status game_status, --  instead of varchar(32)
-    game_type varchar(32), --  мб enum/новую таблу?
+    --  game_type убрана в пользу такого же поля в lobbies
     finish_date timestamp,
     description text --  instead of content
 );
@@ -72,16 +77,16 @@ create table if not exists games_tags (
 create table if not exists characters (
     id serial primary key,
     board_game_system varchar(32),
-    --  lobby_request_id
     user_id integer references users (id) on delete restrict,
-    --  status
     stats bytea
 );
+
+create type game_format as enum ('online', 'offline');
 
 create table if not exists lobbies (
     id serial primary key,
     game_id integer references games (id) on delete restrict,
-    lobby_type varchar(32) --  мб enum/новую таблу?
+    format game_format --  теперь enum
 );
 
 create table if not exists lobby_requests (
