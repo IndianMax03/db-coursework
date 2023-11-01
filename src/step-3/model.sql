@@ -17,15 +17,15 @@ create table if not exists users (
 create type request_status as enum ('on-review', 'rejected', 'approved');
 
 create table if not exists friendships (
-    sender_user_id integer references users (id) on delete restrict,
-    receiver_user_id integer references users (id) on delete restrict,
+    sender_user_id integer references users (id) on delete restrict on update cascade,
+    receiver_user_id integer references users (id) on delete restrict on update cascade,
     current_status request_status not null,
     primary key (sender_user_id, receiver_user_id)
 );
 
 create table if not exists reviews (
-    reviewer_user_id integer references users (id) on delete restrict,
-    recipient_user_id integer references users (id) on delete restrict,
+    reviewer_user_id integer references users (id) on delete restrict on update cascade,
+    recipient_user_id integer references users (id) on delete restrict on update cascade,
     content text,
     date timestamp not null,
     rating smallint not null,
@@ -39,8 +39,8 @@ create table if not exists roles (
 );
 
 create table if not exists user_roles (
-    user_id integer references users (id) on delete restrict,
-    role_id integer references roles (id) on delete cascade,
+    user_id integer references users (id) on delete restrict on update cascade,
+    role_id integer references roles (id) on delete cascade on update cascade,
     primary key (user_id, role_id)
 );
 
@@ -54,9 +54,9 @@ create type game_status as enum ('not-started', 'started', 'finished');
 create table if not exists games (
     id serial primary key,
     name varchar(32) not null,
-    game_system_id integer references game_systems (id) on delete restrict, --  ссылка на новую таблицу
+    game_system_id integer references game_systems (id) on delete restrict on update cascade, --  ссылка на новую таблицу
     picture bytea,
-    master_id integer references users (id) on delete restrict, --  instead of user_id
+    master_id integer references users (id) on delete restrict on update cascade, --  instead of user_id
     creation_date timestamp not null,
     current_status game_status not null, --  instead of varchar(32)
     --  game_type убрана в пользу такого же поля в lobbies
@@ -71,15 +71,15 @@ create table if not exists tags (
 );
 
 create table if not exists games_tags (
-    game_id integer references games (id) on delete restrict,
-    tag_id integer references tags (id) on delete cascade,
+    game_id integer references games (id) on delete restrict on update cascade,
+    tag_id integer references tags (id) on delete cascade on update cascade,
     primary key (game_id, tag_id)
 );
 
 create table if not exists characters (
     id serial primary key,
     board_game_system varchar(32),
-    user_id integer references users (id) on delete restrict,
+    user_id integer references users (id) on delete restrict on update cascade,
     stats bytea
 );
 
@@ -87,14 +87,14 @@ create type game_format as enum ('online', 'offline');
 
 create table if not exists lobbies (
     id serial primary key,
-    game_id integer references games (id) on delete restrict,
+    game_id integer references games (id) on delete restrict on update cascade,
     format game_format --  теперь enum
 );
 
 create table if not exists lobby_requests (
     id serial primary key,
-    lobby_id integer references lobbies (id) on delete restrict,
-    character_id integer references characters (id) on delete cascade,
+    lobby_id integer references lobbies (id) on delete restrict on update cascade,
+    character_id integer references characters (id) on delete cascade on update cascade,
     current_status request_status
 );
 
