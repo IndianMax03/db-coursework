@@ -77,7 +77,7 @@ create table if not exists games_tags (
 
 create table if not exists characters (
     id serial primary key,
-    board_game_system varchar(32),
+    game_system_id integer references game_systems (id) on delete restrict on update cascade, --  ссылка на новую таблицу
     user_id integer references users (id) on delete restrict on update cascade,
     stats bytea
 );
