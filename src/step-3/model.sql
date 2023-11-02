@@ -1,6 +1,8 @@
 --  запросы для инициализации модели
 
 create type user_status as enum ('exists', 'deleted');
+create type game_status as enum ('not-started', 'started', 'finished');
+create type request_status as enum ('on-review', 'rejected', 'approved');
 
 create table if not exists users (
     id serial primary key,
@@ -14,7 +16,6 @@ create table if not exists users (
     current_status user_status not null
 );
 
-create type request_status as enum ('on-review', 'rejected', 'approved');
 
 create table if not exists friendships (
     sender_user_id integer references users (id) on delete restrict on update cascade,
@@ -48,8 +49,6 @@ create table if not exists game_systems ( --  новая таблица (d&d, pf
     id serial primary key,
     name varchar(32) not null
 );
-
-create type game_status as enum ('not-started', 'started', 'finished');
 
 create table if not exists games (
     id serial primary key,
