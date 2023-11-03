@@ -131,6 +131,13 @@ $$ language plpgsql;
 create or replace function update_character_status() returns trigger as
 $$
 begin
-    insert into characters()
+    if (OLD.current_status <> NEW.current_status) then
+    update characters
+    set character_status = case 
+        when NEW.current_status = "started" then "busy"
+        when NEW.current_status = "finished" then "free"
+        when NEW.current_status = "not-started" then "busy"
+    end
+    where ()
 end;
 $$ language plpgsql;
