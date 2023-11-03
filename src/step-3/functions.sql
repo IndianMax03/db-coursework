@@ -50,3 +50,21 @@ create function change_game_status(game_id integer, new_status game_status) retu
         where id = id;
     end;
 ' language SQL;
+
+create or replace function create_lobby() returns trigger as 
+$$
+begin
+    insert into lobby(game_id) values (NEW.id);
+    return NEW;
+end;
+$$ language plpgsql;
+
+create or replace function update_finish_date() returns trigger as 
+$$
+begin
+    if NEW.current_status <> OLD.current_status then
+        NEW.finish_date := CURRENT_TIMESTAMP
+    end if;
+    return new;
+end;
+$$ language plpgsql;
