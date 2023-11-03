@@ -65,6 +65,72 @@ begin
     if NEW.current_status <> OLD.current_status then
         NEW.finish_date := CURRENT_TIMESTAMP
     end if;
-    return new;
+    return NEW;
+end;
+$$ language plpgsql;
+
+create or replace function check_if_master_role_is_present() returns trigger as 
+$$
+begin
+    if not exists (
+        select 1 
+        from users_roles 
+        where user_id = NEW.master_id and role_id = 2) 
+        then  
+        raise exception "у пользователя нет прав создавать игру"
+    end if;
+    return NEW;
+end;
+$$ language plpgsql;
+
+
+create or replace function check_if_friendship_already_exists() returns trigger as 
+$$
+begin
+    if exists(
+        select 1 
+        from friendships 
+        where sender_user_id = NEW.receiver_user_id
+        and receiver_user_id = NEW.sender_user_id
+    ) then
+     raise exception "такая дружба уже существует";
+     end if;
+     return NEW;
+end;
+$$ language plpgsql;
+
+
+create or replace function check_character_game_system_correct() returns trigger as 
+$$
+begin
+    if (select game_system_id, id from characters where id = NEW.character_id) = (select )
+    character.board_system <> game.board_system then
+    raise exception "персонаж не соответствует системе игры"
+    end if;
+    return NEW;
+end;
+$$ language plpgsql;
+
+
+create or replace function check_if_character_is_already_in_game() returns trigger as 
+$$
+begin
+    if exists(
+        select 1 
+        from lobby_request
+        where NEW.character_id = character_id and current_status = "approved" 
+    )
+    then
+    raise exception “персонаж уже в игре»
+    end if;
+    return NEW;
+end;
+$$ language plpgsql;
+
+
+create or replace function update_character_status() returns trigger as
+$$
+begin
+    insert into characters()
 end;
 $$ language plpgsql;

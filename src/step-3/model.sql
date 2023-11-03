@@ -3,6 +3,7 @@
 create type user_status as enum ('exists', 'deleted');
 create type game_status as enum ('not-started', 'started', 'finished');
 create type request_status as enum ('on-review', 'rejected', 'approved');
+create type game_format as enum ('online', 'offline');
 
 create table if not exists users (
     id serial primary key,
@@ -15,7 +16,6 @@ create table if not exists users (
     vk_tag varchar(32),
     current_status user_status not null
 );
-
 
 create table if not exists friendships (
     sender_user_id integer references users (id) on delete restrict on update cascade,
@@ -82,8 +82,6 @@ create table if not exists characters (
     current_status request_status not null, 
     stats bytea not null
 );
-
-create type game_format as enum ('online', 'offline');
 
 create table if not exists lobbies (
     id serial primary key,
