@@ -14,7 +14,7 @@ todo: строится на основе функций и процедур (т�
 
 Доказательство:
 
-![lobby_game_idx.png](https://github.com/IndianMax03/db-coursework/blob/main/img/lobby_game_idx.png)
+![lobby_game_idx.png](img/lobby_game_idx.png)
 
 ## btree:
 
@@ -24,7 +24,7 @@ todo: строится на основе функций и процедур (т�
 
 Доказательство:
 
-![games_user_idx.png](https://github.com/IndianMax03/db-coursework/blob/main/img/games_user_idx.png)
+![games_user_idx.png](img/games_user_idx.png)
 
 ### `character_user_idx` для столбца `characters`.`user_id`
 
@@ -32,7 +32,7 @@ todo: строится на основе функций и процедур (т�
 
 Доказательство:
 
-![character_user_idx.png](https://github.com/IndianMax03/db-coursework/blob/main/img/character_user_idx.png)
+![character_user_idx.png](img/character_user_idx.png)
 
 ### `lobby_request_character_idx` для столбца `lobby_requests`.`character_id`
 
@@ -40,7 +40,7 @@ todo: строится на основе функций и процедур (т�
 
 Доказательство:
 
-![lobby_request_character_idx.png](https://github.com/IndianMax03/db-coursework/blob/main/img/lobby_request_character_idx.png)
+![lobby_request_character_idx.png](img/lobby_request_character_idx.png)
 
 ### `lobby_request_lobby_idx` для столбца `lobby_requests`.`lobby_id`
 
@@ -48,4 +48,4 @@ todo: строится на основе функций и процедур (т�
 
 Доказательство:
 
-![lobby_request_lobby_idx.png](https://github.com/IndianMax03/db-coursework/blob/main/img/lobby_request_lobby_idx.png)
+![lobby_request_lobby_idx.png](img/lobby_request_lobby_idx.png)
