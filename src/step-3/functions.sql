@@ -13,7 +13,7 @@ create function create_character(board_game_system varchar(32), user_id integer,
     end;
 $$ language plpgsql;
 
-create_lobby_request(lobby_id integer, character_id integer, current_status request_status) returns void as $$
+create function create_lobby_request(lobby_id integer, character_id integer, current_status request_status) returns void as $$
      begin
         insert into lobby_request (lobby_id, character_id, current_status)
         values (lobby_id, character_id, current_status);
@@ -63,7 +63,7 @@ create or replace function update_finish_date() returns trigger as
 $$
 begin
     if NEW.current_status <> OLD.current_status then
-        NEW.finish_date := CURRENT_TIMESTAMP
+        NEW.finish_date := CURRENT_TIMESTAMP;
     end if;
     return NEW;
 end;
@@ -92,8 +92,7 @@ begin
         from friendships 
         where sender_user_id = NEW.receiver_user_id
         and receiver_user_id = NEW.sender_user_id
-    ) then
-     raise exception "такая дружба уже существует";
+    ) then raise exception "такая дружба уже существует";
      end if;
      return NEW;
 end;
