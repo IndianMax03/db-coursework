@@ -80,7 +80,7 @@ create table if not exists characters (
     game_system_id integer references game_systems (id) on delete restrict on update cascade, --  ссылка на новую таблицу
     user_id integer references users (id) on delete restrict on update cascade,
     current_status request_status not null, 
-    stats bytea
+    stats bytea not null
 );
 
 create type game_format as enum ('online', 'offline');
