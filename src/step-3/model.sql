@@ -79,6 +79,7 @@ create table if not exists characters (
     id serial primary key,
     game_system_id integer references game_systems (id) on delete restrict on update cascade, --  ссылка на новую таблицу
     user_id integer references users (id) on delete restrict on update cascade,
+    current_status game_status not null, 
     stats bytea
 );
 
@@ -86,7 +87,7 @@ create type game_format as enum ('online', 'offline');
 
 create table if not exists lobbies (
     id serial primary key,
-    game_id integer references games (id) on delete restrict on update cascade,
+    game_id integer references games (id) on delete restrict on update cascade unique,
     format game_format --  теперь enum
 );
 
