@@ -4,6 +4,7 @@ create type user_status as enum ('exists', 'deleted');
 create type game_status as enum ('not-started', 'started', 'finished');
 create type request_status as enum ('on-review', 'rejected', 'approved');
 create type game_format as enum ('online', 'offline');
+create type character_status as enum ('free', 'busy');
 
 create table if not exists users (
     id serial primary key,
@@ -79,7 +80,7 @@ create table if not exists characters (
     id serial primary key,
     game_system_id integer references game_systems (id) on delete restrict on update cascade, --  ссылка на новую таблицу
     user_id integer references users (id) on delete restrict on update cascade,
-    current_status request_status not null, 
+    current_status character_status not null, 
     stats bytea not null
 );
 
