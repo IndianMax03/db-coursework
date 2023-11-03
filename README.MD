@@ -24,7 +24,7 @@ No1).
 
 ## Диаграмма даталогической модели
 
-![Изображение модели](img/v_2_db-course-work-data.drawio.png)
+![Изображение модели](/img/v_2_db-course-work-data.drawio.png)
 
 ## Выполнили:
 
