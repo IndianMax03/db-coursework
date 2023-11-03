@@ -24,7 +24,7 @@ No1).
 
 ## Диаграмма даталогической модели
 
-![Изображение модели](https://github.com/IndianMax03/db-coursework/blob/main/img/db-coursework-2-data.drawio.png)
+![Изображение модели](https://github.com/IndianMax03/db-coursework/blob/main/img/v_2_db-coursework-2-data.drawio.png)
 
 ## Выполнили:
 
