@@ -1,7 +1,14 @@
 package com.manu.roleplaybackend.model;
 
-import java.util.Arrays;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class Game {
     
     private Integer id;
@@ -13,52 +20,5 @@ public class Game {
     private String currentStatus;
     private String finishDate;
     private String description;
-    
-    public Game() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getGameSystemId() {
-        return gameSystemId;
-    }
-
-    public byte[] getPicture() {
-        return picture;
-    }
-
-    public Integer getMasterId() {
-        return masterId;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public String getCurrentStatus() {
-        return currentStatus;
-    }
-
-    public String getFinishDate() {
-        return finishDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public String toString() {
-        return "Game [id=" + id + ", name=" + name + ", gameSystemId=" + gameSystemId + ", picture="
-                + Arrays.toString(picture) + ", masterId=" + masterId + ", creationDate=" + creationDate
-                + ", currentStatus=" + currentStatus + ", finishDate=" + finishDate + ", description=" + description
-                + "]";
-    }
 
 }

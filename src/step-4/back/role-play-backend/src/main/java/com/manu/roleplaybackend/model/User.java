@@ -1,5 +1,14 @@
 package com.manu.roleplaybackend.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class User {
     
     private Integer id;
@@ -12,58 +21,5 @@ public class User {
     private String telegramTag;
     private String vkTag;
     private String userStatus;
-
-    public User() {
-        this.id = 2;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public int getKarma() {
-        return karma;
-    }
-
-    public String getTimezone() {
-        return timezone;
-    }
-
-    public String getTelegramTag() {
-        return telegramTag;
-    }
-
-    public String getVkTag() {
-        return vkTag;
-    }
-
-    public String getUserStatus() {
-        return userStatus;
-    }
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", login=" + login + ", name=" + name + ", password=" + password + ", karma=" + karma
-                + ", timezone=" + timezone + ", telegramTag=" + telegramTag + ", vkTag=" + vkTag + ", userStatus="
-                + userStatus + "]";
-    }
-
-    public byte[] getPicture() {
-        return picture;
-    }
-
     
-
 }
