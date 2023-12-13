@@ -2,19 +2,19 @@ package com.manu.roleplaybackend.model;
 
 public class User {
     
-    private final int id;
+    private Integer id;
     private String login;
     private String name;
     private String password;
     private byte[] picture;
-    private int karma;
+    private Integer karma = 0;
     private String timezone;
     private String telegramTag;
     private String vkTag;
     private String userStatus;
 
     public User() {
-        this.id = 1;
+        this.id = 2;
     }
 
     public int getId() {
