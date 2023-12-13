@@ -1,13 +1,10 @@
 package com.manu.roleplaybackend.controllers;
 
 import java.util.Set;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
