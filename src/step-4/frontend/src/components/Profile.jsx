@@ -14,14 +14,13 @@ const Profile = () => {
   return (
     <div className="flex items-center justify-center">
       <div>
-        <div>Профиль пользователя</div>
         <div className="flex space-x-20">
           <img src="pfp.jpg" alt="profile" className=" h-44 rounded-full"></img>
           <div>
             <div>карма значок</div>
             <div>Личная информация</div>
             <div>
-              <div>Имя</div>
+              <div>Котярыч</div>
               <div>Часовой пояс</div>
             </div>
             <div>Ссылки</div>

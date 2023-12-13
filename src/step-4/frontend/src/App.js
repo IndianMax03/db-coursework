@@ -1,10 +1,15 @@
+import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div>
-      <AppRouter />
-    </div>
+    <BrowserRouter>
+      <div className="flex mt-10 justify-center space-x-32">
+        <Navbar />
+        <AppRouter />
+      </div>
+    </BrowserRouter>
   );
 }
 
