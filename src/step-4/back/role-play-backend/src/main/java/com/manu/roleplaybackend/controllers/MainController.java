@@ -3,6 +3,7 @@ package com.manu.roleplaybackend.controllers;
 import java.util.Optional;
 
 import com.manu.roleplaybackend.db.DataBase;
+import com.manu.roleplaybackend.model.Game;
 import com.manu.roleplaybackend.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,13 @@ public class MainController {
         System.out.println(user);
         dataBase.addUser(user);
         return Optional.of(user);
+    }
+
+    @PostMapping("addGame")
+    public Optional<Game> addGame(@RequestBody Game game) {
+        System.out.println(game);
+        dataBase.addGame(game);
+        return Optional.of(game);
     }
 
 }
