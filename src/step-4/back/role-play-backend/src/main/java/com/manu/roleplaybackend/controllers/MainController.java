@@ -27,6 +27,11 @@ public class MainController {
         return "pong";
     }
 
+    @GetMapping("gimmeUsers")
+    public Iterable<User> gimmeUsers() {
+        return dataBase.getUsers();
+    }
+
     @PostMapping("add")
     public Optional<User> addUser(@RequestBody User user) {
         System.out.println(user);
