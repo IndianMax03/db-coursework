@@ -14,32 +14,45 @@ const Profile = () => {
   return (
     <div className="flex items-center justify-center">
       <div>
-        <div className="flex space-x-20">
+        <div className="flex space-x-20 mb-10">
           <img src="pfp.jpg" alt="profile" className=" h-44 rounded-full"></img>
-          <div>
-            <div>карма значок</div>
-            <div>Личная информация</div>
-            <div>
-              <div>Котярыч</div>
-              <div>Часовой пояс</div>
+          <div className="w-44">
+            <div className="flex text-2xl mb-5 space-x-5 justify-between">
+              <div>Котярыч</div> <div className=" text-red-600 font-medium">+1234</div>
             </div>
-            <div>Ссылки</div>
-            <div>
-              <div>Вконтакте </div>
-              <div>Телеграм</div>
-            </div>
+            <div>Часовой пояс: Москва</div>
+            <div>Вконтакте: @kitten </div>
+            <div>Телеграм: @kitten</div>
           </div>
         </div>
-        <div>Друзья</div>
-        <div className="flex space-x-4">
+        <div className="mb-5">Друзья</div>
+        <div className="flex space-x-10 justify-between mx-5 mb-10">
           <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
           <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
           <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
           <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
         </div>
-        <div className=" flex justify-between bg-slate-500">
-          <button onClick={() => handleRoleChange('player')}>Игрок</button>
-          <button onClick={() => handleRoleChange('master')}>Мастер</button>
+        <div className=" flex space-x-5 justify-center mb-5">
+          <button
+            className={
+              'player' === role
+                ? 'border-solid border-2 text-white border-slate-500 bg-slate-500 rounded-lg w-full'
+                : 'border-solid border-2 border-slate-500 rounded-lg w-full'
+            }
+            onClick={() => handleRoleChange('player')}
+          >
+            Игрок
+          </button>
+          <button
+            className={
+              'master' === role
+                ? 'border-solid border-2 text-white border-slate-500 bg-slate-500 rounded-lg w-full'
+                : 'border-solid border-2 border-slate-500 rounded-lg w-full'
+            }
+            onClick={() => handleRoleChange('master')}
+          >
+            Мастер
+          </button>
         </div>
         {role === 'player' ? <Player /> : <Master />}
       </div>

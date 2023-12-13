@@ -1,9 +1,11 @@
+import Character from './Character';
+
 const Player = () => {
   return (
-    <div>
-      Персонажи
-      <div>персонаж 1</div>
-      <div>персонаж 2</div>
+    <div className="space-y-3">
+      <div>Персонажи</div>
+      <Character name="name" gameSystem="DnD" status="в игре" lobby="1234" />
+      <Character />
     </div>
   );
 };
