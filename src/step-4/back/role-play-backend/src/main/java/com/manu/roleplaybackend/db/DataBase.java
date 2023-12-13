@@ -17,8 +17,8 @@ public class DataBase {
     }
 
     public boolean addUser(User user) {
-        String slq = "insert into users values (?, ?, ?, ?, ?, ?, ?, ?, cast(? as user_status))";
-        template.update(slq, user.getId(), user.getLogin(), user.getName(), user.getPassword(), user.getKarma(), user.getTimezone(), user.getTelegramTag(), user.getVkTag(), user.getUserStatus());
+        String slq = "insert into users values (?, ?, ?, ?, ?, ?, ?, ?, ?, cast(? as user_status))";
+        template.update(slq, user.getId(), user.getLogin(), user.getName(), user.getPassword(), user.getPicture(), user.getKarma(), user.getTimezone(), user.getTelegramTag(), user.getVkTag(), user.getUserStatus());
         return true;
     }
 

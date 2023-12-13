@@ -9,6 +9,7 @@ create table if not exists users (
     login varchar(32) not null,
     name varchar(128) not null,
     password varchar(128) not null,
+    picture bytea,
     karma integer default 0 not null,
     timezone text,
     telegram_tag varchar(32),
@@ -75,6 +76,8 @@ create table if not exists games_tags (
 
 create table if not exists characters (
     id serial primary key,
+    name text,
+    picture bytea,
     game_system_id integer references game_systems (id) on delete restrict on update cascade,
     user_id integer references users (id) on delete restrict on update cascade,
     current_status character_status not null, 

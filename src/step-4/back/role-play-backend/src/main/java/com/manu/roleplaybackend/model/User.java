@@ -6,6 +6,7 @@ public class User {
     private String login;
     private String name;
     private String password;
+    private byte[] picture;
     private int karma;
     private String timezone;
     private String telegramTag;
@@ -57,6 +58,10 @@ public class User {
         return "User [id=" + id + ", login=" + login + ", name=" + name + ", password=" + password + ", karma=" + karma
                 + ", timezone=" + timezone + ", telegramTag=" + telegramTag + ", vkTag=" + vkTag + ", userStatus="
                 + userStatus + "]";
+    }
+
+    public byte[] getPicture() {
+        return picture;
     }
 
     
