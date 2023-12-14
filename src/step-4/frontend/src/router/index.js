@@ -7,6 +7,8 @@ import RegisterForm from '../components/RegisterForm';
 import LobbyPage from '../components/LobbyPage';
 import CharacterCreationForm from '../components/CharacterCreationForm';
 import GameCreationForm from '../components/GameCreationForm';
+import CharacterSelection from '../components/CharacterSelection';
+import Requests from '../components/Requests';
 
 export const privateRoutes = [
   { path: '/friends', element: <Friends /> },
@@ -15,7 +17,9 @@ export const privateRoutes = [
   { path: '*', element: <Navigate to="/profile" replace /> },
   { path: '/lobby', element: <LobbyPage /> },
   { path: '/character-creation', element: <CharacterCreationForm /> },
-  { path: '/game-creation', element: <GameCreationForm/>},
+  { path: '/game-creation', element: <GameCreationForm /> },
+  { path: '/character-selection', element: <CharacterSelection /> },
+  { path: '/requests', element: <Requests /> },
   //   TODO: delete when auth is done
   { path: '/register', element: <RegisterForm /> },
   { path: '/login', element: <LoginForm /> }

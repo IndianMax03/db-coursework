@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Lobby = ({ game, master, players }) => {
   return (
     <div className="space-y-5 p-5 border-solid border-2 border-slate-500 rounded-lg">
@@ -23,7 +25,7 @@ const Lobby = ({ game, master, players }) => {
       ))}
       {game.status === 'not-started' ? (
         <button className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
-          Подать заявку на участие
+          <Link to="/character-selection">Подать заявку на участие</Link>
         </button>
       ) : (
         ''

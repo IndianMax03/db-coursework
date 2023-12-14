@@ -3,6 +3,7 @@ import { CgProfile } from 'react-icons/cg';
 import { GrCatalog } from 'react-icons/gr';
 import { FaUserFriends } from 'react-icons/fa';
 import { CiLogout } from 'react-icons/ci';
+import { FaBell } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
@@ -10,6 +11,10 @@ const Navbar = () => {
       <Link to={'/profile'} className="flex space-x-4">
         <CgProfile className="h-6" />
         <div>Мой профиль</div>
+      </Link>
+      <Link to={'/requests'} className="flex space-x-4">
+        <FaBell className="h-6" />
+        <div> Мои заявки</div>
       </Link>
       <Link to={'/catalog'} className="flex space-x-4">
         <GrCatalog className="h-6" />

@@ -36,8 +36,8 @@ const Master = () => {
           tags={['DnD', 'долгая']}
         />
         <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
-        <Link to="/game-creation">Создать игру</Link>
-      </button>
+          <Link to="/game-creation">Создать игру</Link>
+        </button>
       </div>
       <div className="space-y-3 mb-5">
         <div> Отзывы </div>
