@@ -1,14 +1,14 @@
-import Catalog from '../components/Catalog';
-import Friends from '../components/Friends';
-import LoginForm from '../components/LoginForm';
-import Profile from '../components/Profile';
+import Catalog from '../components/Catalog/Catalog';
+import Friends from '../components/Friends/Friends';
+import LoginForm from '../components/Auth/LoginForm';
+import Profile from '../components/Profile/Profile';
 import { Navigate } from 'react-router-dom';
-import RegisterForm from '../components/RegisterForm';
+import RegisterForm from '../components/Auth/RegisterForm';
 import LobbyPage from '../components/LobbyPage';
 import CharacterCreationForm from '../components/CharacterCreationForm';
 import GameCreationForm from '../components/GameCreationForm';
 import CharacterSelection from '../components/CharacterSelection';
-import Requests from '../components/Requests';
+import Requests from '../components/Requests/Requests';
 
 export const privateRoutes = [
   { path: '/friends', element: <Friends /> },

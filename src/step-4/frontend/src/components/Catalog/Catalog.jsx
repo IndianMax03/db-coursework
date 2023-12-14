@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Game from './Game';
+import Game from '../Game';
 const Catalog = () => {
   const [search, setSearch] = useState('games');
 

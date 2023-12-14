@@ -1,4 +1,4 @@
-import Game from './Game';
+import Game from '../Game';
 import Review from './Review';
 import { Link } from 'react-router-dom';
 

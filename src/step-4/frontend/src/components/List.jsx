@@ -1,11 +1,11 @@
-const UserList = ({ userArray, rowCount, position, maxInRow }) => {
+const List = ({array, rowCount, position, maxInRow }) => {
   return (
     <div>
       <div className={position === 'horizontal' ? 'flex space-x-9' : 'grid'}>
-        {userArray.map((user) => (
+        {array.map((item) => (
           <div>
             <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
-            <div>{user.name}</div>
+            <div>{item.name}</div>
           </div>
         ))}
       </div>
@@ -13,4 +13,4 @@ const UserList = ({ userArray, rowCount, position, maxInRow }) => {
   );
 };
 
-export default UserList;
+export default List;

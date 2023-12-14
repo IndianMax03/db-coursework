@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Character from './Character';
+import Character from '../Character';
 
 const Player = () => {
   return (

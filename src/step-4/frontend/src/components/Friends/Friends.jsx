@@ -1,10 +1,10 @@
-import UserList from './UserList';
+import List from '../List';
 
 const Friends = () => {
   return (
     <div className="">
-      <UserList
-        userArray={[{ name: 'friend1' }, { name: 'friend2' }]}
+      <List
+        array={[{ name: 'friend1' }, { name: 'friend2' }]}
         rowCount={2}
         position="horizontal"
       />

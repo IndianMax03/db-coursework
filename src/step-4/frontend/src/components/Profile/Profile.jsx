@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Player from './Player';
 import Master from './Master';
-import UserList from './UserList';
+import List from '../List';
 
 const Profile = () => {
   const [role, setRole] = useState('player');
@@ -28,8 +28,8 @@ const Profile = () => {
         </div>
         <div className="mb-5">Друзья</div>
         <div className="flex  mb-10">
-          <UserList
-            userArray={[
+          <List
+            array={[
               { name: 'friend1' },
               { name: 'friend2' },
               { name: 'friend2' },

@@ -1,7 +1,7 @@
-import Profile from '../components/Profile';
+import Profile from '../components/Profile/Profile';
 import Navbar from '../components/Navbar';
-import LoginForm from '../components/LoginForm';
-import Catalog from '../components/Catalog';
+import LoginForm from '../components/Auth/LoginForm';
+import Catalog from '../components/Catalog/Catalog';
 import { Route, Routes } from 'react-router-dom';
 import { publicRoutes, privateRoutes } from '.';
 
