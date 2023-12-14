@@ -26,11 +26,14 @@ const RegisterForm = () => {
         </div>
         <div className="text-slate-500 text-sm "> В формате @yourtag</div>
         <div className="flex justify-between space-x-5">
-          <div>Вконтакте (тег) </div>
+          <div>Вконтакте (id) </div>
           <input className="border-2 rounded-lg"></input>
         </div>
+        <div className="flex justify-between space-x-5">
+          <div>Загрузить аватарку</div>
+          <input type='file' accept='image/png, image/jpeg'></input>
+        </div>
         <div className="flex justify-center space-x-5">
-          {' '}
           <div> У меня уже есть аккаунт </div>
           <Link to={'/login'} className="text-slate-500">
             Войти

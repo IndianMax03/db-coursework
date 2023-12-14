@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Player from './Player';
 import Master from './Master';
 import UserList from './UserList';
-import Lobby from './Lobby';
 
 const Profile = () => {
   const [role, setRole] = useState('player');
@@ -23,7 +22,7 @@ const Profile = () => {
               <div>Котярыч</div> <div className=" text-red-600 font-medium">+1234</div>
             </div>
             <div>Часовой пояс: Москва</div>
-            <div>Вконтакте: @kitten </div>
+            <div>Вконтакте: kitten </div>
             <div>Телеграм: @kitten</div>
           </div>
         </div>
