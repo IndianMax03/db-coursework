@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Player from './Player';
 import Master from './Master';
 import UserList from './UserList';
+import Lobby from './Lobby';
 
 const Profile = () => {
   const [role, setRole] = useState('player');

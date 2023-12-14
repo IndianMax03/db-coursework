@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Game = ({
   name,
   gameSystem,
@@ -26,17 +28,13 @@ const Game = ({
             </div>
           ))}
         </div>
-        {status === 'finished' || status === 'started' ? (
-          <button className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
-            Перейти в лобби игры
-          </button>
-        ) : (
-          ''
-        )}
+        <button className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
+          <Link to="/lobby">Перейти в лобби игры</Link>
+        </button>
         {status === 'not-started' ? (
-          <button className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
-            Подать заявку на участие
-          </button>
+          <div>
+            <div className="text-slate-500">Вы можете подать заявку на участие!</div>
+          </div>
         ) : (
           ''
         )}

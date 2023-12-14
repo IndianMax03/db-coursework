@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Character = ({ name = 'Astarion', gameSystem = 'DnD', status = 'свободен', lobby }) => {
   return (
     <div className="flex border-solid border-2 border-slate-500 rounded-lg">
@@ -8,7 +10,7 @@ const Character = ({ name = 'Astarion', gameSystem = 'DnD', status = 'свобо
         <div>Статус: {status}</div>
         {lobby ? (
           <button className="mt-10 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
-            Перейти в лобби персонажа
+            <Link to="/lobby">Перейти в лобби персонажа</Link>
           </button>
         ) : (
           ''
