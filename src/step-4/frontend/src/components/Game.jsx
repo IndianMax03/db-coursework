@@ -6,7 +6,8 @@ const Game = ({
   status,
   gameType,
   finishDate,
-  description
+  description,
+  tags
 }) => {
   return (
     <div className="flex border-solid border-2 border-slate-500 rounded-lg">
@@ -18,6 +19,13 @@ const Game = ({
         <div>Дата создания: {creationDate} </div>
         <div>Дата завершения: {finishDate} </div>
         <div className="w-72">Описание: {description} </div>
+        <div className="flex">
+          {tags.map((i) => (
+            <div key={i} className="text-slate-500 mr-3">
+              #{i}
+            </div>
+          ))}
+        </div>
       </div>
       <img src="gameImage.jpg" alt="character" className="w-48 h-48 rounded object-cover p-2" />
       <div></div>

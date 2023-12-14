@@ -14,6 +14,7 @@ const Master = () => {
           gameType="онлайн"
           finishDate="13.12.2023"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
+          tags={['DnD', 'долгая']}
         />
         <Game
           name="name"
@@ -23,6 +24,7 @@ const Master = () => {
           gameType="онлайн"
           finishDate="13.12.2023"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
+          tags={['DnD', 'долгая']}
         />
       </div>
       <div className="space-y-3 mb-5">

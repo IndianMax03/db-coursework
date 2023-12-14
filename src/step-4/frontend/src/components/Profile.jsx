@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Player from './Player';
 import Master from './Master';
+import UserList from './UserList';
 
 const Profile = () => {
   const [role, setRole] = useState('player');
@@ -26,11 +27,19 @@ const Profile = () => {
           </div>
         </div>
         <div className="mb-5">Друзья</div>
-        <div className="flex space-x-10 justify-between mx-5 mb-10">
-          <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
-          <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
-          <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
-          <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
+        <div className="flex  mb-10">
+          <UserList
+            userArray={[
+              { name: 'friend1' },
+              { name: 'friend2' },
+              { name: 'friend2' },
+              { name: 'friend2' },
+              { name: 'friend2' },
+              { name: 'friend2' }
+            ]}
+            rowCount={2}
+            position="horizontal"
+          />
         </div>
         <div className=" flex space-x-5 justify-center mb-5">
           <button
