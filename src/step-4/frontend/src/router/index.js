@@ -10,7 +10,7 @@ export const privateRoutes = [
   { path: '/catalog', element: <Catalog /> },
   { path: '/profile', element: <Profile /> },
   { path: '*', element: <Navigate to="/profile" replace /> },
-//   TODO: delete when auth is done 
+  //   TODO: delete when auth is done
   { path: '/register', element: <RegisterForm /> },
   { path: '/login', element: <LoginForm /> }
 ];

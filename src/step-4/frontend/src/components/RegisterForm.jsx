@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 const RegisterForm = () => {
   return (
     <div className="w-128 flex justify-center">
@@ -29,9 +29,13 @@ const RegisterForm = () => {
           <div>Вконтакте (тег) </div>
           <input className="border-2 rounded-lg"></input>
         </div>
-        <div className="flex justify-center space-x-5"> <div> У меня уже есть аккаунт </div>
-             <Link to={'/login'} className='text-slate-500'>Войти</Link>
-          </div>
+        <div className="flex justify-center space-x-5">
+          {' '}
+          <div> У меня уже есть аккаунт </div>
+          <Link to={'/login'} className="text-slate-500">
+            Войти
+          </Link>
+        </div>
         <div className="flex justify-center">
           <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
             Зарегистрироваться

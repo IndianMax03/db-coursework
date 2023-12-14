@@ -7,22 +7,30 @@ const Master = () => {
       <div className="space-y-3 mb-5">
         <div>Сюжеты</div>
         <Game
-          name="name"
+          name="Порядулечная игра"
           gameSystem="DnD"
           creationDate="01.12.2023"
-          status="закончена"
+          status="finished"
           gameType="онлайн"
           finishDate="13.12.2023"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
           tags={['DnD', 'долгая']}
         />
         <Game
-          name="name"
+          name="Порядошная игра"
           gameSystem="DnD"
           creationDate="01.12.2023"
-          status="закончена"
+          status="started"
           gameType="онлайн"
-          finishDate="13.12.2023"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
+          tags={['DnD', 'долгая']}
+        />
+        <Game
+          name="Порядошная игра"
+          gameSystem="DnD"
+          creationDate="01.12.2023"
+          status="not-started"
+          gameType="онлайн"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
           tags={['DnD', 'долгая']}
         />
