@@ -5,11 +5,11 @@
 # Ручки
 
 - `/enter/register` : **регистрация**
-    - POST: логин, имя, пароль, [таймзона, телеграм_тег, вк_тег]
-    - returns: токен в хедере
+    - POST: login, name, password, [timezone, telegramTag, vkTag]
+    - returns: token в хедере
 - `enter/login` : **логин**
-    - POST: логин, пароль
-    - returns: токен в хедере
+    - POST: login, password
+    - returns: token в хедере
 
 ---
 
