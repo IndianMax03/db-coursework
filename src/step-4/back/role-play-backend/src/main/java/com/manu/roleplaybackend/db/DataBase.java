@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -17,6 +18,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.User;
 
 import io.micrometer.common.lang.Nullable;
@@ -55,6 +57,12 @@ public class DataBase {
 
     public boolean findUserByLoginAndPassword(User user) {
         String sql = "select count(*) from users where (login = '" + user.getLogin() + "' and password = '" + user.getPassword() + "')";
+        Integer result = template.queryForObject(sql, Integer.class);
+        return result != null && result != 0;
+    }
+
+    public boolean findUserById(Integer userId) {
+        String sql = "select count(*) from users where (id = '" + userId + "')";
         Integer result = template.queryForObject(sql, Integer.class);
         return result != null && result != 0;
     }
@@ -129,6 +137,33 @@ public class DataBase {
         } catch (EmptyResultDataAccessException erde) {
             return new ResponseEntity<Object>("User with login " + login + " not found", HttpStatus.NOT_FOUND);
         }
+    }
+    
+    public boolean findGameSystemById(Integer gameSystemId) {
+        String sql = "select count(*) from game_systems where (id = '" + gameSystemId + "')";
+        Integer result = template.queryForObject(sql, Integer.class);
+        return result != null && result != 0;
+    }
+
+    public ResponseEntity<Object> createCharacter(Character character) {
+        if (!findGameSystemById(character.getGameSystemId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no game system with id = " + character.getGameSystemId());
+        }
+        if (!findUserById(character.getUserId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user with id = " + character.getUserId());
+        }
+        try {
+            String slq = "select create_character(?, ?, ?, ?, ?::character_status, ?)";
+            Integer characterId = template.queryForObject(slq, Integer.class, character.getName(), character.getPicture(), character.getGameSystemId(), character.getUserId(), character.getCurrentStatus(), character.getStats());
+            character.setId(characterId);
+            return new ResponseEntity<Object>(character, HttpStatus.CREATED);
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
     }
 
 }

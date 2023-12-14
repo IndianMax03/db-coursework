@@ -76,12 +76,12 @@ create table if not exists games_tags (
 
 create table if not exists characters (
     id serial primary key,
-    name text,
+    name text not null,
     picture bytea,
     game_system_id integer references game_systems (id) on delete restrict on update cascade,
     user_id integer references users (id) on delete restrict on update cascade,
     current_status character_status not null, 
-    stats bytea not null
+    stats bytea
 );
 
 create table if not exists lobbies (
