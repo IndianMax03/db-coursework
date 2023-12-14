@@ -7,15 +7,15 @@
 - `/enter/register` : **регистрация**
     - POST: login, name, password, [timezone, telegramTag, vkTag]
     - returns: token в хедере
-- `enter/login` : **логин**
+- `/enter/login` : **логин**
     - POST: login, password
     - returns: token в хедере
 
 ---
 
-- `users/all` : **получить всех юзеров**
+- `/users/all` : **получить всех юзеров**
     - GET
     - returns: массив всех юзеров
-- `users/{login}` : **получить юзера по логину**
+- `/users/{login}` : **получить юзера по логину**
     - GET: {login} в переменной пути
     - returns: информация о пользователе (кроме пароля)
