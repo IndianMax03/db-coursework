@@ -6,7 +6,7 @@ create type character_status as enum ('free', 'busy');
 
 create table if not exists users (
     id serial primary key,
-    login varchar(32) not null,
+    login varchar(32) unique not null,
     name varchar(128) not null,
     password varchar(128) not null,
     picture bytea,
