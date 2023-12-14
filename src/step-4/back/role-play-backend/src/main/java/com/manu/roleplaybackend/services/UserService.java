@@ -24,8 +24,13 @@ public class UserService {
         return dataBase.createUser(user);
     }
 
-    public boolean login() {
-        return true;
+    public ResponseEntity<String> login(User user) {
+        if (user.validLogin() && user.validPassword()) {
+            if (dataBase.findUserByLoginAndPassword(user)) {
+                return ResponseEntity.status(HttpStatus.OK).header("token", dataBase.generateToken(user.getPassword())).body(HttpStatus.OK.getReasonPhrase());
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login or password");
     }
 
 }

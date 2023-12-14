@@ -21,8 +21,13 @@ public class EnterController {
     public EnterController() { }
 
     @PostMapping("/register")
-    public ResponseEntity<String> ping(@RequestBody User user) {
+    public ResponseEntity<String> register(@RequestBody User user) {
         return userService.register(user);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user) {
+        return userService.login(user);
     }
 
     @GetMapping("/ping")

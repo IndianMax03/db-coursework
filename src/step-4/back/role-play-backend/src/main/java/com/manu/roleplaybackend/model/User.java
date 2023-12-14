@@ -19,16 +19,34 @@ public class User {
     private String name;
     private String password;
     private byte[] picture;
-    private Integer karma;
+    private Integer karma = 0;
     private String timezone;
     private String telegramTag;
     private String vkTag;
-    private String currentStatus;
+    private String currentStatus = "exists";
+
+    public boolean validLogin() {
+        return this.login != null && !this.login.trim().isEmpty() && this.login.length() <= 32;
+    }
+
+    public boolean validName() {
+        return this.name != null && !this.name.trim().isEmpty() && this.name.length() <= 128;
+    }
+
+    public boolean validPassword() {
+        return this.password != null && !this.password.trim().isEmpty() && this.password.length() <= 128;
+    }
+
+    public boolean validKarma() {
+        return this.karma != null;
+    }
+
+    public boolean validCurrentStatus() {
+        return this.currentStatus != null;
+    }
  
     public boolean isValid() {
-        boolean notNull = this.login != null && this.name != null && this.password != null && this.karma != null && this.currentStatus != null;
-        boolean notEmpty = !this.login.trim().isEmpty() && !this.name.trim().isEmpty() && !this.password.trim().isEmpty();
-        return notNull && notEmpty;
+        return validLogin() && validName() && validPassword();
     }
 
     public List<Object> getParamsList() {

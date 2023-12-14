@@ -7,6 +7,7 @@ import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,30 +29,51 @@ public class DataBase {
     }
 
     public ResponseEntity<String> createUser(User user) {
+        if (findUserByLoginAndPassword(user)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists. Try /enter/login.");
+        }
         try {
             String slq = "select create_user(?, ?, ?, ?, ?, ?, ?, ?, ?::user_status)";
             template.update(slq, user.getLogin(), user.getName(), user.getPassword(), user.getPicture(), user.getKarma(), user.getTimezone(), user.getTelegramTag(), user.getVkTag(), user.getCurrentStatus());
+        } catch (DuplicateKeyException dke) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists. Try /enter/login.");
         } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
         } catch (DataAccessException dae) {
             System.out.println(dae);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
         }
+        String token = generateToken(user.getPassword());
+        if (token != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).header("token", token).body("User created succesfully");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hashing trouble");
+    }
+
+    public boolean findUserByLoginAndPassword(User user) {
+        String sql = "select count(*) from users where (login = '" + user.getLogin() + "' and password = '" + user.getPassword() + "')";
+        Integer result = template.queryForObject(sql, Integer.class);
+        return result != null && result != 0;
+    }
+
+    public String generateToken(String password) {
+
+        StringBuilder sb = new StringBuilder();
+
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
 
-            md.update(user.getLogin().getBytes());
+            md.update(password.getBytes());
 
             byte[] bytes = md.digest();
 
-            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bytes.length; i++) {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
-            String generatedPassword = sb.toString();
-            return ResponseEntity.status(HttpStatus.CREATED).header("token", generatedPassword).body("User created succesfully");
         } catch (NoSuchAlgorithmException nsae) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hashing trouble");
+            return null;
         }
+        return sb.toString();
     }
 
     // public Iterable<User> getUsers() {
