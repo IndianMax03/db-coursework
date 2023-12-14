@@ -1,5 +1,6 @@
 import Game from './Game';
 import Review from './Review';
+import { Link } from 'react-router-dom';
 
 const Master = () => {
   return (
@@ -34,6 +35,9 @@ const Master = () => {
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
           tags={['DnD', 'долгая']}
         />
+        <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
+        <Link to="/game-creation">Создать игру</Link>
+      </button>
       </div>
       <div className="space-y-3 mb-5">
         <div> Отзывы </div>

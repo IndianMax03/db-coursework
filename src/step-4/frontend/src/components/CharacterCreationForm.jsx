@@ -5,7 +5,7 @@ const CharacterCreationForm = () => {
   const [gameSystem, setGameSystem] = useState('');
   const [image, setImage] = useState(undefined);
   const [pdf, setPdf] = useState(undefined);
-  const options = ["DnD", "Pathfinder"];
+  const options = ['DnD', 'Pathfinder'];
 
   return (
     <div className="w-128 flex justify-center">
@@ -17,7 +17,9 @@ const CharacterCreationForm = () => {
         <div className="flex justify-between space-x-5">
           <label for="gameSystem">Игровая система</label>
           <select name="gameSystem" id="gameSystem">
-            {options.map((option) => (<option value={option}>{option}</option>))}
+            {options.map((option) => (
+              <option value={option}>{option}</option>
+            ))}
           </select>
         </div>
         <div className="flex justify-between space-x-5">
