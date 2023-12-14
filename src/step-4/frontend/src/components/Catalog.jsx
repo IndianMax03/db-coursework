@@ -3,12 +3,12 @@ import Game from './Game';
 const Catalog = () => {
   const [search, setSearch] = useState('games');
 
-    const handleCatalogChange = (type) => {
-        if(search === type){
-            return;
-        }
-        setSearch(type);
+  const handleCatalogChange = (type) => {
+    if (search === type) {
+      return;
     }
+    setSearch(type);
+  };
 
   return (
     <div className>
@@ -18,7 +18,9 @@ const Catalog = () => {
       </div>
       <div className=" flex space-x-5 justify-center mb-5">
         <button
-        onClick={() => {handleCatalogChange('games')}}
+          onClick={() => {
+            handleCatalogChange('games');
+          }}
           className={
             'games' === search
               ? 'border-solid border-2 text-white border-slate-500 bg-slate-500 rounded-lg w-full'
@@ -28,7 +30,9 @@ const Catalog = () => {
           Игры
         </button>
         <button
-            onClick={() => {handleCatalogChange('players')}}
+          onClick={() => {
+            handleCatalogChange('players');
+          }}
           className={
             'players' === search
               ? 'border-solid border-2 text-white border-slate-500 bg-slate-500 rounded-lg w-full'
@@ -40,12 +44,16 @@ const Catalog = () => {
       </div>
       <div> Теги </div>
       <div>
-      <input id="default-checkbox" type="checkbox" value=""/>
-    <label for="default-checkbox" className="ms-2 ">DnD</label>
+        <input id="default-checkbox" type="checkbox" value="" />
+        <label for="default-checkbox" className="ms-2 ">
+          DnD
+        </label>
       </div>
       <div>
-      <input id="default-checkbox" type="checkbox" value=""/>
-    <label for="default-checkbox" className="ms-2 ">Долгая</label>
+        <input id="default-checkbox" type="checkbox" value="" />
+        <label for="default-checkbox" className="ms-2 ">
+          Долгая
+        </label>
       </div>
 
       <Game

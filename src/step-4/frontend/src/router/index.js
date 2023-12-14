@@ -5,6 +5,7 @@ import Profile from '../components/Profile';
 import { Navigate } from 'react-router-dom';
 import RegisterForm from '../components/RegisterForm';
 import LobbyPage from '../components/LobbyPage';
+import CharacterCreationForm from '../components/CharacterCreationForm';
 
 export const privateRoutes = [
   { path: '/friends', element: <Friends /> },
@@ -12,6 +13,7 @@ export const privateRoutes = [
   { path: '/profile', element: <Profile /> },
   { path: '*', element: <Navigate to="/profile" replace /> },
   { path: '/lobby', element: <LobbyPage /> },
+  { path: '/character-creation', element: <CharacterCreationForm/>},
   //   TODO: delete when auth is done
   { path: '/register', element: <RegisterForm /> },
   { path: '/login', element: <LoginForm /> }

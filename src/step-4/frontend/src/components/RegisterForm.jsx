@@ -31,7 +31,7 @@ const RegisterForm = () => {
         </div>
         <div className="flex justify-between space-x-5">
           <div>Загрузить аватарку</div>
-          <input type='file' accept='image/png, image/jpeg'></input>
+          <input type="file" accept="image/png, image/jpeg"></input>
         </div>
         <div className="flex justify-center space-x-5">
           <div> У меня уже есть аккаунт </div>
