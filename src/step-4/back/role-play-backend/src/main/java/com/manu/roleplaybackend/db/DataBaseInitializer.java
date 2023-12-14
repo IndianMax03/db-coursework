@@ -15,7 +15,7 @@ public class DataBaseInitializer implements CommandLineRunner {
     private JdbcTemplate jdbcTemplate;
 
     private final String mainPath = "src/main/resources/sql/create/";
-    private final String[] initFileNames = {"model", "indexes"};  // , "functions"};
+    private final String[] initFileNames = {"model", "indexes", "functions"};
 
     @Override
     public void run(String... args) throws Exception {
@@ -27,6 +27,7 @@ public class DataBaseInitializer implements CommandLineRunner {
                 jdbcTemplate.execute(query);
             } catch (Exception e) {
                 System.out.println("-----------------ПРОБЛЕМЫ С СОЗДАНИЕМ-----------------");
+                System.out.println(e);
             }
         }
     }
