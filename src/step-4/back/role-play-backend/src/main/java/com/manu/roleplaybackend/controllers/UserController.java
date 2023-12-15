@@ -27,4 +27,9 @@ public class UserController {
         return userService.getByLogin(login);
     }
 
+    @GetMapping("/roles/{login}")
+    public ResponseEntity<Object> getUserRoles(@PathVariable String login) {
+        return userService.getUserRoles(login);
+    }
+
 }

@@ -47,4 +47,12 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with login " + login + " does not exist");
     }
 
+    public ResponseEntity<Object> getUserRoles(String login) {
+        Optional<User> opUser = dataBase.getUserByLogin(login);
+        if (opUser.isPresent()) {
+            return dataBase.getUserRolesById(opUser.get().getId());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with login " + login + " does not exist");
+    }
+
 }

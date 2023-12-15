@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.Game;
+import com.manu.roleplaybackend.model.Role;
 import com.manu.roleplaybackend.model.User;
 
 import io.micrometer.common.lang.Nullable;
@@ -233,6 +234,25 @@ public class DataBase {
             }
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+    }
+
+    public ResponseEntity<Object> getUserRolesById(Integer id) {
+        String sql = "select roles.id, roles.name from user_roles join roles on user_roles.role_id = roles.id join users on user_roles.user_id = users.id where users.id = " + id;
+        List<Role> result = null;
+        try {
+            result = template.query(sql, new RowMapper<Role>() {
+                @Override
+                @Nullable
+                public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Role role = new Role();
+                    role.setId(rs.getInt("id"));
+                    role.setName(rs.getString("name"));
+                    return role;
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+        return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
 }
