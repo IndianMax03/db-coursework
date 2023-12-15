@@ -2,6 +2,7 @@ package com.manu.roleplaybackend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,10 @@ import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.LobbyRequest;
 import com.manu.roleplaybackend.services.CharacterService;
 
+
 @RestController
 @RequestMapping("/characters")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CharacterController {
 
     @Autowired
