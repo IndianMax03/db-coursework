@@ -8,6 +8,6 @@ insert into game_systems values (nextval('game_systems_id_seq'), 'Pathfinder');
 insert into users values (nextval('users_id_seq'), 'indian_max03', 'Maxim', 'cors123', null, 112, 'Russia/Moscow', 'tg_max', 'vk_max', 'exists');
 insert into users values (nextval('users_id_seq'), 'deaad', 'Ksenia', 'react123', null, 12, 'Russia/Moscow', 'tg_ksenia', 'vk_ksenia', 'exists');
 insert into user_roles values (2, 1);
-insert into games values (nextval('games_id_seq'), 1, null, 2, '2023-12-15 05:36:22.738363', 'not-started', null, 'Игра для любителей темных лесов и таинственных путешествий! Будь осторожен путник, на твоей дороге могут встретиться самые страшные создания!!!');
+insert into games values (nextval('games_id_seq'), 'Игра игрулька', 1, null, 2, '2023-12-15 05:36:22.738363', 'not-started', null, 'Игра для любителей темных лесов и таинственных путешествий! Будь осторожен путник, на твоей дороге могут встретиться самые страшные создания!!!');
 insert into characters values(nextval('characters_id_seq'), 'Липрикон', null, 1, 1, 'busy', null);
 insert into lobby_requests values (nextval('lobby_requests_id_seq'), 1, 1, 'on-review');
