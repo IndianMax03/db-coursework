@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.db.DataBase;
 import com.manu.roleplaybackend.model.Character;
+import com.manu.roleplaybackend.model.LobbyRequest;
 
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,13 @@ public class CharacterService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid character data");
         }
         return dataBase.createCharacter(character);
+    }
+
+    public ResponseEntity<Object> createRequest(LobbyRequest lobbyRequest) {
+        if (!lobbyRequest.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid lobby request data");
+        }
+        return dataBase.createLobbyRequest(lobbyRequest);
     }
 
 }

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.Game;
+import com.manu.roleplaybackend.model.LobbyRequest;
 import com.manu.roleplaybackend.model.Role;
 import com.manu.roleplaybackend.model.User;
 
@@ -145,6 +146,18 @@ public class DataBase {
     
     public boolean findGameSystemById(Integer gameSystemId) {
         String sql = "select count(*) from game_systems where (id = '" + gameSystemId + "')";
+        Integer result = template.queryForObject(sql, Integer.class);
+        return result != null && result != 0;
+    }
+
+    public boolean findCharacterById(Integer characterId) {
+        String sql = "select count(*) from characters where (id = '" + characterId + "')";
+        Integer result = template.queryForObject(sql, Integer.class);
+        return result != null && result != 0;
+    }
+
+    public boolean findLobbyById(Integer lobbyId) {
+        String sql = "select count(*) from lobbies where (id = '" + lobbyId + "')";
         Integer result = template.queryForObject(sql, Integer.class);
         return result != null && result != 0;
     }
@@ -329,6 +342,30 @@ public class DataBase {
         } catch (EmptyResultDataAccessException ignore) {
         }
         return new ResponseEntity<Object>(result, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Object> createLobbyRequest(LobbyRequest lobbyRequest) {
+        if (!findCharacterById(lobbyRequest.getCharacterId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no character with id = " + lobbyRequest.getCharacterId());
+        }
+        if (!findLobbyById(lobbyRequest.getLobbyId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no lobby with id = " + lobbyRequest.getLobbyId());
+        }
+        Integer lobbyRequestId = null;
+        try {
+            String slq = "select create_lobby_request(?, ?, ?::request_status)";
+            lobbyRequestId = template.queryForObject(slq, Integer.class, lobbyRequest.getLobbyId(), lobbyRequest.getCharacterId(), lobbyRequest.getCurrentStatus());
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+        if (lobbyRequestId != null) {
+            lobbyRequest.setId(lobbyRequestId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(lobbyRequest);
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hashing trouble");
     }
 
 }

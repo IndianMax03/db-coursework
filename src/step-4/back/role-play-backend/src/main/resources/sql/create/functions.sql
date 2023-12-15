@@ -51,3 +51,16 @@ begin
     return new_id;
 end;
 $$ language plpgsql;
+
+create or replace function create_lobby_request(lobby_id integer, character_id integer, current_status request_status)
+returns integer
+as $$
+declare
+    new_id integer;
+begin
+    insert into lobby_requests
+    values (nextval('lobby_requests_id_seq'), lobby_id, character_id, current_status)
+    returning id into new_id;
+    return new_id;
+end;
+$$ language plpgsql;
