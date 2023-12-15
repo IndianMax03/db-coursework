@@ -25,3 +25,9 @@
 - `characters/create` : **создать персонажа**
     - POST: name, gameSystemId, userId, [picture, stats]
     - returns: информация о созданном персонаже (с айдишником)
+
+---
+
+- `games/create` : **создать игру**
+    - POST: name, gameSystemId, masterId, [picture, currentStatus, finishDate, description]
+    - returns: созданную игру с заполненными айди и датой создания

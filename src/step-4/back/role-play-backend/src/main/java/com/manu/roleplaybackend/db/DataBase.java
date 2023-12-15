@@ -19,6 +19,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.model.Character;
+import com.manu.roleplaybackend.model.Game;
 import com.manu.roleplaybackend.model.User;
 
 import io.micrometer.common.lang.Nullable;
@@ -164,6 +165,72 @@ public class DataBase {
         } catch (DataAccessException dae) {
             System.out.println(dae);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+    }
+
+    public boolean isUserMasterById(Integer id) {
+        try {
+            String sql = "select is_user_master(?)";
+            Boolean isMaster = template.queryForObject(sql, Boolean.class, id);
+            return isMaster;
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+        }
+        return false;
+    }
+
+    public Optional<Game> getGameById(Integer gameId) {
+        String sql = "select id, name, game_system_id, picture, master_id, creation_date, current_status, finish_date, description from games where id = " + gameId;
+        try {
+            Game result = template.queryForObject(sql, new RowMapper<Game>() {
+                @Override
+                @org.springframework.lang.Nullable
+                public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Game game = new Game();
+                    game.setId(rs.getInt("id"));
+                    game.setName(rs.getString("name"));
+                    game.setGameSystemId(rs.getInt("game_system_id"));
+                    game.setPicture(rs.getBytes("picture"));
+                    game.setMasterId(rs.getInt("master_id"));
+                    game.setCreationDate(rs.getString("creation_date"));
+                    game.setCurrentStatus(rs.getString("current_status"));
+                    game.setFinishDate(rs.getString("finish_date"));
+                    game.setDescription(rs.getString("description"));
+                    return game;
+                }
+            });
+            return Optional.of(result);
+        } catch (EmptyResultDataAccessException erde) {
+            return Optional.empty();
+        }
+    }
+
+    public ResponseEntity<Object> createGame(Game game) {
+        if (!findGameSystemById(game.getGameSystemId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no game system with id = " + game.getGameSystemId());
+        }
+        if (!isUserMasterById(game.getMasterId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with id = " + game.getMasterId() + " is not master!");
+        }
+
+        Integer gameId = null;
+        try {
+            
+            String sql = "select create_game(?, ?, ?, ?, ?::game_status, ?)";
+            gameId = template.queryForObject(sql, Integer.class, game.getName(), game.getGameSystemId(), game.getPicture(), game.getMasterId(), game.getCurrentStatus(), game.getDescription());
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+
+        if (gameId != null) {
+            Optional<Game> newGame = getGameById(gameId);
+            if (newGame.isPresent()) {
+                return new ResponseEntity<Object>(newGame, HttpStatus.CREATED);
+            }
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
     }
