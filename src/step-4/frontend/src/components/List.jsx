@@ -1,4 +1,4 @@
-const List = ({array, rowCount, position, maxInRow }) => {
+const List = ({ array, rowCount, position, maxInRow }) => {
   return (
     <div>
       <div className={position === 'horizontal' ? 'flex space-x-9' : 'grid'}>

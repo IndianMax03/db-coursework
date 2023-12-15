@@ -10,9 +10,7 @@ const GameCreationForm = () => {
   const [image, setImage] = useState(undefined);
   const date = Date.now();
   const [description, setDescription] = useState('');
-  
 
-  
   return (
     <div className="w-128 flex justify-center">
       <div className=" space-y-3 ">
