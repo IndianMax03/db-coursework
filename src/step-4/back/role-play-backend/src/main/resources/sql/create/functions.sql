@@ -64,3 +64,18 @@ begin
     return new_id;
 end;
 $$ language plpgsql;
+
+create or replace function create_lobby()
+returns trigger
+as $$
+begin
+    insert into lobbies
+    values (nextval('lobbies_id_seq'), NEW.id, 'online');
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger game_creation
+after insert on games
+for each row
+execute function create_lobby();

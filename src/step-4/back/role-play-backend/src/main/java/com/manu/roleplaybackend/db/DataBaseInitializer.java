@@ -26,10 +26,16 @@ public class DataBaseInitializer implements CommandLineRunner {
                 query = new String(Files.readAllBytes(Paths.get(mainPath + initFileNames[i] + ".sql")));
                 jdbcTemplate.execute(query);
             } catch (Exception e) {
-                System.out.println("-----------------ПРОБЛЕМЫ С СОЗДАНИЕМ-----------------");
                 System.out.println(e);
             }
         }
+
+        // try {
+        //     query = new String(Files.readAllBytes(Paths.get("src/main/resources/sql/insert/default_data.sql")));
+        //     jdbcTemplate.execute(query);
+        // } catch (Exception e) {
+        //     System.out.println(e);
+        // }
     }
 
 }
