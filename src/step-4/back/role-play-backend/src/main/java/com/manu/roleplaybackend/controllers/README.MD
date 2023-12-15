@@ -6,10 +6,10 @@
 
 - `/enter/register` : **регистрация**
     - POST: login, name, password, [timezone, telegramTag, vkTag]
-    - returns: token в хедере
+    - returns: token в хедере, в боди весь юзер (с айдишником)
 - `/enter/login` : **логин**
     - POST: login, password
-    - returns: token в хедере
+    - returns: token в хедере, в боди весь юзер
 
 ---
 
@@ -19,3 +19,9 @@
 - `/users/{login}` : **получить юзера по логину**
     - GET: {login} в переменной пути
     - returns: информация о пользователе (кроме пароля)
+
+---
+
+- `characters/create` : **создать персонажа**
+    - POST: name, gameSystemId, userId, [picture, stats]
+    - returns: информация о созданном персонаже (с айдишником)
