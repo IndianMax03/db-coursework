@@ -40,3 +40,6 @@
 - `games/create` : **создать игру**
     - POST: name, gameSystemId, masterId, [picture, currentStatus, finishDate, description]
     - returns: созданную игру с заполненными айди и датой создания
+- `/games/all` : **получить все игры**
+    - GET
+    - returns: массив всех игр

@@ -305,4 +305,30 @@ public class DataBase {
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
+    public ResponseEntity<Object> getAllGames() {
+        String sql = "select * from games";
+        List<Game> result = null;
+        try {
+            result = template.query(sql, new RowMapper<Game>() {
+                @Override
+                @Nullable
+                public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    return new Game(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("game_system_id"),
+                        rs.getBytes("picture"),
+                        rs.getInt("master_id"),
+                        rs.getString("creation_date"),
+                        rs.getString("current_status"),
+                        rs.getString("finish_date"),
+                        rs.getString("description")
+                    );
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+        return new ResponseEntity<Object>(result, HttpStatus.OK);
+    }
+
 }
