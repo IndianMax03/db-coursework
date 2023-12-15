@@ -37,9 +37,10 @@ public class DataBase {
         if (findUserByLoginAndPassword(user)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists. Try /enter/login.");
         }
+        Integer userId = null;
         try {
             String slq = "select create_user(?, ?, ?, ?, ?, ?, ?, ?, ?::user_status)";
-            template.update(slq, user.getLogin(), user.getName(), user.getPassword(), user.getPicture(), user.getKarma(), user.getTimezone(), user.getTelegramTag(), user.getVkTag(), user.getCurrentStatus());
+            userId = template.queryForObject(slq, Integer.class, user.getLogin(), user.getName(), user.getPassword(), user.getPicture(), user.getKarma(), user.getTimezone(), user.getTelegramTag(), user.getVkTag(), user.getCurrentStatus());
         } catch (DuplicateKeyException dke) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists. Try /enter/login.");
         } catch (DataIntegrityViolationException igonre) {
@@ -50,7 +51,8 @@ public class DataBase {
         }
         String token = generateToken(user.getPassword());
         if (token != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).header("token", token).body("User created succesfully");
+            user.setId(userId);
+            return ResponseEntity.status(HttpStatus.CREATED).header("token", token).body(user);
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hashing trouble");
     }
@@ -113,7 +115,7 @@ public class DataBase {
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> getUserByLogin(String login) {
+    public Optional<User> getUserByLogin(String login) {
         String sql = "select id, login, name, picture, karma, timezone, telegram_tag, vk_tag, current_status from users where login = '" + login + "'";
         try {
             User result = template.queryForObject(sql, new RowMapper<User>() {
@@ -133,9 +135,9 @@ public class DataBase {
                     return user;
                 }
             });
-            return new ResponseEntity<Object>(result, HttpStatus.OK);
+            return Optional.of(result);
         } catch (EmptyResultDataAccessException erde) {
-            return new ResponseEntity<Object>("User with login " + login + " not found", HttpStatus.NOT_FOUND);
+            return Optional.empty();
         }
     }
     

@@ -1,5 +1,7 @@
 package com.manu.roleplaybackend.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class UserService {
     public ResponseEntity<Object> login(User user) {
         if (user.validLogin() && user.validPassword()) {
             if (dataBase.findUserByLoginAndPassword(user)) {
-                return ResponseEntity.status(HttpStatus.OK).header("token", dataBase.generateToken(user.getPassword())).body(HttpStatus.OK.getReasonPhrase());
+                return ResponseEntity.status(HttpStatus.OK).header("token", dataBase.generateToken(user.getPassword())).body(dataBase.getUserByLogin(user.getLogin()));
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login or password");
@@ -38,7 +40,11 @@ public class UserService {
     }
 
     public ResponseEntity<Object> getByLogin(String login) {
-        return dataBase.getUserByLogin(login);
+        Optional<User> opUser = dataBase.getUserByLogin(login);
+        if (opUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(opUser.get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with login " + login + " does not exist");
     }
 
 }
