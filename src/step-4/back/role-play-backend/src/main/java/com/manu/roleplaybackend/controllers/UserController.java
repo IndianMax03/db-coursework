@@ -37,4 +37,9 @@ public class UserController {
         return userService.getUserCharacters(login);
     }
 
+    @GetMapping("/games/{login}")
+    public ResponseEntity<Object> getUserGames(@PathVariable String login) {
+        return userService.getUserGames(login);
+    }
+
 }
