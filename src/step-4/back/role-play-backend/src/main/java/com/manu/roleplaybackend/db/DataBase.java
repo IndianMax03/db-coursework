@@ -255,4 +255,28 @@ public class DataBase {
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
+    public ResponseEntity<Object> getUserCharactersById(Integer id) {
+        String sql = "select * from characters where user_id = " + id;
+        List<Character> result = null;
+        try {
+            result = template.query(sql, new RowMapper<Character>() {
+                @Override
+                @Nullable
+                public Character mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    return new Character(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getBytes("picture"),
+                        rs.getInt("game_system_id"),
+                        rs.getInt("user_id"),
+                        rs.getString("current_status"),
+                        rs.getBytes("stats")
+                    );
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+        return new ResponseEntity<Object>(result, HttpStatus.OK);
+    }
+
 }

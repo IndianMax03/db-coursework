@@ -32,4 +32,9 @@ public class UserController {
         return userService.getUserRoles(login);
     }
 
+    @GetMapping("/characters/{login}")
+    public ResponseEntity<Object> getUserCharacters(@PathVariable String login) {
+        return userService.getUserCharacters(login);
+    }
+
 }
