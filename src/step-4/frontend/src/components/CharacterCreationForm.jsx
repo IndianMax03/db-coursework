@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createCharacter } from '../service/data.service';
+import { useDispatch } from 'react-redux';
 
 const CharacterCreationForm = () => {
   const [name, setName] = useState('');

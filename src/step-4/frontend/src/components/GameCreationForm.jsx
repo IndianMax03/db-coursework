@@ -1,16 +1,20 @@
 import { useState } from 'react';
+import { createGame } from '../service/data.service';
 
 const GameCreationForm = () => {
   const gameTypes = ['online', 'offline'];
   const status = 'not-started';
-  const options = ['DnD', 'Pathfinder'];
+  const options = ['1', '2'];
   const [name, setName] = useState('');
-  const [gameSystem, setGameSystem] = useState('');
+  const [gameSystem, setGameSystem] = useState('1');
   const [gameType, setGameType] = useState('');
   const [image, setImage] = useState(undefined);
   const date = Date.now();
   const [description, setDescription] = useState('');
 
+  const handleGameCreation = () => {
+    createGame(name, gameSystem, 1, null, null, null, description);
+  };
   return (
     <div className="w-128 flex justify-center">
       <div className=" space-y-3 ">
@@ -44,7 +48,10 @@ const GameCreationForm = () => {
           <input type="file" accept="image/png, image/jpeg"></input>
         </div>
         <div className="flex justify-center">
-          <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
+          <button
+            onClick={handleGameCreation}
+            className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "
+          >
             Создать игру
           </button>
         </div>
