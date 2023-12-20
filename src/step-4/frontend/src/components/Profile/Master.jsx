@@ -14,7 +14,6 @@ const Master = () => {
   useEffect(() => {
     const login = 'deaad';
     dispatch(fetchGames(login));
-    console.log(games);
   }, [dispatch]);
 
   if (loading) {

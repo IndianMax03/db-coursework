@@ -66,21 +66,44 @@ export const getUserGames = async (login) => {
 };
 
 export const createCharacter = async (name, gameSystemId, userId, picture, stats) => {
+  // const formData = new FormData();
+
+  // const blob = new Blob([picture], { type: 'image/jpeg' });
+  // formData.append('picture', blob, 'character_image.jpg');
+
+  // formData.append('name', name);
+  // formData.append('gameSystemId', gameSystemId);
+  // formData.append('userId', userId);
+  // formData.append('stats', stats);
+
+
+  // return await axios.post(
+  //   API_BASE_URL + `characters/create`, formData, 
+  //   {
+  //     headers: {
+  //       'Content-Type' : 'multipart/form-data',
+  //       token: '123'
+  //     }
+  //   }
+  // );
+  console.log(picture[0]);
+  console.log(picture);
+
   return await axios.post(
-    API_BASE_URL + `characters/create`,
-    {
-      name,
-      gameSystemId,
-      userId,
-      picture,
-      stats
-    },
-    {
-      headers: {
-        token: '123'
+      API_BASE_URL + `characters/create`, 
+      {
+        name,
+        gameSystemId,
+        userId,
+        picture,
+        stats
+      }, 
+      {
+        headers: {
+          token: '123'
+        }
       }
-    }
-  );
+    );
 };
 
 export const createGame = async (

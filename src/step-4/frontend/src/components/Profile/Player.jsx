@@ -18,7 +18,6 @@ const Player = () => {
   useEffect(() => {
     const login = 'indian_max03';
     dispatch(fetchCharacters(login));
-    console.log(characters);
   }, [dispatch]);
 
   if (loading) {
