@@ -1,11 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { GrCatalog } from 'react-icons/gr';
 import { FaUserFriends } from 'react-icons/fa';
 import { CiLogout } from 'react-icons/ci';
 import { FaBell } from 'react-icons/fa';
+import { logout } from '../auth/auth.service';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <div className="grid h-32 sticky top-10">
       <Link to={'/profile'} className="flex space-x-4">
@@ -24,10 +32,10 @@ const Navbar = () => {
         <FaUserFriends className="h-6" />
         <div>Друзья</div>
       </Link>
-      <Link to={'/login'} className="flex space-x-4">
+      <button onClick={handleLogout} className="flex space-x-4">
         <CiLogout className="h-6" />
         <div>Выйти</div>
-      </Link>
+      </button>
     </div>
   );
 };

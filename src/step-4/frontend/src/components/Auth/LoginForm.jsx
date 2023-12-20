@@ -1,8 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { login as enter } from '../../auth/auth.service';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSelf, selectSelf } from '../../redux/slices/UserSlice';
+import {
+  fetchSelf,
+  selectError,
+  selectSelf,
+  selectSelfError,
+  selectSelfLoading
+} from '../../redux/slices/UserSlice';
 
 const LoginForm = () => {
   const [login, setLogin] = useState('');
@@ -10,14 +15,16 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const self = useSelector(selectSelf);
+  const loading = useSelector(selectError);
+  const hasError = useSelector(selectError);
+  const selfLoading = useSelector(selectSelfLoading);
+  const selfError = useSelector(selectSelfError);
 
   const handleLogin = () => {
-    console.log('login')
-    dispatch(fetchSelf(login, password));
-    console.log(self);
+    const isLoggingIn = true;
+    dispatch(fetchSelf({ login, password, isLoggingIn }));
     navigate(`profile/${login}`);
   };
-
 
   return (
     <div className="w-128 flex justify-center">

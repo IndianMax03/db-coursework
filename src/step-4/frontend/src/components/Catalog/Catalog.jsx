@@ -67,22 +67,22 @@ const Catalog = () => {
           Долгая
         </label>
       </div>
-      {search === 'games' ? games.map((game, index) => (
-            <Game
-              key={index}
-              name={game.name}
-              gameSystem={game.gameSystemId}
-              creationDate={game.creationDate}
-              status={game.currentStatus}
-              finishDate={game.finishDate}
-              description={game.description}
-              tags={[]}
-            />
-          ))
-        : 
-        <List array={users} position='horizontal'/>
-      }
-      
+      {search === 'games' ? (
+        games.map((game, index) => (
+          <Game
+            key={index}
+            name={game.name}
+            gameSystem={game.gameSystemId}
+            creationDate={game.creationDate}
+            status={game.currentStatus}
+            finishDate={game.finishDate}
+            description={game.description}
+            tags={[]}
+          />
+        ))
+      ) : (
+        <List array={users} position="horizontal" />
+      )}
     </div>
   );
 };

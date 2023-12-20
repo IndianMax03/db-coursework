@@ -6,8 +6,6 @@ const dataUrlToByteArray = (dataUrl) => {
   for (let i = 0; i < binaryData.length; i++) {
     byteArray[i] = binaryData.charCodeAt(i);
   }
-  console.log(byteArray[0]);
-  console.log(byteArray);
   return byteArray;
 };
 

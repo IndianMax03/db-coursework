@@ -21,14 +21,14 @@ const Profile = () => {
   useEffect(() => {
     const login = 'indian_max03';
     dispatch(fetchUser(login));
-  }, [dispatch]); 
+  }, [dispatch]);
 
-  if (loading){
-    return <div>Загрузка... </div>
+  if (loading) {
+    return <div>Загрузка... </div>;
   }
 
-  if(hasError){
-    return <div>Ошибка!</div>
+  if (hasError) {
+    return <div>Ошибка!</div>;
   }
 
   return (
@@ -40,7 +40,7 @@ const Profile = () => {
             <div className="flex text-2xl mb-3 space-x-3 justify-left">
               <div>{user.name}</div> <div className=" text-red-600 font-medium">{user.karma}</div>
             </div>
-            <div className=' text-red-600 font-medium'>{user.login}</div>
+            <div className=" text-red-600 font-medium">{user.login}</div>
             <div>Часовой пояс: {user.timezone}</div>
             <div>Вконтакте: {user.vkTag} </div>
             <div>Телеграм: @{user.telegramTag}</div>

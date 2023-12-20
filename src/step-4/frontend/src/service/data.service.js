@@ -3,33 +3,29 @@ import axios from 'axios';
 const API_BASE_URL = 'http://localhost:8081/';
 
 export async function getUsers() {
-  try{
+  try {
     const response = await axios.get(API_BASE_URL + 'users/all', {
       headers: {
         token: '123'
       }
     });
     return response.data;
-  }
-  catch(error){
+  } catch (error) {
     throw error;
   }
- 
 }
 
 export const getUser = async (login) => {
-  try{
-    const response =  await axios.get(API_BASE_URL + `users/${login}`, {
+  try {
+    const response = await axios.get(API_BASE_URL + `users/${login}`, {
       headers: {
         token: '123'
       }
     });
     return response.data;
-  }
-  catch(error){
+  } catch (error) {
     throw error;
   }
-  
 };
 
 export const getUserRoles = async (login) => {
@@ -42,11 +38,7 @@ export const getUserRoles = async (login) => {
 
 export const getUserCharacters = async (login) => {
   try {
-    const response = await axios.get(API_BASE_URL + `users/characters/${login}`, {
-      headers: {
-        token: '123'
-      }
-    });
+    const response = await axios.get(API_BASE_URL + `users/characters/${login}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -99,8 +91,6 @@ export const createCharacter = async (name, gameSystemId, userId, picture, stats
   //     }
   //   }
   // );
-  console.log(picture[0]);
-  console.log(picture);
 
   return await axios.post(
     API_BASE_URL + `characters/create`,

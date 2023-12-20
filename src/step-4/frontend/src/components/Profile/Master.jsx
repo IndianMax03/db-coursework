@@ -2,7 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Game from '../Game';
 import Review from './Review';
 import { Link } from 'react-router-dom';
-import { selectError, selectLoading, selectGames, fetchUserGames } from '../../redux/slices/GameSlice';
+import {
+  selectError,
+  selectLoading,
+  selectGames,
+  fetchUserGames
+} from '../../redux/slices/GameSlice';
 import { useEffect } from 'react';
 
 const Master = () => {

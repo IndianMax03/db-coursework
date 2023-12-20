@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { register } from '../../auth/auth.service';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { fetchSelf } from '../../redux/slices/UserSlice';
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const [login, setLogin] = useState('');
@@ -10,11 +10,12 @@ const RegisterForm = () => {
   const [timezone, setTimezone] = useState(null);
   const [telegramTag, setTelegramTag] = useState(null);
   const [vkTag, setVkTag] = useState(null);
+  const navigate = useNavigate();
 
   const handleRegister = () => {
-    register(login, name, password, timezone, telegramTag, vkTag);
-    console.log('register success!');
-    console.log(login, name, password, timezone, telegramTag, vkTag);
+    const isLoggingIn = false;
+    dispatch(fetchSelf({ login, isLoggingIn, name, password, timezone, telegramTag, vkTag }));
+    navigate(`profile/${login}`);
   };
 
   return (
