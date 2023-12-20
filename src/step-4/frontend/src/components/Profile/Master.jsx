@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Game from '../Game';
 import Review from './Review';
 import { Link } from 'react-router-dom';
-import { selectError, selectLoading, selectGames, fetchGames } from '../../redux/slices/GameSlice';
+import { selectError, selectLoading, selectGames, fetchUserGames } from '../../redux/slices/GameSlice';
 import { useEffect } from 'react';
 
 const Master = () => {
@@ -13,7 +13,7 @@ const Master = () => {
 
   useEffect(() => {
     const login = 'deaad';
-    dispatch(fetchGames(login));
+    dispatch(fetchUserGames(login));
   }, [dispatch]);
 
   if (loading) {

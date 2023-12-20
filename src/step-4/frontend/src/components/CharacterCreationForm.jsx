@@ -14,11 +14,10 @@ const CharacterCreationForm = () => {
   const navigate = useNavigate();
 
   const handleCharacterCreation = () => {
-    if (true){
+    if (true) {
       createCharacter(name, 1, 1, imageByteArray, null);
-      navigate('profile')
+      navigate('profile');
     }
-    
   };
 
   const handleImageInput = (event) => {
@@ -33,7 +32,7 @@ const CharacterCreationForm = () => {
       };
       reader.readAsDataURL(file);
     }
-  } 
+  };
 
   return (
     <div className="w-128 flex justify-center">

@@ -1,7 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Game from '../Game';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGames, selectGames } from '../../redux/slices/GamesSlice';
+import { fetchUsers, selectUsers } from '../../redux/slices/UsersSlice';
+import List from '../List';
 const Catalog = () => {
   const [search, setSearch] = useState('games');
+  const dispatch = useDispatch();
+  const games = useSelector(selectGames);
+  const users = useSelector(selectUsers);
 
   const handleCatalogChange = (type) => {
     if (search === type) {
@@ -9,6 +16,11 @@ const Catalog = () => {
     }
     setSearch(type);
   };
+
+  useEffect(() => {
+    dispatch(fetchGames());
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   return (
     <div className>
@@ -55,27 +67,22 @@ const Catalog = () => {
           Долгая
         </label>
       </div>
-
-      <Game
-        name="name"
-        gameSystem="DnD"
-        creationDate="01.12.2023"
-        status="закончена"
-        gameType="онлайн"
-        finishDate="13.12.2023"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
-        tags={['DnD', 'долгая']}
-      />
-      <Game
-        name="name"
-        gameSystem="DnD"
-        creationDate="01.12.2023"
-        status="закончена"
-        gameType="онлайн"
-        finishDate="13.12.2023"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
-        tags={['DnD', 'долгая']}
-      />
+      {search === 'games' ? games.map((game, index) => (
+            <Game
+              key={index}
+              name={game.name}
+              gameSystem={game.gameSystemId}
+              creationDate={game.creationDate}
+              status={game.currentStatus}
+              finishDate={game.finishDate}
+              description={game.description}
+              tags={[]}
+            />
+          ))
+        : 
+        <List array={users} position='horizontal'/>
+      }
+      
     </div>
   );
 };

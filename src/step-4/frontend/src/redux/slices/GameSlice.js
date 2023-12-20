@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getUserGames } from '../../service/data.service';
 
-export const fetchGames = createAsyncThunk('game/fetchGames', async (login) => {
+export const fetchUserGames = createAsyncThunk('game/fetchUserGames', async (login) => {
   const res = await getUserGames(login);
   return res;
 });
@@ -16,16 +16,16 @@ export const gameSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchGames.pending, (state, action) => {
+      .addCase(fetchUserGames.pending, (state, action) => {
         state.isLoading = true;
         state.hasError = false;
       })
-      .addCase(fetchGames.fulfilled, (state, action) => {
+      .addCase(fetchUserGames.fulfilled, (state, action) => {
         state.games = action.payload;
         state.isLoading = false;
         state.hasError = false;
       })
-      .addCase(fetchGames.rejected, (state, action) => {
+      .addCase(fetchUserGames.rejected, (state, action) => {
         state.hasError = true;
         state.isLoading = false;
       });

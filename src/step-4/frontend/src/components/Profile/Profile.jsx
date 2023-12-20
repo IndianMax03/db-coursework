@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Player from './Player';
 import Master from './Master';
 import List from '../List';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser, selectLoading, selectUser, selectError } from '../../redux/slices/UserSlice';
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const [role, setRole] = useState('player');
+  const loading = useSelector(selectLoading);
+  const hasError = useSelector(selectError);
 
   const handleRoleChange = (newRole) => {
     if (newRole !== role) {
@@ -12,18 +18,32 @@ const Profile = () => {
     }
   };
 
+  useEffect(() => {
+    const login = 'indian_max03';
+    dispatch(fetchUser(login));
+  }, [dispatch]); 
+
+  if (loading){
+    return <div>Загрузка... </div>
+  }
+
+  if(hasError){
+    return <div>Ошибка!</div>
+  }
+
   return (
     <div className="flex items-center justify-center">
       <div>
         <div className="flex space-x-20 mb-10">
           <img src="pfp.jpg" alt="profile" className=" h-44 rounded-full"></img>
           <div className="w-44">
-            <div className="flex text-2xl mb-5 space-x-5 justify-between">
-              <div>Котярыч</div> <div className=" text-red-600 font-medium">+1234</div>
+            <div className="flex text-2xl mb-3 space-x-3 justify-left">
+              <div>{user.name}</div> <div className=" text-red-600 font-medium">{user.karma}</div>
             </div>
-            <div>Часовой пояс: Москва</div>
-            <div>Вконтакте: kitten </div>
-            <div>Телеграм: @kitten</div>
+            <div className=' text-red-600 font-medium'>{user.login}</div>
+            <div>Часовой пояс: {user.timezone}</div>
+            <div>Вконтакте: {user.vkTag} </div>
+            <div>Телеграм: @{user.telegramTag}</div>
           </div>
         </div>
         <div className="mb-5">Друзья</div>

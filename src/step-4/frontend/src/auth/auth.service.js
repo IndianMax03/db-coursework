@@ -14,8 +14,15 @@ export const register = async (login, name, password, timezone, telegramTag, vkT
 };
 
 export const login = async (login, password) => {
-  await axios.post(API_BASE_URL + 'enter/login', {
-    login,
-    password
-  });
+  try{
+   const response = await axios.post(API_BASE_URL + 'enter/login', {
+      login,
+      password
+    });
+    return response.data;
+  }
+  catch(error){
+    throw error;
+  }
+ 
 };

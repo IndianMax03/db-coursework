@@ -1,16 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { login as enter } from '../../auth/auth.service';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSelf, selectSelf } from '../../redux/slices/UserSlice';
 
 const LoginForm = () => {
   const [login, setLogin] = useState('');
+  const dispatch = useDispatch();
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const self = useSelector(selectSelf);
 
   const handleLogin = () => {
-    enter(login, password);
-    console.log('login success!');
-    console.log(login, password);
+    console.log('login')
+    dispatch(fetchSelf(login, password));
+    console.log(self);
+    navigate(`profile/${login}`);
   };
+
 
   return (
     <div className="w-128 flex justify-center">
