@@ -365,7 +365,7 @@ public class DataBase {
             lobbyRequest.setId(lobbyRequestId);
             return ResponseEntity.status(HttpStatus.CREATED).body(lobbyRequest);
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hashing trouble");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cannot create lobby request! Contact MT urgently!");
     }
 
 }

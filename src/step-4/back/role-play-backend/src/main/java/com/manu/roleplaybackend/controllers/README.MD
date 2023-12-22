@@ -4,6 +4,8 @@
 
 # Ручки
 
+## Вход в приложение
+
 - `/enter/register` : **регистрация**
     - POST: login, name, password, [timezone, telegramTag, vkTag]
     - returns: token в хедере, в боди весь юзер (с айдишником)
@@ -11,7 +13,7 @@
     - POST: login, password
     - returns: token в хедере, в боди весь юзер
 
----
+## Информация о юзере
 
 - `/users/all` : **получить всех юзеров**
     - GET
@@ -29,13 +31,16 @@
     - GET: {login} в переменной пути
     - returns: список игр
 
----
+## Информация о персонажах
 
 - `characters/create` : **создать персонажа**
     - POST: name, gameSystemId, userId, [picture, stats]
     - returns: информация о созданном персонаже (с айдишником)
+- `characters/request` : **создать запрос в лобби**
+    - POST: lobbyId, characterId
+    - returns: сущность lobby request
 
----
+## Информация об играх
 
 - `games/create` : **создать игру**
     - POST: name, gameSystemId, masterId, [picture, currentStatus, finishDate, description]
