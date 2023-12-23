@@ -350,6 +350,34 @@ public class DataBase {
             return Optional.empty();
         }
     }
+
+    public Optional<Character> getCharacterById(Integer id) {
+        String sql = "select * from characters where id=" + id;
+        try {
+            Character result = template.queryForObject(sql, new RowMapper<Character>() {
+                @Override
+                @org.springframework.lang.Nullable
+                public Character mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        Character character = new Character();
+                        character.setId(rs.getInt("id"));
+                        character.setName(rs.getString("name"));
+                        character.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        character.setGameSystemId(rs.getInt("game_system_id"));
+                        character.setUserId(rs.getInt("user_id"));
+                        character.setCurrentStatus(rs.getString("current_status"));
+                        character.setStats(mapper.readValue(rs.getBytes("stats"), byte[][].class));
+                        return character;
+                    } catch (IOException ioe) {
+                        return null;
+                    }
+                }
+            });
+            return Optional.of(result);
+        } catch (EmptyResultDataAccessException erde) {
+            return Optional.empty();
+        }
+    }
     
     public boolean findGameSystemById(Integer gameSystemId) {
         String sql = "select count(*) from game_systems where (id = '" + gameSystemId + "')";
@@ -622,9 +650,24 @@ public class DataBase {
         if (!findCharacterById(lobbyRequest.getCharacterId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no character with id = " + lobbyRequest.getCharacterId());
         }
-        if (!findLobbyById(lobbyRequest.getLobbyId())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no lobby with id = " + lobbyRequest.getLobbyId());
+        if (!findGameById(lobbyRequest.getGameId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no game with id = " + lobbyRequest.getGameId());
         }
+
+        Character character = getCharacterById(lobbyRequest.getCharacterId()).get();
+
+        if (!character.getCurrentStatus().equals("free")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot register busy character!");
+        }
+
+        Game game = getGameById(lobbyRequest.getGameId()).get();
+
+        if (character.getGameSystemId() != game.getGameSystemId()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Game systems don't match!");
+        }
+
+        Lobby lobby = getLobbyByGameId(lobbyRequest.getGameId()).get();
+        lobbyRequest.setLobbyId(lobby.getId());
         Integer lobbyRequestId = null;
         try {
             String slq = "select create_lobby_request(?, ?, ?::request_status)";

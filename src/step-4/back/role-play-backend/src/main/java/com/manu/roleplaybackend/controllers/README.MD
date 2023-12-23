@@ -56,7 +56,7 @@
     - POST: name, gameSystemId, userId, [picture, stats]
     - returns: информация о созданном персонаже (с айдишником)
 - `characters/request` : **создать запрос в лобби**
-    - POST: lobbyId, characterId
+    - POST: gameId, characterId
     - returns: сущность lobby request
 
 ## Информация об играх

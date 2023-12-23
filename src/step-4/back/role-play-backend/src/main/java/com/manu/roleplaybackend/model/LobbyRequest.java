@@ -13,11 +13,12 @@ public class LobbyRequest {
     
     private Integer id;
     private Integer lobbyId;
+    private Integer gameId;
     private Integer characterId;
     private String currentStatus = "on-review";
 
-    public boolean validLobbyId() {
-        return this.lobbyId != null && this.lobbyId > 0;
+    public boolean validGameId() {
+        return this.gameId != null && this.gameId > 0;
     }
 
     public boolean validCharacterId() {
@@ -25,7 +26,7 @@ public class LobbyRequest {
     }
 
     public boolean isValid() {
-        return validCharacterId() && validLobbyId();
+        return validCharacterId() && validGameId();
     }
 
 }
