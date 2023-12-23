@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.manu.roleplaybackend.model.Friendship;
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 import com.manu.roleplaybackend.services.UserService;
 
@@ -50,6 +52,11 @@ public class UserController {
     @PatchMapping("/update/karma")
     public ResponseEntity<Object> updateKarma(@RequestBody UpdateKarmaRequest updKarmaRequest) {
         return userService.updateKarma(updKarmaRequest);
+    }
+
+    @PostMapping("/friendship")
+    public ResponseEntity<Object> friendRequest(@RequestBody Friendship friendship) {
+        return userService.friendRequest(friendship);
     }
 
 }

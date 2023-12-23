@@ -11,6 +11,19 @@ begin
 end;
 $$ language plpgsql;
 
+create or replace function create_friendship(sender_user_id integer, receiver_user_id integer, curr_status request_status)
+returns request_status
+as $$
+declare
+    inserted_status request_status;
+begin
+    insert into friendships
+    values (sender_user_id, receiver_user_id, curr_status)
+    returning current_status into inserted_status;
+    return inserted_status;
+end;
+$$ language plpgsql;
+
 create or replace function create_character(name text, picture bytea, game_system_id integer, user_id integer, current_status character_status, stats bytea)
 returns integer
 as $$

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.db.DataBase;
+import com.manu.roleplaybackend.model.Friendship;
 import com.manu.roleplaybackend.model.User;
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 
@@ -77,6 +78,13 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
         }
         return dataBase.updateUserKarma(updKarmaRequest);
+    }
+
+    public ResponseEntity<Object> friendRequest(Friendship friendship) {
+        if (!friendship.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
+        }
+        return dataBase.friendRequest(friendship);
     }
 
 }

@@ -33,6 +33,9 @@
 - `/users/update/karma` : **изменить карму для игрока (+- 1)**
     - PATCH: senderUserId, receiverUserId, {increase = true | decrease = true}
     - returns: новое значение karma для receiverUserId
+- `/users/friendship`
+    - POST: senderId, receiverId, [currentStatus]
+    - returns: currentStatus (по умолчанию on-review)
 
 ## Информация о персонажах
 

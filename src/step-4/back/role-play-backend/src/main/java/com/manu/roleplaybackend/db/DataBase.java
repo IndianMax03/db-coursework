@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manu.roleplaybackend.model.Character;
+import com.manu.roleplaybackend.model.Friendship;
 import com.manu.roleplaybackend.model.Game;
 import com.manu.roleplaybackend.model.LobbyRequest;
 import com.manu.roleplaybackend.model.Role;
@@ -95,6 +96,31 @@ public class DataBase {
             return ResponseEntity.status(HttpStatus.OK).body(responseNode);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot change user karma!");
+    }
+
+    public ResponseEntity<Object> friendRequest(Friendship friendship) {
+        if (!findUserById(friendship.getSenderId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (sender) with id = " + friendship.getSenderId());
+        }
+        if (!findUserById(friendship.getReceiverId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (receiver) with id = " + friendship.getReceiverId());
+        }
+        String currentStatus = null;
+        try {
+        String slq = "select create_friendship(?, ?, ?::request_status)";
+        currentStatus = template.queryForObject(slq, String.class, friendship.getSenderId(), friendship.getReceiverId(), friendship.getCurrentStatus());
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+        if (currentStatus != null) {
+            Map<String, String> responseNode = new HashMap<>();
+            responseNode.put("currentStatus", currentStatus);
+            return ResponseEntity.status(HttpStatus.OK).body(responseNode);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Your friend request cannot be processed!");
     }
 
     public boolean findUserByLoginAndPassword(User user) {
