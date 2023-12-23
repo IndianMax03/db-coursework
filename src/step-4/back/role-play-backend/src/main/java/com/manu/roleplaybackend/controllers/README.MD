@@ -46,6 +46,9 @@
 - `/users/review/leave` : **оставить отзыв о юзере**
     - POST: reviewerId, recipientId, rating, [content]
     - returns: сущность review с заполненной датой и отправленными полями
+- `users/review/all/{login}` : **получить все отзывы о юзере**
+    - GET: {login} в переменной пути
+    - returns: отзывы в формате: человек + оставленный отзыв
 
 ## Информация о персонажах
 

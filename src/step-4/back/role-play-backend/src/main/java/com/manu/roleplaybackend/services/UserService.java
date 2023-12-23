@@ -106,4 +106,8 @@ public class UserService {
         return dataBase.leaveReview(review);
     }
 
+    public ResponseEntity<Object> getReviews(String login) {
+        return dataBase.getReviews(login);
+    }
+
 }

@@ -75,4 +75,9 @@ public class UserController {
         return userService.leaveReview(review);
     }
 
+    @GetMapping("/review/all/{login}")
+    public ResponseEntity<Object> getUserReviews(@PathVariable String login) {
+        return userService.getReviews(login);
+    }
+
 }

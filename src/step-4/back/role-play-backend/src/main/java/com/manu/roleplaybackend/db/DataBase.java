@@ -31,6 +31,7 @@ import com.manu.roleplaybackend.model.Review;
 import com.manu.roleplaybackend.model.Role;
 import com.manu.roleplaybackend.model.User;
 import com.manu.roleplaybackend.model.request.Friend;
+import com.manu.roleplaybackend.model.request.Reviewer;
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 
 import io.micrometer.common.lang.Nullable;
@@ -610,6 +611,45 @@ public class DataBase {
             return ResponseEntity.status(HttpStatus.CREATED).body(review);
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cursed sql statement! Contact MT urgently!");
+    }
+
+    public ResponseEntity<Object> getReviews(String login) {
+        Optional<User> opUser = getUserByLogin(login);
+        if (!opUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user with login = " + login);
+        }
+        User user = opUser.get();
+        String sql = "select id, login, name, picture, karma, timezone, telegram_tag, vk_tag, current_status, content, date, rating from reviews join users on users.id=reviews.reviewer_user_id where recipient_user_id=" + user.getId();
+        List<Reviewer> reviewers = null;
+        try {
+            reviewers = template.query(sql, new RowMapper<Reviewer>() {
+                @Override
+                @Nullable
+                public Reviewer mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        Reviewer reviewer = new Reviewer();
+                        reviewer.setId(rs.getInt("id"));
+                        reviewer.setLogin(rs.getString("login"));
+                        reviewer.setName(rs.getString("name"));
+                        reviewer.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        reviewer.setKarma(rs.getInt("karma"));
+                        reviewer.setTimezone(rs.getString("timezone"));
+                        reviewer.setTelegramTag(rs.getString("telegram_tag"));
+                        reviewer.setVkTag(rs.getString("vk_tag"));
+                        reviewer.setCurrentStatus(rs.getString("current_status"));
+                        reviewer.setContent(rs.getString("content"));
+                        reviewer.setDate(rs.getTimestamp("date"));
+                        reviewer.setRating(rs.getInt("rating"));
+                        return reviewer;
+                    } catch (IOException ioe) {
+                        return null;
+                    }
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+        
+        return ResponseEntity.status(HttpStatus.OK).body(reviewers);
     }
 
 }
