@@ -33,7 +33,7 @@
 - `/users/update/karma` : **изменить карму для игрока (+- 1)**
     - PATCH: senderUserId, receiverUserId, {increase = true | decrease = true}
     - returns: новое значение karma для receiverUserId
-- `/users/friendship`
+- `/users/friendship` : **отправить запрос в друзья**
     - POST: senderId, receiverId, [currentStatus]
     - returns: currentStatus (по умолчанию on-review)
 - `/users/update/friendship` : **изменить статус заявки в  друзья**
