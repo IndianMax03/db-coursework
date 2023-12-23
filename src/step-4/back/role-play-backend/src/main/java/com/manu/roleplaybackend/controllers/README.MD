@@ -48,3 +48,6 @@
 - `/games/all` : **получить все игры**
     - GET
     - returns: массив всех игр
+- `/games/update/status` : **изменить статус игры**
+    - PATCH: id, currentStatus
+    - returns: см. статус ответа

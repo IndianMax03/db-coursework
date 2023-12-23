@@ -78,6 +78,12 @@ public class DataBase {
         return result != null && result != 0;
     }
 
+    public boolean findGameById(Integer gameId) {
+        String sql = "select count(*) from games where (id = '" + gameId + "')";
+        Integer result = template.queryForObject(sql, Integer.class);
+        return result != null && result != 0;
+    }
+
     public String generateToken(String password) {
 
         StringBuilder sb = new StringBuilder();
@@ -271,6 +277,27 @@ public class DataBase {
             }
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+    }
+
+    public ResponseEntity<Object> updateGameStatus(Game game) {
+        if (!findGameById(game.getId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no game with id = " + game.getId());
+        }
+
+        String sql = "update games set current_status = ?::game_status where id = ? returning id";
+        Integer result = null;
+        try {
+            result = template.queryForObject(sql, Integer.class, game.getCurrentStatus(), game.getId());
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+        if (result != null) {
+            return ResponseEntity.status(HttpStatus.OK).body("Game status changed successfully");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot change game status!");
     }
 
     public ResponseEntity<Object> getUserRolesById(Integer id) {

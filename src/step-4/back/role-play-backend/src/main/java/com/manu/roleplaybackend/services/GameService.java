@@ -31,4 +31,8 @@ public class GameService {
         return dataBase.getAllGames();
     }
 
+    public ResponseEntity<Object> updateStatus(Game game) {
+        return dataBase.updateGameStatus(game);
+    }
+
 }
