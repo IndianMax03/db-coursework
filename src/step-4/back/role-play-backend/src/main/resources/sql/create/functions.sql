@@ -150,3 +150,20 @@ create trigger update_games_trigger
 after update of current_status on games
 for each row
 execute function update_characters_status_after_changing_game_status();
+
+create or replace function update_game_finish_date()
+returns trigger
+as $$
+begin
+    if new.current_status = cast ('finished' as game_status) then
+        new.finish_date = current_timestamp;
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger update_game_finish_date_trigger
+before update on games
+for each row
+execute procedure update_game_finish_date();
+
