@@ -94,4 +94,8 @@ public class UserService {
         return dataBase.friendRequest(friendship);
     }
 
+    public ResponseEntity<Object> getFriends(String login) {
+        return dataBase.getFriends(login);
+    }
+
 }

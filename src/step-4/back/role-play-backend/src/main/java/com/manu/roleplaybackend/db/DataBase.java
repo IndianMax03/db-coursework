@@ -28,6 +28,7 @@ import com.manu.roleplaybackend.model.Game;
 import com.manu.roleplaybackend.model.LobbyRequest;
 import com.manu.roleplaybackend.model.Role;
 import com.manu.roleplaybackend.model.User;
+import com.manu.roleplaybackend.model.request.Friend;
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 
 import io.micrometer.common.lang.Nullable;
@@ -146,6 +147,74 @@ public class DataBase {
             return ResponseEntity.status(HttpStatus.OK).body(responseNode);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Your friend request cannot be processed!");
+    }
+
+    public ResponseEntity<Object> getFriends(String login) {
+        Optional<User> opUser = getUserByLogin(login);
+        if (!opUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user with login = " + login);
+        }
+        User user = opUser.get();
+        String outcomeSql = "select users.id id, users.login login, users.name name, users.picture picture, users.karma karma, users.timezone timezone, users.telegram_tag telegram_tag, users.vk_tag vk_tag, users.current_status current_status, friendships.current_status friendships_status from friendships join users on users.id=friendships.receiver_user_id where sender_user_id=" + user.getId();
+        List<Friend> outcome = null;
+        try {
+            outcome = template.query(outcomeSql, new RowMapper<Friend>() {
+                @Override
+                @Nullable
+                public Friend mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        Friend friend = new Friend();
+                        friend.setId(rs.getInt("id"));
+                        friend.setLogin(rs.getString("login"));
+                        friend.setName(rs.getString("name"));
+                        friend.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        friend.setKarma(rs.getInt("karma"));
+                        friend.setTimezone(rs.getString("timezone"));
+                        friend.setTelegramTag(rs.getString("telegram_tag"));
+                        friend.setVkTag(rs.getString("vk_tag"));
+                        friend.setCurrentStatus(rs.getString("current_status"));
+                        friend.setFriendshipStatus(rs.getString("friendships_status"));
+                        return friend;
+                    } catch (IOException ioe) {
+                        return null;
+                    }
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+        
+        String incomeSql = "select users.id id, users.login login, users.name name, users.picture picture, users.karma karma, users.timezone timezone, users.telegram_tag telegram_tag, users.vk_tag vk_tag, users.current_status current_status, friendships.current_status friendships_status from friendships join users on users.id=friendships.sender_user_id where receiver_user_id=" + user.getId();
+        List<Friend> income = null;
+        try {
+            income = template.query(incomeSql, new RowMapper<Friend>() {
+                @Override
+                @Nullable
+                public Friend mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        Friend friend = new Friend();
+                        friend.setId(rs.getInt("id"));
+                        friend.setLogin(rs.getString("login"));
+                        friend.setName(rs.getString("name"));
+                        friend.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        friend.setKarma(rs.getInt("karma"));
+                        friend.setTimezone(rs.getString("timezone"));
+                        friend.setTelegramTag(rs.getString("telegram_tag"));
+                        friend.setVkTag(rs.getString("vk_tag"));
+                        friend.setCurrentStatus(rs.getString("current_status"));
+                        friend.setFriendshipStatus(rs.getString("friendships_status"));
+                        return friend;
+                    } catch (IOException ioe) {
+                        return null;
+                    }
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+
+        Map<String, List<Friend>> responseNode = new HashMap<>();
+        responseNode.put("outcome", outcome);
+        responseNode.put("income", income);
+        return ResponseEntity.status(HttpStatus.OK).body(responseNode);
     }
 
     public boolean findUserByLoginAndPassword(User user) {

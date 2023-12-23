@@ -64,4 +64,9 @@ public class UserController {
         return userService.friendRequest(friendship);
     }
 
+    @GetMapping("/friends/{login}")
+    public ResponseEntity<Object> getFriendsByLogin(@PathVariable String login) {
+        return userService.getFriends(login);
+    }
+
 }

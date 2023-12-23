@@ -40,6 +40,9 @@
     - PATCH: senderId, receiverId, currentStatus
         - note: для sender и receiver порядок имеет значение
     - returns: currentStatus (тот, что был отправлен)
+- `/users/friends/{login}` : **получить друзей**
+    - GET: {login} в переменной пути
+    - returns: income, outcome (массивы людей со статусами заявок к ним. входящие/исходящие относительно запрашиваемого юзера)
 
 ## Информация о персонажах
 
