@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.db.DataBase;
 import com.manu.roleplaybackend.model.User;
+import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 
 import lombok.NoArgsConstructor;
 
@@ -69,6 +70,13 @@ public class UserService {
             return dataBase.getUserGamesById(opUser.get().getId());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with login " + login + " does not exist");
+    }
+
+    public ResponseEntity<Object> updateKarma(UpdateKarmaRequest updKarmaRequest) {
+        if (!updKarmaRequest.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
+        }
+        return dataBase.updateUserKarma(updKarmaRequest);
     }
 
 }

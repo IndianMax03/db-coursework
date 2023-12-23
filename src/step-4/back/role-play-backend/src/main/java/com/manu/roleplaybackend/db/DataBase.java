@@ -5,7 +5,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import com.manu.roleplaybackend.model.Game;
 import com.manu.roleplaybackend.model.LobbyRequest;
 import com.manu.roleplaybackend.model.Role;
 import com.manu.roleplaybackend.model.User;
+import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 
 import io.micrometer.common.lang.Nullable;
 
@@ -64,6 +67,34 @@ public class DataBase {
             return ResponseEntity.status(HttpStatus.CREATED).header("token", token).body(user);
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hashing trouble");
+    }
+
+    public ResponseEntity<Object> updateUserKarma(UpdateKarmaRequest updKarmaRequest) {
+
+        if (!findUserById(updKarmaRequest.getSenderUserId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (sender) with id = " + updKarmaRequest.getSenderUserId());
+        }
+        if (!findUserById(updKarmaRequest.getReceiverUserId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (receiver) with id = " + updKarmaRequest.getReceiverUserId());
+        }
+
+        Integer karma = null;
+        String operator = updKarmaRequest.isIncrease() ? "+" : "-";
+        String sql = "update users set karma = karma " + operator + " 1 where id = ? returning karma";
+        try {
+            karma = template.queryForObject(sql, Integer.class, updKarmaRequest.getReceiverUserId());
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+        if (karma != null) {
+            Map<String, Integer> responseNode = new HashMap<>();
+            responseNode.put("karma", karma);
+            return ResponseEntity.status(HttpStatus.OK).body(responseNode);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot change user karma!");
     }
 
     public boolean findUserByLoginAndPassword(User user) {

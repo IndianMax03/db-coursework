@@ -30,6 +30,9 @@
 - `/users/games/{login}` : **получить игры юзера**
     - GET: {login} в переменной пути
     - returns: список игр
+- `/users/update/karma` : **изменить карму для игрока (+- 1)**
+    - PATCH: senderUserId, receiverUserId, {increase = true | decrease = true}
+    - returns: новое значение karma для receiverUserId
 
 ## Информация о персонажах
 
