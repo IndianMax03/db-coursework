@@ -36,6 +36,10 @@
 - `/users/friendship`
     - POST: senderId, receiverId, [currentStatus]
     - returns: currentStatus (по умолчанию on-review)
+- `/users/update/friendship` : **изменить статус заявки в  друзья**
+    - PATCH: senderId, receiverId, currentStatus
+        - note: для sender и receiver порядок имеет значение
+    - returns: currentStatus (тот, что был отправлен)
 
 ## Информация о персонажах
 

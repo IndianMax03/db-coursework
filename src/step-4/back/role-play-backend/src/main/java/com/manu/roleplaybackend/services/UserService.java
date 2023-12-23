@@ -80,6 +80,13 @@ public class UserService {
         return dataBase.updateUserKarma(updKarmaRequest);
     }
 
+    public ResponseEntity<Object> updateFriendRequestStatus(Friendship friendship) {
+        if (!friendship.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
+        }
+        return dataBase.updateFriendRequestStatus(friendship);
+    }
+
     public ResponseEntity<Object> friendRequest(Friendship friendship) {
         if (!friendship.isValid()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");

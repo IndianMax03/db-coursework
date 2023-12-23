@@ -98,6 +98,31 @@ public class DataBase {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot change user karma!");
     }
 
+    public ResponseEntity<Object> updateFriendRequestStatus(Friendship friendship) {
+        if (!findUserById(friendship.getSenderId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (sender) with id = " + friendship.getSenderId());
+        }
+        if (!findUserById(friendship.getReceiverId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (receiver) with id = " + friendship.getReceiverId());
+        }
+        String newStatus = null;
+        String sql = "update friendships set current_status = ?::request_status where (sender_user_id = ? and receiver_user_id = ?) returning current_status";
+        try {
+            newStatus = template.queryForObject(sql, String.class, friendship.getCurrentStatus(), friendship.getSenderId(), friendship.getReceiverId());
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cursed sql statement! Contact MT urgently!");
+        }
+        if (newStatus != null) {
+            Map<String, String> responseNode = new HashMap<>();
+            responseNode.put("currentStatus", newStatus);
+            return ResponseEntity.status(HttpStatus.OK).body(responseNode);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot change request status!");
+    }
+
     public ResponseEntity<Object> friendRequest(Friendship friendship) {
         if (!findUserById(friendship.getSenderId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (sender) with id = " + friendship.getSenderId());

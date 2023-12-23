@@ -54,6 +54,11 @@ public class UserController {
         return userService.updateKarma(updKarmaRequest);
     }
 
+    @PatchMapping("/update/friendship")
+    public ResponseEntity<Object> updateFriendRequestStatus(@RequestBody Friendship friendship) {
+        return userService.updateFriendRequestStatus(friendship);
+    }
+
     @PostMapping("/friendship")
     public ResponseEntity<Object> friendRequest(@RequestBody Friendship friendship) {
         return userService.friendRequest(friendship);
