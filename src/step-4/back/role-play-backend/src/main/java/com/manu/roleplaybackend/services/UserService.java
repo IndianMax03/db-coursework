@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.db.DataBase;
 import com.manu.roleplaybackend.model.Friendship;
+import com.manu.roleplaybackend.model.Review;
 import com.manu.roleplaybackend.model.User;
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 
@@ -96,6 +97,13 @@ public class UserService {
 
     public ResponseEntity<Object> getFriends(String login) {
         return dataBase.getFriends(login);
+    }
+
+    public ResponseEntity<Object> leaveReview(Review review) {
+        if (!review.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
+        }
+        return dataBase.leaveReview(review);
     }
 
 }

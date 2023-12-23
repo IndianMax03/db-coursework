@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manu.roleplaybackend.model.Friendship;
+import com.manu.roleplaybackend.model.Review;
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 import com.manu.roleplaybackend.services.UserService;
 
@@ -67,6 +68,11 @@ public class UserController {
     @GetMapping("/friends/{login}")
     public ResponseEntity<Object> getFriendsByLogin(@PathVariable String login) {
         return userService.getFriends(login);
+    }
+
+    @PostMapping("/review/leave")
+    public ResponseEntity<Object> leaveReview(@RequestBody Review review) {
+        return userService.leaveReview(review);
     }
 
 }

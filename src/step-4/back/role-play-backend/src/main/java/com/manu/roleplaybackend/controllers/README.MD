@@ -43,6 +43,9 @@
 - `/users/friends/{login}` : **получить друзей**
     - GET: {login} в переменной пути
     - returns: income, outcome (массивы людей со статусами заявок к ним. входящие/исходящие относительно запрашиваемого юзера)
+- `/users/review/leave` : **оставить отзыв о юзере**
+    - POST: reviewerId, recipientId, rating, [content]
+    - returns: сущность review с заполненной датой и отправленными полями
 
 ## Информация о персонажах
 

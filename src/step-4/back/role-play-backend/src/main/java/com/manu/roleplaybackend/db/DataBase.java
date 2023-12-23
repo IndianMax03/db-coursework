@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.Friendship;
 import com.manu.roleplaybackend.model.Game;
 import com.manu.roleplaybackend.model.LobbyRequest;
+import com.manu.roleplaybackend.model.Review;
 import com.manu.roleplaybackend.model.Role;
 import com.manu.roleplaybackend.model.User;
 import com.manu.roleplaybackend.model.request.Friend;
@@ -584,6 +586,30 @@ public class DataBase {
             return ResponseEntity.status(HttpStatus.CREATED).body(lobbyRequest);
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cannot create lobby request! Contact MT urgently!");
+    }
+
+    public ResponseEntity<Object> leaveReview(Review review) {
+        if (!findUserById(review.getReviewerId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (reviewer) with id = " + review.getReviewerId());
+        }
+        if (!findUserById(review.getRecipientId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (recipient) with id = " + review.getRecipientId());
+        }
+        Timestamp creationDate = null;
+        try {
+            String slq = "insert into reviews values (?, ?, ?, now(), ?) returning date";
+            creationDate = template.queryForObject(slq, Timestamp.class, review.getReviewerId(), review.getRecipientId(), review.getContent(), review.getRating());
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+        if (creationDate != null) {
+            review.setDate(creationDate);
+            return ResponseEntity.status(HttpStatus.CREATED).body(review);
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cursed sql statement! Contact MT urgently!");
     }
 
 }
