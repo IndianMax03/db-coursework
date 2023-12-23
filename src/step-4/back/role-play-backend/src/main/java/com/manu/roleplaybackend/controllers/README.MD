@@ -61,6 +61,9 @@
 - `/characters/lobby/{characterId}` : **получить подробную информацию о лобби**
     - GET: {characterId} в переменной пути
     - returns: game, lobby, master, requests (персонажи и их статусы для этого лобби)
+- `/characters/update/request` : **изменение статуса заявки на игру (в лобби)**
+    - PATCH: id, currentStatus (из сущности lobbyRequest)
+    - returns: см. статус ответа
 
 ## Информация об играх
 

@@ -125,7 +125,7 @@ public class DataBase {
             responseNode.put("current_status", newStatus);
             return ResponseEntity.status(HttpStatus.OK).body(responseNode);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot lobby request status!");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot change lobby request status!");
 
     }
 
