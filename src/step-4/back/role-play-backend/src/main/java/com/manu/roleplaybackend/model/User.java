@@ -18,7 +18,7 @@ public class User {
     private String login;
     private String name;
     private String password;
-    private byte[] picture;
+    private byte[][] picture;
     private Integer karma = 0;
     private String timezone;
     private String telegramTag;

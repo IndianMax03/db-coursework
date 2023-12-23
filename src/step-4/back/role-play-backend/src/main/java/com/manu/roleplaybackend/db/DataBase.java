@@ -19,8 +19,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.Game;
@@ -48,7 +46,7 @@ public class DataBase {
         Integer userId = null;
         try {
             String slq = "select create_user(?, ?, ?, ?, ?, ?, ?, ?, ?::user_status)";
-            userId = template.queryForObject(slq, Integer.class, user.getLogin(), user.getName(), user.getPassword(), user.getPicture(), user.getKarma(), user.getTimezone(), user.getTelegramTag(), user.getVkTag(), user.getCurrentStatus());
+            userId = template.queryForObject(slq, Integer.class, user.getLogin(), user.getName(), user.getPassword(), mapper.writeValueAsBytes(user.getPicture()), user.getKarma(), user.getTimezone(), user.getTelegramTag(), user.getVkTag(), user.getCurrentStatus());
         } catch (DuplicateKeyException dke) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists. Try /enter/login.");
         } catch (DataIntegrityViolationException igonre) {
@@ -56,6 +54,9 @@ public class DataBase {
         } catch (DataAccessException dae) {
             System.out.println(dae);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file");
         }
         String token = generateToken(user.getPassword());
         if (token != null) {
@@ -105,17 +106,21 @@ public class DataBase {
                 @Override
                 @Nullable
                 public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    User user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setLogin(rs.getString("login"));
-                    user.setName(rs.getString("name"));
-                    user.setPicture(rs.getBytes("picture"));
-                    user.setKarma(rs.getInt("karma"));
-                    user.setTimezone(rs.getString("timezone"));
-                    user.setTelegramTag(rs.getString("telegram_tag"));
-                    user.setVkTag(rs.getString("vk_tag"));
-                    user.setCurrentStatus(rs.getString("current_status"));
-                    return user;
+                    try {
+                        User user = new User();
+                        user.setId(rs.getInt("id"));
+                        user.setLogin(rs.getString("login"));
+                        user.setName(rs.getString("name"));
+                        user.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        user.setKarma(rs.getInt("karma"));
+                        user.setTimezone(rs.getString("timezone"));
+                        user.setTelegramTag(rs.getString("telegram_tag"));
+                        user.setVkTag(rs.getString("vk_tag"));
+                        user.setCurrentStatus(rs.getString("current_status"));
+                        return user;
+                    } catch (IOException ioe) {
+                        return null;
+                    }
                 }
             });
         } catch (EmptyResultDataAccessException ignore) {
@@ -130,17 +135,21 @@ public class DataBase {
                 @Override
                 @org.springframework.lang.Nullable
                 public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    User user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setLogin(rs.getString("login"));
-                    user.setName(rs.getString("name"));
-                    user.setPicture(rs.getBytes("picture"));
-                    user.setKarma(rs.getInt("karma"));
-                    user.setTimezone(rs.getString("timezone"));
-                    user.setTelegramTag(rs.getString("telegram_tag"));
-                    user.setVkTag(rs.getString("vk_tag"));
-                    user.setCurrentStatus(rs.getString("current_status"));
-                    return user;
+                    try {
+                        User user = new User();
+                        user.setId(rs.getInt("id"));
+                        user.setLogin(rs.getString("login"));
+                        user.setName(rs.getString("name"));
+                        user.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        user.setKarma(rs.getInt("karma"));
+                        user.setTimezone(rs.getString("timezone"));
+                        user.setTelegramTag(rs.getString("telegram_tag"));
+                        user.setVkTag(rs.getString("vk_tag"));
+                        user.setCurrentStatus(rs.getString("current_status"));
+                        return user;
+                    } catch (IOException ioe) {
+                        return null;
+                    }
                 }
             });
             return Optional.of(result);
@@ -176,7 +185,7 @@ public class DataBase {
         }
         try {
             String slq = "select create_character(?, ?, ?, ?, ?::character_status, ?)";
-            Integer characterId = template.queryForObject(slq, Integer.class, character.getName(), mapper.writeValueAsBytes(character.getPicture());, character.getGameSystemId(), character.getUserId(), character.getCurrentStatus(), character.getStats());
+            Integer characterId = template.queryForObject(slq, Integer.class, character.getName(), mapper.writeValueAsBytes(character.getPicture()), character.getGameSystemId(), character.getUserId(), character.getCurrentStatus(), mapper.writeValueAsBytes(character.getStats()));
             character.setId(characterId);
             return new ResponseEntity<Object>(character, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException igonre) {
@@ -209,17 +218,21 @@ public class DataBase {
                 @Override
                 @org.springframework.lang.Nullable
                 public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    Game game = new Game();
-                    game.setId(rs.getInt("id"));
-                    game.setName(rs.getString("name"));
-                    game.setGameSystemId(rs.getInt("game_system_id"));
-                    game.setPicture(rs.getBytes("picture"));
-                    game.setMasterId(rs.getInt("master_id"));
-                    game.setCreationDate(rs.getString("creation_date"));
-                    game.setCurrentStatus(rs.getString("current_status"));
-                    game.setFinishDate(rs.getString("finish_date"));
-                    game.setDescription(rs.getString("description"));
-                    return game;
+                    try {
+                        Game game = new Game();
+                        game.setId(rs.getInt("id"));
+                        game.setName(rs.getString("name"));
+                        game.setGameSystemId(rs.getInt("game_system_id"));
+                        game.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        game.setMasterId(rs.getInt("master_id"));
+                        game.setCreationDate(rs.getString("creation_date"));
+                        game.setCurrentStatus(rs.getString("current_status"));
+                        game.setFinishDate(rs.getString("finish_date"));
+                        game.setDescription(rs.getString("description"));
+                        return game;
+                    } catch (IOException ioe) {
+                        return null;
+                    }
                 }
             });
             return Optional.of(result);
@@ -240,12 +253,15 @@ public class DataBase {
         try {
             
             String sql = "select create_game(?, ?, ?, ?, ?::game_status, ?)";
-            gameId = template.queryForObject(sql, Integer.class, game.getName(), game.getGameSystemId(), game.getPicture(), game.getMasterId(), game.getCurrentStatus(), game.getDescription());
+            gameId = template.queryForObject(sql, Integer.class, game.getName(), game.getGameSystemId(), mapper.writeValueAsBytes(game.getPicture()), game.getMasterId(), game.getCurrentStatus(), game.getDescription());
         } catch (DataIntegrityViolationException igonre) {
             System.out.println(igonre.getClass());
         } catch (DataAccessException dae) {
             System.out.println(dae);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file");
         }
 
         if (gameId != null) {
@@ -292,7 +308,7 @@ public class DataBase {
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("current_status"),
-                        rs.getBytes("stats")
+                        mapper.readValue(rs.getBytes("stats"), byte[][].class)
                         );
 
                         return character;
@@ -314,17 +330,22 @@ public class DataBase {
                 @Override
                 @Nullable
                 public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    return new Game(
+                    try {
+                        Game game = new Game(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("game_system_id"),
-                        rs.getBytes("picture"),
+                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("master_id"),
                         rs.getString("creation_date"),
                         rs.getString("current_status"),
                         rs.getString("finish_date"),
                         rs.getString("description")
-                    );
+                        );
+                        return game;
+                    } catch (IOException ignore) {
+                        return null;
+                    }
                 }
             });
         } catch (EmptyResultDataAccessException ignore) {
@@ -340,17 +361,22 @@ public class DataBase {
                 @Override
                 @Nullable
                 public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    return new Game(
+                    try {
+                        Game game = new Game(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("game_system_id"),
-                        rs.getBytes("picture"),
+                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("master_id"),
                         rs.getString("creation_date"),
                         rs.getString("current_status"),
                         rs.getString("finish_date"),
                         rs.getString("description")
-                    );
+                        );
+                        return game;
+                    } catch (IOException ignore) {
+                        return null;
+                    }
                 }
             });
         } catch (EmptyResultDataAccessException ignore) {

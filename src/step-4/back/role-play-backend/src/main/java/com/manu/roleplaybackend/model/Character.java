@@ -19,7 +19,7 @@ public class Character {
     private Integer gameSystemId;
     private Integer userId;
     private String currentStatus = "free";
-    private byte[] stats;
+    private byte[][] stats;
 
     public boolean validName() {
         return this.name != null && !this.name.trim().isEmpty();
