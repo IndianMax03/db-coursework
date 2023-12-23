@@ -32,6 +32,10 @@ public class CharacterService {
         return dataBase.createLobbyRequest(lobbyRequest);
     }
 
+    public ResponseEntity<Object> updateRequest(LobbyRequest lobbyRequest) {
+        return dataBase.updateLobbyRequest(lobbyRequest);
+    }
+
     public ResponseEntity<Object> getLobbyInformation( Integer chatacterId) {
         if (chatacterId == null || chatacterId <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid character data");

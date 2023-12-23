@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,11 @@ public class CharacterController {
     @PostMapping("/request")
     public ResponseEntity<Object> createRequest(@RequestBody LobbyRequest lobbyRequest) {
         return characterService.createRequest(lobbyRequest);
+    }
+
+    @PatchMapping("/update/request")
+    public ResponseEntity<Object> updateRequestStatus(@RequestBody LobbyRequest lobbyRequest) {
+        return characterService.updateRequest(lobbyRequest);
     }
 
     @GetMapping("/lobby/{characterId}")
