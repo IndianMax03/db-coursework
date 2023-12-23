@@ -1,5 +1,6 @@
 package com.manu.roleplaybackend.db;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -18,6 +19,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.Game;
 import com.manu.roleplaybackend.model.LobbyRequest;
@@ -31,9 +35,10 @@ public class DataBase {
 
     @Autowired
     JdbcTemplate template;
+    ObjectMapper mapper;
     
     public DataBase() {
-
+        mapper = new ObjectMapper();
     }
 
     public ResponseEntity<Object> createUser(User user) {
@@ -171,7 +176,7 @@ public class DataBase {
         }
         try {
             String slq = "select create_character(?, ?, ?, ?, ?::character_status, ?)";
-            Integer characterId = template.queryForObject(slq, Integer.class, character.getName(), character.getPicture(), character.getGameSystemId(), character.getUserId(), character.getCurrentStatus(), character.getStats());
+            Integer characterId = template.queryForObject(slq, Integer.class, character.getName(), mapper.writeValueAsBytes(character.getPicture());, character.getGameSystemId(), character.getUserId(), character.getCurrentStatus(), character.getStats());
             character.setId(characterId);
             return new ResponseEntity<Object>(character, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException igonre) {
@@ -179,6 +184,9 @@ public class DataBase {
         } catch (DataAccessException dae) {
             System.out.println(dae);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file");
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
     }
@@ -276,15 +284,21 @@ public class DataBase {
                 @Override
                 @Nullable
                 public Character mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    return new Character(
+                    try {
+                        Character character = new Character(
                         rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getBytes("picture"),
+                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("current_status"),
                         rs.getBytes("stats")
-                    );
+                        );
+
+                        return character;
+                    } catch (IOException ignore) {
+                        return null;
+                    }
                 }
             });
         } catch (EmptyResultDataAccessException ignore) {

@@ -15,7 +15,7 @@ public class Character {
     
     private Integer id;
     private String name;
-    private byte[] picture;
+    private byte[][] picture;
     private Integer gameSystemId;
     private Integer userId;
     private String currentStatus = "free";
