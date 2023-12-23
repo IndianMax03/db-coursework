@@ -46,16 +46,16 @@
 - `/users/review/leave` : **оставить отзыв о юзере**
     - POST: reviewerId, recipientId, rating, [content]
     - returns: сущность review с заполненной датой и отправленными полями
-- `users/review/all/{login}` : **получить все отзывы о юзере**
+- `/users/review/all/{login}` : **получить все отзывы о юзере**
     - GET: {login} в переменной пути
     - returns: отзывы в формате: человек + оставленный отзыв
 
 ## Информация о персонажах
 
-- `characters/create` : **создать персонажа**
+- `/characters/create` : **создать персонажа**
     - POST: name, gameSystemId, userId, [picture, stats]
     - returns: информация о созданном персонаже (с айдишником)
-- `characters/request` : **создать запрос в лобби**
+- `/characters/request` : **создать запрос в лобби**
     - POST: gameId, characterId
     - returns: сущность lobby request
 - `/characters/lobby/{characterId}` : **получить подробную информацию о лобби**
@@ -64,7 +64,7 @@
 
 ## Информация об играх
 
-- `games/create` : **создать игру**
+- `/games/create` : **создать игру**
     - POST: name, gameSystemId, masterId, [picture, currentStatus, finishDate, description]
     - returns: созданную игру с заполненными айди и датой создания
 - `/games/all` : **получить все игры**
