@@ -105,6 +105,18 @@ public class DataBase {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot change user karma!");
     }
 
+    // public ResponseEntity<Object> updateLobbyRequest(LobbyRequest lobbyRequest) {
+    //     if (!findCharacterById(lobbyRequest.getCharacterId())) {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no character with id = " + lobbyRequest.getCharacterId());
+    //     }
+    //     if (!findGameById(lobbyRequest.getGameId())) {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no game with id = " + lobbyRequest.getGameId());
+    //     }
+
+    //     Lobby lobby = getLobbyByGameId(lobbyRequest.getGameId()).get();
+
+    // }
+
     public ResponseEntity<Object> updateFriendRequestStatus(Friendship friendship) {
         if (!findUserById(friendship.getSenderId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no user (sender) with id = " + friendship.getSenderId());
@@ -763,7 +775,7 @@ public class DataBase {
         Lobby lobby = opLobby.get();
         User master = getUserById(game.getMasterId()).get();
 
-        String sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where lobby_requests.lobby_id=" + lobby.getId();
+        String sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.id lobreqid, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where lobby_requests.lobby_id=" + lobby.getId();
         List<CharacterRequest> characterRequests = null;
         try {
             characterRequests = template.query(sql, new RowMapper<CharacterRequest>() {
@@ -779,6 +791,7 @@ public class DataBase {
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
                         mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
                         return characterRequest;
@@ -794,7 +807,7 @@ public class DataBase {
     }
 
     public ResponseEntity<Object> getLobbyInformationByCharacterId(Integer characterId) {
-        String sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where (lobby_requests.character_id=" + characterId + " and lobby_requests.current_status <> cast('rejected' as request_status))";
+        String sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.id lobreqid, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where (lobby_requests.character_id=" + characterId + " and lobby_requests.current_status <> cast('rejected' as request_status))";
         CharacterRequest characterRequest = null;
         try {
             characterRequest = template.queryForObject(sql, new RowMapper<CharacterRequest>() {
@@ -810,6 +823,7 @@ public class DataBase {
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
                         mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
                         return characterRequest;
@@ -846,7 +860,7 @@ public class DataBase {
         Lobby lobby = getLobbyByGameId(gameId).get();
         User master = getUserById(game.getMasterId()).get();
 
-        sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where lobby_requests.lobby_id=" + lobby.getId();
+        sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.id lobreqid, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where lobby_requests.lobby_id=" + lobby.getId();
         List<CharacterRequest> characterRequests = null;
         try {
             characterRequests = template.query(sql, new RowMapper<CharacterRequest>() {
@@ -862,6 +876,7 @@ public class DataBase {
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
                         mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
                         return characterRequest;

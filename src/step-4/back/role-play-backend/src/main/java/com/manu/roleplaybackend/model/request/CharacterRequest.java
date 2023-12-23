@@ -13,13 +13,14 @@ import lombok.ToString;
 @AllArgsConstructor
 public class CharacterRequest {
 
-    private Integer id;
+    private Integer characterId;
     private String name;
     private byte[][] picture;
     private Integer gameSystemId;
     private Integer userId;
     private String currentStatus = "free";
     private byte[][] stats;
+    private Integer lobbyRequestId;
     private String requestStatus;
     
 }
