@@ -26,11 +26,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.Friendship;
 import com.manu.roleplaybackend.model.Game;
+import com.manu.roleplaybackend.model.Lobby;
 import com.manu.roleplaybackend.model.LobbyRequest;
 import com.manu.roleplaybackend.model.Review;
 import com.manu.roleplaybackend.model.Role;
 import com.manu.roleplaybackend.model.User;
+import com.manu.roleplaybackend.model.request.CharacterRequest;
 import com.manu.roleplaybackend.model.request.Friend;
+import com.manu.roleplaybackend.model.request.LobbyInformation;
 import com.manu.roleplaybackend.model.request.Reviewer;
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 
@@ -317,6 +320,36 @@ public class DataBase {
             return Optional.empty();
         }
     }
+
+    public Optional<User> getUserById(Integer id) {
+        String sql = "select id, login, name, picture, karma, timezone, telegram_tag, vk_tag, current_status from users where id=" + id;
+        try {
+            User result = template.queryForObject(sql, new RowMapper<User>() {
+                @Override
+                @org.springframework.lang.Nullable
+                public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        User user = new User();
+                        user.setId(rs.getInt("id"));
+                        user.setLogin(rs.getString("login"));
+                        user.setName(rs.getString("name"));
+                        user.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        user.setKarma(rs.getInt("karma"));
+                        user.setTimezone(rs.getString("timezone"));
+                        user.setTelegramTag(rs.getString("telegram_tag"));
+                        user.setVkTag(rs.getString("vk_tag"));
+                        user.setCurrentStatus(rs.getString("current_status"));
+                        return user;
+                    } catch (IOException ioe) {
+                        return null;
+                    }
+                }
+            });
+            return Optional.of(result);
+        } catch (EmptyResultDataAccessException erde) {
+            return Optional.empty();
+        }
+    }
     
     public boolean findGameSystemById(Integer gameSystemId) {
         String sql = "select count(*) from game_systems where (id = '" + gameSystemId + "')";
@@ -400,7 +433,27 @@ public class DataBase {
             return Optional.empty();
         }
     }
-
+    
+    public Optional<Lobby> getLobbyByGameId(Integer gameId) {
+        String sql = "select id, game_id, format from lobbies where game_id=" + gameId;
+        try {
+            Lobby result = template.queryForObject(sql, new RowMapper<Lobby>() {
+                @Override
+                @org.springframework.lang.Nullable
+                public Lobby mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Lobby lobby = new Lobby();
+                    lobby.setId(rs.getInt("id"));
+                    lobby.setGameId(rs.getInt("game_id"));
+                    lobby.setFormat(rs.getString("format"));
+                    return lobby;
+                }
+            });
+            return Optional.of(result);
+        } catch (EmptyResultDataAccessException erde) {
+            return Optional.empty();
+        }
+    }
+    
     public ResponseEntity<Object> createGame(Game game) {
         if (!findGameSystemById(game.getGameSystemId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no game system with id = " + game.getGameSystemId());
@@ -650,6 +703,51 @@ public class DataBase {
         }
         
         return ResponseEntity.status(HttpStatus.OK).body(reviewers);
+    }
+
+    public ResponseEntity<Object> getLobbyInformation(Integer gameId) {
+        
+        Optional<Game> opGame = getGameById(gameId);
+        if (!opGame.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no game with id = " + gameId);
+        }
+        Optional<Lobby> opLobby = getLobbyByGameId(gameId);
+        if (!opLobby.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no lobby with id = " + gameId + ". Contact MT urgently!");
+        }
+
+        Game game = opGame.get();
+        Lobby lobby = opLobby.get();
+        User master = getUserById(game.getMasterId()).get();
+
+        String sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where lobby_requests.lobby_id=" + lobby.getId();
+        List<CharacterRequest> characterRequests = null;
+        try {
+            characterRequests = template.query(sql, new RowMapper<CharacterRequest>() {
+                @Override
+                @Nullable
+                public CharacterRequest mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        CharacterRequest characterRequest = new CharacterRequest(
+                        rs.getInt("chid"),
+                        rs.getString("name"),
+                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        rs.getInt("game_system_id"),
+                        rs.getInt("user_id"),
+                        rs.getString("chstatus"),
+                        mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        rs.getString("lobreqstat")
+                        );
+                        return characterRequest;
+                    } catch (IOException ignore) {
+                        return null;
+                    }
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new LobbyInformation(game, lobby, master, characterRequests));
     }
 
 }

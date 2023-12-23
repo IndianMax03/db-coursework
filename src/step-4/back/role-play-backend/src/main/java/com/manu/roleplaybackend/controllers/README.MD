@@ -70,3 +70,6 @@
 - `/games/update/status` : **изменить статус игры**
     - PATCH: id, currentStatus
     - returns: см. статус ответа
+- `/games/lobby/{gameId}` : **получить подробную информацию о лобби**
+    - GET: {gameId} в переменной пути
+    - returns: game, lobby, master, requests (персонажи и их статусы для этого лобби)

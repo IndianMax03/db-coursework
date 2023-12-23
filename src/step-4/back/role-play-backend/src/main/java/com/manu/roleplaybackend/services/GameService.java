@@ -1,7 +1,5 @@
 package com.manu.roleplaybackend.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.db.DataBase;
 import com.manu.roleplaybackend.model.Game;
-import com.manu.roleplaybackend.model.User;
 
 import lombok.NoArgsConstructor;
 
@@ -33,6 +30,13 @@ public class GameService {
 
     public ResponseEntity<Object> updateStatus(Game game) {
         return dataBase.updateGameStatus(game);
+    }
+
+    public ResponseEntity<Object> getLobbyInformation( Integer gameId) {
+        if (gameId == null || gameId <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid game data");
+        }
+        return dataBase.getLobbyInformation(gameId);
     }
 
 }
