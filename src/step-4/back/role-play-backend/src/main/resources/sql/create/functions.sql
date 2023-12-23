@@ -119,3 +119,34 @@ create trigger insert_characters_trigger
 after insert on lobby_requests
 for each row
 execute function update_characters_status_while_changing_request_status();
+
+create or replace function update_characters_status_after_changing_game_status()
+returns trigger
+as $$
+declare
+    changed_game_id integer;
+begin
+    if new.current_status = cast('finished' as game_status) then
+        changed_game_id = new.id;
+        update characters
+        set current_status = cast('free' as character_status)
+        where id in (
+            select character_id
+            from lobby_requests
+            where current_status <> cast('rejected' as request_status)
+            and
+            lobby_id in (
+                select id
+                from lobbies
+                where game_id = changed_game_id
+            )
+        );
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger update_games_trigger
+after update of current_status on games
+for each row
+execute function update_characters_status_after_changing_game_status();
