@@ -793,4 +793,88 @@ public class DataBase {
         return ResponseEntity.status(HttpStatus.OK).body(new LobbyInformation(game, lobby, master, characterRequests));
     }
 
+    public ResponseEntity<Object> getLobbyInformationByCharacterId(Integer characterId) {
+        String sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where (lobby_requests.character_id=" + characterId + " and lobby_requests.current_status <> cast('rejected' as request_status))";
+        CharacterRequest characterRequest = null;
+        try {
+            characterRequest = template.queryForObject(sql, new RowMapper<CharacterRequest>() {
+                @Override
+                @Nullable
+                public CharacterRequest mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        CharacterRequest characterRequest = new CharacterRequest(
+                        rs.getInt("chid"),
+                        rs.getString("name"),
+                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        rs.getInt("game_system_id"),
+                        rs.getInt("user_id"),
+                        rs.getString("chstatus"),
+                        mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        rs.getString("lobreqstat")
+                        );
+                        return characterRequest;
+                    } catch (IOException ignore) {
+                        return null;
+                    }
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+
+        if (characterRequest == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Your character is not yet registered in any of the lobbies");
+        }
+
+        Integer gameId = null;
+        sql = "select games.id from characters join lobby_requests on lobby_requests.character_id=characters.id join lobbies on lobby_requests.lobby_id=lobbies.id join games on lobbies.game_id=games.id where (lobby_requests.character_id=" + characterId + " and lobby_requests.current_status <> cast('rejected' as request_status))";
+        
+        try {
+            gameId = template.queryForObject(sql, Integer.class);
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            dae.printStackTrace();
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+
+        if (gameId == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot find game for character with id = " + characterId);
+        }
+
+        Game game = getGameById(gameId).get();
+        Lobby lobby = getLobbyByGameId(gameId).get();
+        User master = getUserById(game.getMasterId()).get();
+
+        sql = "select characters.id chid, name, picture, game_system_id, user_id, characters.current_status chstatus, stats, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id where lobby_requests.lobby_id=" + lobby.getId();
+        List<CharacterRequest> characterRequests = null;
+        try {
+            characterRequests = template.query(sql, new RowMapper<CharacterRequest>() {
+                @Override
+                @Nullable
+                public CharacterRequest mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    try {
+                        CharacterRequest characterRequest = new CharacterRequest(
+                        rs.getInt("chid"),
+                        rs.getString("name"),
+                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        rs.getInt("game_system_id"),
+                        rs.getInt("user_id"),
+                        rs.getString("chstatus"),
+                        mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        rs.getString("lobreqstat")
+                        );
+                        return characterRequest;
+                    } catch (IOException ignore) {
+                        return null;
+                    }
+                }
+            });
+        } catch (EmptyResultDataAccessException ignore) {
+        }
+        
+        return ResponseEntity.status(HttpStatus.OK).body(new LobbyInformation(game, lobby, master, characterRequests));
+        
+    }
+
 }

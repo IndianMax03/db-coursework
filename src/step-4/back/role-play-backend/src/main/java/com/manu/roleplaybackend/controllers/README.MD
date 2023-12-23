@@ -58,6 +58,9 @@
 - `characters/request` : **создать запрос в лобби**
     - POST: gameId, characterId
     - returns: сущность lobby request
+- `/characters/lobby/{characterId}` : **получить подробную информацию о лобби**
+    - GET: {characterId} в переменной пути
+    - returns: game, lobby, master, requests (персонажи и их статусы для этого лобби)
 
 ## Информация об играх
 
