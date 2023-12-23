@@ -92,3 +92,30 @@ create trigger game_creation
 after insert on games
 for each row
 execute function create_lobby();
+
+create or replace function update_characters_status_while_changing_request_status()
+returns trigger
+as $$
+begin
+    if new.current_status = cast('rejected' as request_status) then
+        update characters
+        set current_status = cast('free' as character_status)
+        where id = new.character_id;
+    elsif new.current_status <> cast('rejected' as request_status) then
+        update characters
+        set current_status = cast('busy' as character_status)
+        where id = new.character_id;
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger update_characters_trigger
+after update of current_status on lobby_requests
+for each row
+execute function update_characters_status_while_changing_request_status();
+
+create trigger insert_characters_trigger
+after insert on lobby_requests
+for each row
+execute function update_characters_status_while_changing_request_status();
