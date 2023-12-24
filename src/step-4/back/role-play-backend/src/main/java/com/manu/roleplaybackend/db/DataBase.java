@@ -197,7 +197,7 @@ public class DataBase {
                         friend.setId(rs.getInt("id"));
                         friend.setLogin(rs.getString("login"));
                         friend.setName(rs.getString("name"));
-                        friend.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        friend.setPicture(rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class));
                         friend.setKarma(rs.getInt("karma"));
                         friend.setTimezone(rs.getString("timezone"));
                         friend.setTelegramTag(rs.getString("telegram_tag"));
@@ -225,7 +225,7 @@ public class DataBase {
                         friend.setId(rs.getInt("id"));
                         friend.setLogin(rs.getString("login"));
                         friend.setName(rs.getString("name"));
-                        friend.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        friend.setPicture(rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class));
                         friend.setKarma(rs.getInt("karma"));
                         friend.setTimezone(rs.getString("timezone"));
                         friend.setTelegramTag(rs.getString("telegram_tag"));
@@ -298,7 +298,7 @@ public class DataBase {
                         user.setId(rs.getInt("id"));
                         user.setLogin(rs.getString("login"));
                         user.setName(rs.getString("name"));
-                        user.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        user.setPicture(rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class));
                         user.setKarma(rs.getInt("karma"));
                         user.setTimezone(rs.getString("timezone"));
                         user.setTelegramTag(rs.getString("telegram_tag"));
@@ -327,7 +327,7 @@ public class DataBase {
                         user.setId(rs.getInt("id"));
                         user.setLogin(rs.getString("login"));
                         user.setName(rs.getString("name"));
-                        user.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        user.setPicture(rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class));
                         user.setKarma(rs.getInt("karma"));
                         user.setTimezone(rs.getString("timezone"));
                         user.setTelegramTag(rs.getString("telegram_tag"));
@@ -357,7 +357,7 @@ public class DataBase {
                         user.setId(rs.getInt("id"));
                         user.setLogin(rs.getString("login"));
                         user.setName(rs.getString("name"));
-                        user.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        user.setPicture(rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class));
                         user.setKarma(rs.getInt("karma"));
                         user.setTimezone(rs.getString("timezone"));
                         user.setTelegramTag(rs.getString("telegram_tag"));
@@ -386,11 +386,11 @@ public class DataBase {
                         Character character = new Character();
                         character.setId(rs.getInt("id"));
                         character.setName(rs.getString("name"));
-                        character.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        character.setPicture(rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class));
                         character.setGameSystemId(rs.getInt("game_system_id"));
                         character.setUserId(rs.getInt("user_id"));
                         character.setCurrentStatus(rs.getString("current_status"));
-                        character.setStats(mapper.readValue(rs.getBytes("stats"), byte[][].class));
+                        character.setStats(rs.getBytes("stats") == null ? null : mapper.readValue(rs.getBytes("stats"), byte[][].class));
                         return character;
                     } catch (IOException ioe) {
                         return null;
@@ -474,7 +474,7 @@ public class DataBase {
                         game.setId(rs.getInt("id"));
                         game.setName(rs.getString("name"));
                         game.setGameSystemId(rs.getInt("game_system_id"));
-                        game.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        game.setPicture(rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class));
                         game.setMasterId(rs.getInt("master_id"));
                         game.setCreationDate(rs.getString("creation_date"));
                         game.setCurrentStatus(rs.getString("current_status"));
@@ -596,11 +596,11 @@ public class DataBase {
                         Character character = new Character(
                         rs.getInt("id"),
                         rs.getString("name"),
-                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("current_status"),
-                        mapper.readValue(rs.getBytes("stats"), byte[][].class)
+                        mapper.readValue(rs.getBytes("stats") == null ? null : rs.getBytes("stats"), byte[][].class)
                         );
 
                         return character;
@@ -627,7 +627,7 @@ public class DataBase {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("game_system_id"),
-                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
                         rs.getInt("master_id"),
                         rs.getString("creation_date"),
                         rs.getString("current_status"),
@@ -658,7 +658,7 @@ public class DataBase {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("game_system_id"),
-                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
                         rs.getInt("master_id"),
                         rs.getString("creation_date"),
                         rs.getString("current_status"),
@@ -757,7 +757,7 @@ public class DataBase {
                         reviewer.setId(rs.getInt("id"));
                         reviewer.setLogin(rs.getString("login"));
                         reviewer.setName(rs.getString("name"));
-                        reviewer.setPicture(mapper.readValue(rs.getBytes("picture"), byte[][].class));
+                        reviewer.setPicture(rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class));
                         reviewer.setKarma(rs.getInt("karma"));
                         reviewer.setTimezone(rs.getString("timezone"));
                         reviewer.setTelegramTag(rs.getString("telegram_tag"));
@@ -804,11 +804,11 @@ public class DataBase {
                         CharacterRequest characterRequest = new CharacterRequest(
                         rs.getInt("chid"),
                         rs.getString("name"),
-                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
-                        mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        mapper.readValue(rs.getBytes("stats") == null ? null : rs.getBytes("stats"), byte[][].class),
                         rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
@@ -836,11 +836,11 @@ public class DataBase {
                         CharacterRequest characterRequest = new CharacterRequest(
                         rs.getInt("chid"),
                         rs.getString("name"),
-                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
-                        mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        mapper.readValue(rs.getBytes("stats") == null ? null : rs.getBytes("stats"), byte[][].class),
                         rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
@@ -889,11 +889,11 @@ public class DataBase {
                         CharacterRequest characterRequest = new CharacterRequest(
                         rs.getInt("chid"),
                         rs.getString("name"),
-                        mapper.readValue(rs.getBytes("picture"), byte[][].class),
+                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
-                        mapper.readValue(rs.getBytes("stats"), byte[][].class),
+                        mapper.readValue(rs.getBytes("stats") == null ? null : rs.getBytes("stats"), byte[][].class),
                         rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
