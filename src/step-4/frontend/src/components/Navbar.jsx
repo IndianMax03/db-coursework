@@ -4,14 +4,18 @@ import { GrCatalog } from 'react-icons/gr';
 import { FaUserFriends } from 'react-icons/fa';
 import { CiLogout } from 'react-icons/ci';
 import { FaBell } from 'react-icons/fa';
-import { logout } from '../auth/auth.service';
+import { cleanCookieToken } from '../auth/auth.service';
+import { logout } from '../redux/slices/UserSlice';
+import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate('/login');
+    cleanCookieToken();
+    dispatch(logout());
+    navigate('login');
   };
 
   return (
@@ -32,9 +36,12 @@ const Navbar = () => {
         <FaUserFriends className="h-6" />
         <div>Друзья</div>
       </Link>
+
       <button onClick={handleLogout} className="flex space-x-4">
         <CiLogout className="h-6" />
-        <div>Выйти</div>
+        <Link to={'/login'}>
+          <div>Выйти</div>
+        </Link>
       </button>
     </div>
   );

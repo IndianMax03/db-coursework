@@ -4,6 +4,7 @@ import Master from './Master';
 import List from '../List';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser, selectLoading, selectUser, selectError } from '../../redux/slices/UserSlice';
+import LobbyPage from '../LobbyPage';
 
 const Profile = () => {
   const dispatch = useDispatch();

@@ -10,7 +10,7 @@ const Lobby = ({ game, master, players }) => {
         <div>{master.name} </div>
       </div>
       <div>Игроки</div>
-      {players.map((player) => (
+      {players.map((player, i) => (
         <div className="flex space-x-10">
           <img
             src={player.character.image}

@@ -1,29 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchSelf,
-  selectError,
-  selectSelf,
-  selectSelfError,
-  selectSelfLoading
-} from '../../redux/slices/UserSlice';
+import { useDispatch } from 'react-redux';
+import { fetchSelf } from '../../redux/slices/UserSlice';
 
 const LoginForm = () => {
   const [login, setLogin] = useState('');
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const self = useSelector(selectSelf);
-  const loading = useSelector(selectError);
-  const hasError = useSelector(selectError);
-  const selfLoading = useSelector(selectSelfLoading);
-  const selfError = useSelector(selectSelfError);
 
   const handleLogin = () => {
     const isLoggingIn = true;
     dispatch(fetchSelf({ login, password, isLoggingIn }));
-    navigate(`profile/${login}`);
+    navigate(`/profile`);
   };
 
   return (

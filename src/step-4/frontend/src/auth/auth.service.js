@@ -35,7 +35,11 @@ export const login = async (login, password) => {
   }
 };
 
-export const logout = () => {
+export const cleanCookieToken = () => {
   Cookies.remove('token');
   axios.defaults.headers.common['token'] = undefined;
+};
+
+export const isLoggedIn = () => {
+  return Cookies.get('token') !== undefined;
 };

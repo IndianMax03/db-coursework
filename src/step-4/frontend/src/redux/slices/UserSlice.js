@@ -35,7 +35,16 @@ const UserSlice = createSlice({
     isSelfLoading: false,
     hasSelfError: false
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = {};
+      state.self = {};
+      state.isLoading = false;
+      state.hasError = false;
+      state.isSelfLoading = false;
+      state.hasSelfError = false;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, (state, action) => {
@@ -73,5 +82,6 @@ export const selectLoading = (state) => state.user.isLoading;
 export const selectError = (state) => state.user.hasError;
 export const selectSelfError = (state) => state.user.hasSelfError;
 export const selectSelfLoading = (state) => state.user.isSelfLoading;
+export const { logout } = UserSlice.actions;
 
 export default UserSlice.reducer;

@@ -19,10 +19,7 @@ export const privateRoutes = [
   { path: '/character-creation', element: <CharacterCreationForm /> },
   { path: '/game-creation', element: <GameCreationForm /> },
   { path: '/character-selection', element: <CharacterSelection /> },
-  { path: '/requests', element: <Requests /> },
-  //   TODO: delete when auth is done
-  { path: '/register', element: <RegisterForm /> },
-  { path: '/login', element: <LoginForm /> }
+  { path: '/requests', element: <Requests /> }
 ];
 
 export const publicRoutes = [
