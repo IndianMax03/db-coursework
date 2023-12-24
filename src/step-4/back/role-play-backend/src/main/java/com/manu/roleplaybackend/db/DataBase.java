@@ -596,11 +596,11 @@ public class DataBase {
                         Character character = new Character(
                         rs.getInt("id"),
                         rs.getString("name"),
-                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
+                        rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("current_status"),
-                        mapper.readValue(rs.getBytes("stats") == null ? null : rs.getBytes("stats"), byte[][].class)
+                        rs.getBytes("stats") == null ? null : mapper.readValue(rs.getBytes("stats"), byte[][].class)
                         );
 
                         return character;
@@ -627,7 +627,7 @@ public class DataBase {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("game_system_id"),
-                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
+                        rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("master_id"),
                         rs.getString("creation_date"),
                         rs.getString("current_status"),
@@ -658,7 +658,7 @@ public class DataBase {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("game_system_id"),
-                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
+                        rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("master_id"),
                         rs.getString("creation_date"),
                         rs.getString("current_status"),
@@ -804,11 +804,11 @@ public class DataBase {
                         CharacterRequest characterRequest = new CharacterRequest(
                         rs.getInt("chid"),
                         rs.getString("name"),
-                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
+                        rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
-                        mapper.readValue(rs.getBytes("stats") == null ? null : rs.getBytes("stats"), byte[][].class),
+                        rs.getBytes("stats") == null ? null : mapper.readValue(rs.getBytes("stats"), byte[][].class),
                         rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
@@ -836,11 +836,11 @@ public class DataBase {
                         CharacterRequest characterRequest = new CharacterRequest(
                         rs.getInt("chid"),
                         rs.getString("name"),
-                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
+                        rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
-                        mapper.readValue(rs.getBytes("stats") == null ? null : rs.getBytes("stats"), byte[][].class),
+                        rs.getBytes("stats") == null ? null : mapper.readValue(rs.getBytes("stats"), byte[][].class),
                         rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
@@ -889,11 +889,11 @@ public class DataBase {
                         CharacterRequest characterRequest = new CharacterRequest(
                         rs.getInt("chid"),
                         rs.getString("name"),
-                        mapper.readValue(rs.getBytes("picture") == null ? null : rs.getBytes("picture"), byte[][].class),
+                        rs.getBytes("picture") == null ? null : mapper.readValue(rs.getBytes("picture"), byte[][].class),
                         rs.getInt("game_system_id"),
                         rs.getInt("user_id"),
                         rs.getString("chstatus"),
-                        mapper.readValue(rs.getBytes("stats") == null ? null : rs.getBytes("stats"), byte[][].class),
+                        rs.getBytes("stats") == null ? null : mapper.readValue(rs.getBytes("stats"), byte[][].class),
                         rs.getInt("lobreqid"),
                         rs.getString("lobreqstat")
                         );
