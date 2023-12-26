@@ -4,11 +4,7 @@ const API_BASE_URL = 'http://localhost:8081/';
 
 export async function getUsers() {
   try {
-    const response = await axios.get(API_BASE_URL + 'users/all', {
-      headers: {
-        token: '123'
-      }
-    });
+    const response = await axios.get(API_BASE_URL + 'users/all');
     return response.data;
   } catch (error) {
     throw error;
@@ -17,11 +13,7 @@ export async function getUsers() {
 
 export const getUser = async (login) => {
   try {
-    const response = await axios.get(API_BASE_URL + `users/${login}`, {
-      headers: {
-        token: '123'
-      }
-    });
+    const response = await axios.get(API_BASE_URL + `users/${login}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -29,11 +21,7 @@ export const getUser = async (login) => {
 };
 
 export const getUserRoles = async (login) => {
-  await axios.get(API_BASE_URL + `users/roles/${login}`, {
-    headers: {
-      token: '123'
-    }
-  });
+  await axios.get(API_BASE_URL + `users/roles/${login}`);
 };
 
 export const getUserCharacters = async (login) => {
@@ -47,11 +35,7 @@ export const getUserCharacters = async (login) => {
 
 export const getAllGames = async () => {
   try {
-    const response = await axios.get(API_BASE_URL + `games/all`, {
-      headers: {
-        token: '123'
-      }
-    });
+    const response = await axios.get(API_BASE_URL + `games/all`);
     return response.data;
   } catch (error) {
     throw error;
@@ -60,11 +44,7 @@ export const getAllGames = async () => {
 
 export const getUserGames = async (login) => {
   try {
-    const response = await axios.get(API_BASE_URL + `users/games/${login}`, {
-      headers: {
-        token: '123'
-      }
-    });
+    const response = await axios.get(API_BASE_URL + `users/games/${login}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -92,21 +72,13 @@ export const createCharacter = async (name, gameSystemId, userId, picture, stats
   //   }
   // );
 
-  return await axios.post(
-    API_BASE_URL + `characters/create`,
-    {
-      name,
-      gameSystemId,
-      userId,
-      picture,
-      stats
-    },
-    {
-      headers: {
-        token: '123'
-      }
-    }
-  );
+  return await axios.post(API_BASE_URL + `characters/create`, {
+    name,
+    gameSystemId,
+    userId,
+    picture,
+    stats
+  });
 };
 
 export const createGame = async (
@@ -118,21 +90,22 @@ export const createGame = async (
   finishDate,
   description
 ) => {
-  await axios.post(
-    API_BASE_URL + `games/create`,
-    {
-      name,
-      gameSystemId,
-      masterId,
-      picture,
-      currentStatus,
-      finishDate,
-      description
-    },
-    {
-      headers: {
-        token: '123'
-      }
-    }
-  );
+  await axios.post(API_BASE_URL + `games/create`, {
+    name,
+    gameSystemId,
+    masterId,
+    picture,
+    currentStatus,
+    finishDate,
+    description
+  });
+};
+
+export const getFriendshipRequests = async (login) => {
+  try {
+    const response = await axios.get(API_BASE_URL + `/users/friends/${login}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };

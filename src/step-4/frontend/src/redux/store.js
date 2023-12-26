@@ -4,6 +4,7 @@ import gameReducer from './slices/GameSlice';
 import userReducer from './slices/UserSlice';
 import usersReducer from './slices/UsersSlice';
 import gamesReducer from './slices/GamesSlice';
+import friendsReducer from './slices/FriendsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     game: gameReducer,
     user: userReducer,
     users: usersReducer,
-    games: gamesReducer
+    games: gamesReducer,
+    friends: friendsReducer
   }
 });
