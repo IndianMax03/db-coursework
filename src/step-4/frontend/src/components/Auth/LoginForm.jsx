@@ -5,14 +5,16 @@ import { fetchSelf } from '../../redux/slices/UserSlice';
 
 const LoginForm = () => {
   const [login, setLogin] = useState('');
-  const dispatch = useDispatch();
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const handleLogin = () => {
     const isLoggingIn = true;
-    dispatch(fetchSelf({ login, password, isLoggingIn }));
-    navigate(`/profile`);
+    dispatch(fetchSelf({ login, password, isLoggingIn })).then(() => {
+      navigate(`/profile/${login}`);
+    });
   };
 
   return (

@@ -81,7 +81,7 @@ const Catalog = () => {
           />
         ))
       ) : (
-        <List array={users} position="horizontal" />
+        <List array={users} position="horizontal" maxInRow={4}/>
       )}
     </div>
   );

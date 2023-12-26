@@ -13,7 +13,7 @@ import Requests from '../components/Requests/Requests';
 export const privateRoutes = [
   { path: '/friends', element: <Friends /> },
   { path: '/catalog', element: <Catalog /> },
-  { path: '/profile', element: <Profile /> },
+  { path: '/profile/:login', element: <Profile /> },
   { path: '*', element: <Navigate to="/profile" replace /> },
   { path: '/lobby', element: <LobbyPage /> },
   { path: '/character-creation', element: <CharacterCreationForm /> },

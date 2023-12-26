@@ -15,7 +15,9 @@ const RegisterForm = () => {
   const handleRegister = () => {
     const isLoggingIn = false;
     dispatch(fetchSelf({ login, isLoggingIn, name, password, timezone, telegramTag, vkTag }));
-    navigate(`profile/${login}`);
+    // navigate(`profile/${login}`).then(() => {
+    //   navigate(`/profile/${login}`);
+    // });
   };
 
   return (

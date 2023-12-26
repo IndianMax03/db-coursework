@@ -5,12 +5,13 @@ import { FaUserFriends } from 'react-icons/fa';
 import { CiLogout } from 'react-icons/ci';
 import { FaBell } from 'react-icons/fa';
 import { cleanCookieToken } from '../auth/auth.service';
-import { logout } from '../redux/slices/UserSlice';
-import { useDispatch } from 'react-redux';
+import { logout, selectSelf } from '../redux/slices/UserSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector(selectSelf);
 
   const handleLogout = () => {
     cleanCookieToken();
@@ -20,7 +21,7 @@ const Navbar = () => {
 
   return (
     <div className="grid h-32 sticky top-10">
-      <Link to={'/profile'} className="flex space-x-4">
+      <Link to={`/profile/${user.login}`} className="flex space-x-4">
         <CgProfile className="h-6" />
         <div>Мой профиль</div>
       </Link>
@@ -36,7 +37,6 @@ const Navbar = () => {
         <FaUserFriends className="h-6" />
         <div>Друзья</div>
       </Link>
-
       <button onClick={handleLogout} className="flex space-x-4">
         <CiLogout className="h-6" />
         <Link to={'/login'}>

@@ -3,15 +3,19 @@ import Player from './Player';
 import Master from './Master';
 import List from '../List';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser, selectLoading, selectUser, selectError } from '../../redux/slices/UserSlice';
-import LobbyPage from '../LobbyPage';
+import { fetchUser, selectLoading, selectUser, selectError, selectSelf, selectSelfLoading, selectSelfError } from '../../redux/slices/UserSlice';
+import { useParams } from 'react-router-dom';
 
 const Profile = () => {
+  const { login } = useParams();
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const user = useSelector(selectSelf);
   const [role, setRole] = useState('player');
+
   const loading = useSelector(selectLoading);
   const hasError = useSelector(selectError);
+  const selfLoading = useSelector(selectSelfLoading);
+  const selfError = useSelector(selectSelfError);
 
   const handleRoleChange = (newRole) => {
     if (newRole !== role) {
@@ -19,21 +23,17 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {
-    const login = 'indian_max03';
-    dispatch(fetchUser(login));
-  }, [dispatch]);
 
-  if (loading) {
+  if (loading || selfLoading) {
     return <div>Загрузка... </div>;
   }
 
-  if (hasError) {
+  if (hasError || selfError) {
     return <div>Ошибка!</div>;
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="w-128flex items-center justify-center">
       <div>
         <div className="flex space-x-20 mb-10">
           <img src="pfp.jpg" alt="profile" className=" h-44 rounded-full"></img>
@@ -58,8 +58,7 @@ const Profile = () => {
               { name: 'friend2' },
               { name: 'friend2' }
             ]}
-            rowCount={2}
-            position="horizontal"
+            position="horizontal" maxInRow={4}
           />
         </div>
         <div className=" flex space-x-5 justify-center mb-5">
@@ -84,7 +83,7 @@ const Profile = () => {
             Мастер
           </button>
         </div>
-        {role === 'player' ? <Player /> : <Master />}
+        {role === 'player' ? <Player user={user} /> : <Master user={user}/>}
       </div>
     </div>
   );

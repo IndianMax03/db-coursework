@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Character from '../Character';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchCharacters,
@@ -9,16 +9,15 @@ import {
   selectLoading
 } from '../../redux/slices/CharacterSlice';
 
-const Player = () => {
+const Player = ({user}) => {
   const dispatch = useDispatch();
   const characters = useSelector(selectCharacters);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
   useEffect(() => {
-    const login = 'indian_max03';
-    dispatch(fetchCharacters(login));
-  }, [dispatch]);
+    dispatch(fetchCharacters(user.login));
+  }, [dispatch, user.login]);
 
   if (loading) {
     return <div>Загрузка...</div>;

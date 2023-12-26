@@ -5,21 +5,19 @@ import { Link } from 'react-router-dom';
 import {
   selectError,
   selectLoading,
-  selectGames,
   fetchUserGames
 } from '../../redux/slices/GameSlice';
 import { useEffect } from 'react';
 
-const Master = () => {
+const Master = ({user}) => {
   const dispatch = useDispatch();
   const games = useSelector((state) => state.game.games);
   const hasError = useSelector(selectError);
   const loading = useSelector(selectLoading);
 
   useEffect(() => {
-    const login = 'deaad';
-    dispatch(fetchUserGames(login));
-  }, [dispatch]);
+    dispatch(fetchUserGames(user.login));
+  }, [dispatch, user.login]);
 
   if (loading) {
     return <div>Загрузка...</div>;
