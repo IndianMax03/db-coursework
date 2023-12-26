@@ -16,7 +16,6 @@ public class UpdateKarmaRequest {
     private Integer senderUserId;
     private Integer receiverUserId;
     private boolean increase = false;
-    private boolean decrease = false;
 
     public boolean validSenderUserId() {
         return this.senderUserId != null && this.senderUserId > 0;
@@ -27,7 +26,7 @@ public class UpdateKarmaRequest {
     }
 
     public boolean validCombination() {
-        return (this.increase ^ this.decrease) && (this.senderUserId != this.receiverUserId);
+        return this.senderUserId != this.receiverUserId;
     }
 
     public boolean isValid() {

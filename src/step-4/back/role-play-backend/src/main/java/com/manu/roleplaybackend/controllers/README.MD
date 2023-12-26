@@ -31,7 +31,7 @@
     - GET: {login} в переменной пути
     - returns: список игр
 - `/users/update/karma` : **изменить карму для игрока (+- 1)**
-    - PATCH: senderUserId, receiverUserId, {increase = true | decrease = true}
+    - PATCH: senderUserId, receiverUserId, {increase = true}
     - returns: новое значение karma для receiverUserId
 - `/users/friendship` : **отправить запрос в друзья**
     - POST: senderId, receiverId, [currentStatus]
