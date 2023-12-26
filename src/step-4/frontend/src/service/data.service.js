@@ -138,3 +138,12 @@ export const changeKarma = async (
     throw error;
   }
 };
+
+export const getReviews = async (login) => {
+  try {
+    const response = await axios.get(API_BASE_URL + `users/review/all/${login}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -6,6 +6,7 @@ import usersReducer from './slices/UsersSlice';
 import gamesReducer from './slices/GamesSlice';
 import friendsReducer from './slices/FriendsSlice';
 import lobbyReducer from './slices/LobbySlice';
+import reviewReducer from './slices/ReviewSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     users: usersReducer,
     games: gamesReducer,
     friends: friendsReducer,
-    lobby: lobbyReducer
+    lobby: lobbyReducer,
+    review: reviewReducer
   }
 });

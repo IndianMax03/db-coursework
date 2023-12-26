@@ -27,7 +27,7 @@ const Karma = ({ sender, receiver, isMyProfile }) => {
           <IoIosArrowDown />
         </button>
       )}
-      <div className={visible ? "" : "ml-9"}>{karma}</div>
+      <div className={visible ? '' : 'ml-9'}>{karma}</div>
       {!isMyProfile && visible && (
         <button className="hover:text-black" onClick={() => handleKarmaChange(true)}>
           <IoIosArrowUp />

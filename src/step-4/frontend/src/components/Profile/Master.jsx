@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Game from '../Game';
-import Review from './Review';
 import { Link } from 'react-router-dom';
 import { selectError, selectLoading, fetchUserGames } from '../../redux/slices/GameSlice';
 import { useEffect } from 'react';
+import Reviews from '../Reviews/Reviews';
 
 const Master = ({ user, isMyProfile }) => {
   const dispatch = useDispatch();
@@ -47,18 +47,7 @@ const Master = ({ user, isMyProfile }) => {
         )}
         <div className="space-y-3 mb-5">
           <div> Отзывы </div>
-          <Review
-            name="Котярыч2"
-            rating="5"
-            content="Крутое подробный мастер. Мне понравилось. Молодец"
-            date="01.12.2023"
-          />
-          <Review
-            name="Котярыч2"
-            rating="4"
-            content="Хороший сюжет, мне понравилось твое размышление👍 Дополнительное видео очень подошло к твоему сюжету. Увы до 5 звезд не дотянул, но мастер хороший🤩"
-            date="01.12.2023"
-          />
+          <Reviews user={user} />
         </div>
       </div>
     );
