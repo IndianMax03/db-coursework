@@ -20,7 +20,7 @@ const Game = ({
         <div>Тип игры: {gameType}</div>
         <div>Статус: {status}</div>
         <div>Дата создания: {creationDate} </div>
-         {finishDate && <div>Дата завершения: {finishDate} </div>}
+        {finishDate && <div>Дата завершения: {finishDate} </div>}
         <div className="w-72">Описание: {description} </div>
         <div className="flex">
           {tags.map((i) => (
@@ -32,10 +32,11 @@ const Game = ({
         <button className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
           <Link to="/lobby">Перейти в лобби игры</Link>
         </button>
-        {status === 'not-started' && !isMyProfile && 
+        {status === 'not-started' && !isMyProfile && (
           <div>
             <div className="text-slate-500">Вы можете подать заявку на участие!</div>
-          </div>}
+          </div>
+        )}
       </div>
       <img src="gameImage.jpg" alt="character" className="w-48 h-48 rounded object-cover p-2" />
       <div></div>

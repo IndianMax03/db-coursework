@@ -3,7 +3,13 @@ import Player from './Player';
 import Master from './Master';
 import List from '../List';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser, selectLoading, selectUser, selectError, selectSelf } from '../../redux/slices/UserSlice';
+import {
+  fetchUser,
+  selectLoading,
+  selectUser,
+  selectError,
+  selectSelf
+} from '../../redux/slices/UserSlice';
 import { useParams } from 'react-router-dom';
 
 const Profile = () => {
@@ -18,15 +24,14 @@ const Profile = () => {
   const hasError = useSelector(selectError);
 
   useEffect(() => {
-      dispatch(fetchUser(login));
-  }, [dispatch, isMyProfile, login])
+    dispatch(fetchUser(login));
+  }, [dispatch, isMyProfile, login]);
 
   const handleRoleChange = (newRole) => {
     if (newRole !== role) {
       setRole(newRole);
     }
   };
-
 
   if (loading) {
     return <div>Загрузка... </div>;
@@ -62,7 +67,8 @@ const Profile = () => {
               { name: 'friend2' },
               { name: 'friend2' }
             ]}
-            position="horizontal" maxInRow={4}
+            position="horizontal"
+            maxInRow={4}
           />
         </div>
         <div className=" flex space-x-5 justify-center mb-5">
@@ -87,7 +93,11 @@ const Profile = () => {
             Мастер
           </button>
         </div>
-        {role === 'player' ? <Player user={user} isMyProfile={isMyProfile} /> : <Master user={user} isMyProfile={isMyProfile}/>}
+        {role === 'player' ? (
+          <Player user={user} isMyProfile={isMyProfile} />
+        ) : (
+          <Master user={user} isMyProfile={isMyProfile} />
+        )}
       </div>
     </div>
   );

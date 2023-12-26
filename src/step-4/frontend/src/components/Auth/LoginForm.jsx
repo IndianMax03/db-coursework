@@ -9,7 +9,6 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
   const handleLogin = () => {
     const isLoggingIn = true;
     dispatch(fetchSelf({ login, password, isLoggingIn })).then(() => {

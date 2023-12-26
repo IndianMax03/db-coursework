@@ -6,7 +6,10 @@ const List = ({ array, position, maxInRow }) => {
       <div className={position === 'horizontal' ? `grid grid-cols-${maxInRow} gap-4` : 'grid'}>
         {array.map((item, i) => (
           <div key={i} className="">
-            <Link to={`/profile/${item.login}`} className="grid justify-center align justify-items-center">
+            <Link
+              to={`/profile/${item.login}`}
+              className="grid justify-center align justify-items-center"
+            >
               <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
               <div>{item.login}</div>
             </Link>
