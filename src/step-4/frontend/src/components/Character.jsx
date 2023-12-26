@@ -38,7 +38,7 @@ const Character = ({ name, gameSystemId, status, lobby }) => {
           ''
         )}
       </div>
-      <img src="astarion.jpg" alt="character" className="w-48 h-48 rounded object-cover p-2" />
+      <img src="/astarion.jpg" alt="character" className="w-48 h-48 rounded object-cover p-2" />
     </div>
   );
 };

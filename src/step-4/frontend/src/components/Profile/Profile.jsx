@@ -45,7 +45,7 @@ const Profile = () => {
     <div className="w-128flex items-center justify-center">
       <div>
         <div className="flex space-x-20 mb-10">
-          <img src="pfp.jpg" alt="profile" className=" h-44 rounded-full"></img>
+          <img src="/pfp.jpg" alt="profile" className=" h-44 w-44 rounded-full"></img>
           <div className="w-44">
             <div className="flex text-2xl mb-3 space-x-3 justify-left">
               <div>{user.name}</div> <div className=" text-red-600 font-medium">{user.karma}</div>
