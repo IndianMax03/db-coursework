@@ -103,7 +103,36 @@ export const createGame = async (
 
 export const getFriendshipRequests = async (login) => {
   try {
-    const response = await axios.get(API_BASE_URL + `/users/friends/${login}`);
+    const response = await axios.get(API_BASE_URL + `users/friends/${login}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getLobbyByCharacter = async (characterId) => {
+  try {
+    const response = await axios.get(API_BASE_URL + `characters/lobby/${characterId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const changeKarma = async (
+  senderUserId,
+  receiverUserId,
+  increase = false,
+  decrease = false
+) => {
+  try {
+    console.log(senderUserId, receiverUserId, increase, decrease);
+    const response = await axios.patch(API_BASE_URL + `users/update/karma`, {
+      senderUserId,
+      receiverUserId,
+      increase,
+      decrease
+    });
     return response.data;
   } catch (error) {
     throw error;

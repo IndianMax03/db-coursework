@@ -11,6 +11,7 @@ import {
   selectSelf
 } from '../../redux/slices/UserSlice';
 import { useParams } from 'react-router-dom';
+import Karma from './Karma';
 
 const Profile = () => {
   const { login } = useParams();
@@ -48,7 +49,8 @@ const Profile = () => {
           <img src="/pfp.jpg" alt="profile" className=" h-44 w-44 rounded-full"></img>
           <div className="w-44">
             <div className="flex text-2xl mb-3 space-x-3 justify-left">
-              <div>{user.name}</div> <div className=" text-red-600 font-medium">{user.karma}</div>
+              <div>{user.name}</div>
+              <Karma receiver={user} sender={self} isMyProfile={isMyProfile} />
             </div>
             <div className=" text-red-600 font-medium">{user.login}</div>
             <div>Часовой пояс: {user.timezone}</div>

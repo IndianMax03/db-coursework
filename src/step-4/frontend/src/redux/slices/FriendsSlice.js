@@ -9,7 +9,7 @@ export const fetchFriendshipRequests = createAsyncThunk(
   }
 );
 
-export const friendsSlice = createSlice({
+export const FriendsSlice = createSlice({
   name: 'friends',
   initialState: {
     friendshipRequests: [],
@@ -37,4 +37,4 @@ export const friendsSlice = createSlice({
 
 export const selectFriendshipRequests = (state) => state.friends.friendshipRequests;
 
-export default friendsSlice.reducer;
+export default FriendsSlice.reducer;

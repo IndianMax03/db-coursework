@@ -33,6 +33,7 @@ const Player = ({ user, isMyProfile }) => {
           characters?.map((character) => (
             <Character
               key={character.id}
+              characterId={character.id}
               name={character.name}
               status={character.currentStatus}
               gameSystemId={character.gameSystemId}

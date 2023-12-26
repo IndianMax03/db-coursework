@@ -1,6 +1,16 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchLobbyByCharacter, selectLobby } from '../redux/slices/LobbySlice';
+import { useEffect } from 'react';
 
-const Character = ({ name, gameSystemId, status, lobby }) => {
+const Character = ({ name, gameSystemId, status, characterId }) => {
+  const dispatch = useDispatch();
+  const lobby = useSelector(selectLobby);
+
+  useEffect(() => {
+    dispatch(fetchLobbyByCharacter(characterId));
+  }, [dispatch]);
+
   const statusValue = () => {
     switch (status) {
       case 'busy':
