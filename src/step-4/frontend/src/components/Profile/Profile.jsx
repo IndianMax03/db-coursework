@@ -3,19 +3,23 @@ import Player from './Player';
 import Master from './Master';
 import List from '../List';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser, selectLoading, selectUser, selectError, selectSelf, selectSelfLoading, selectSelfError } from '../../redux/slices/UserSlice';
+import { fetchUser, selectLoading, selectUser, selectError, selectSelf } from '../../redux/slices/UserSlice';
 import { useParams } from 'react-router-dom';
 
 const Profile = () => {
   const { login } = useParams();
   const dispatch = useDispatch();
-  const user = useSelector(selectSelf);
+  const user = useSelector(selectUser);
+  const self = useSelector(selectSelf);
+  const isMyProfile = self.login === user.login;
   const [role, setRole] = useState('player');
 
   const loading = useSelector(selectLoading);
   const hasError = useSelector(selectError);
-  const selfLoading = useSelector(selectSelfLoading);
-  const selfError = useSelector(selectSelfError);
+
+  useEffect(() => {
+      dispatch(fetchUser(login));
+  }, [dispatch, isMyProfile, login])
 
   const handleRoleChange = (newRole) => {
     if (newRole !== role) {
@@ -24,11 +28,11 @@ const Profile = () => {
   };
 
 
-  if (loading || selfLoading) {
+  if (loading) {
     return <div>Загрузка... </div>;
   }
 
-  if (hasError || selfError) {
+  if (hasError) {
     return <div>Ошибка!</div>;
   }
 
@@ -83,7 +87,7 @@ const Profile = () => {
             Мастер
           </button>
         </div>
-        {role === 'player' ? <Player user={user} /> : <Master user={user}/>}
+        {role === 'player' ? <Player user={user} isMyProfile={isMyProfile} /> : <Master user={user} isMyProfile={isMyProfile}/>}
       </div>
     </div>
   );

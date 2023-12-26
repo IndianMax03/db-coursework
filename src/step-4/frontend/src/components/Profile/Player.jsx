@@ -9,7 +9,7 @@ import {
   selectLoading
 } from '../../redux/slices/CharacterSlice';
 
-const Player = ({user}) => {
+const Player = ({user, isMyProfile}) => {
   const dispatch = useDispatch();
   const characters = useSelector(selectCharacters);
   const loading = useSelector(selectLoading);
@@ -27,7 +27,7 @@ const Player = ({user}) => {
     return (
       <div className="space-y-3 mb-10">
         <div>Персонажи</div>
-        {characters?.map((character) => (
+        {characters.length=== 0 ? <div> Персонажи отсутствуют!</div> : characters?.map((character) => (
           <Character
             key={character.id}
             name={character.name}
@@ -35,9 +35,9 @@ const Player = ({user}) => {
             gameSystemId={character.gameSystemId}
           />
         ))}
-        <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg px-2 ">
+        {isMyProfile && <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg px-2 ">
           <Link to="/character-creation">Создать персонажа</Link>
-        </button>
+        </button>}
       </div>
     );
   }

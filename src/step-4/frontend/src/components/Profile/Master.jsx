@@ -9,7 +9,7 @@ import {
 } from '../../redux/slices/GameSlice';
 import { useEffect } from 'react';
 
-const Master = ({user}) => {
+const Master = ({user, isMyProfile}) => {
   const dispatch = useDispatch();
   const games = useSelector((state) => state.game.games);
   const hasError = useSelector(selectError);
@@ -25,10 +25,9 @@ const Master = ({user}) => {
     return <div>Произошла ошибка!</div>;
   } else {
     return (
-      <div>
+      <div className='space-y-3'>
         <div>Сюжеты</div>
-        <div>
-          {games.map((game, index) => (
+        {games.length === 0 ? <div> Игры отсутствуют! </div> : games.map((game, index) => (
             <Game
               key={index}
               name={game.name}
@@ -38,12 +37,12 @@ const Master = ({user}) => {
               finishDate={game.finishDate}
               description={game.description}
               tags={[]}
+              isMyProfile={isMyProfile}
             />
           ))}
-        </div>
-        <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
+        {isMyProfile && <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
           <Link to="/game-creation">Создать игру</Link>
-        </button>
+        </button>}
         <div className="space-y-3 mb-5">
           <div> Отзывы </div>
           <Review
