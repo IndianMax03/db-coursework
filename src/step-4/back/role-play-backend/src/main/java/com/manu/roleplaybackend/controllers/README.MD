@@ -24,6 +24,9 @@
 - `/users/roles/{login}` : **получить роли юзера**
     - GET: {login} в переменной пути
     - returns: список ролей (id, name)
+- `/users/roles/become-master/{login}` : **стать мастером**
+    - GET: {login} в переменной пути
+    - returns: HttpStatus + reason message
 - `/users/characters/{login}` : **получить персонажей юзера**
     - GET: {login} в переменной пути
     - returns: список персонажей

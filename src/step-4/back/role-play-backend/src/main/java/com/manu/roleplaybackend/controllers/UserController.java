@@ -35,6 +35,11 @@ public class UserController {
         return userService.getByLogin(login);
     }
 
+    @GetMapping("/roles/become-master/{login}")
+    public ResponseEntity<Object> becomeMaster(@PathVariable String login) {
+        return userService.becomeMaster(login);
+    }
+
     @GetMapping("/roles/{login}")
     public ResponseEntity<Object> getUserRoles(@PathVariable String login) {
         return userService.getUserRoles(login);

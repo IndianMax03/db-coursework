@@ -451,6 +451,28 @@ public class DataBase {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
     }
 
+    public ResponseEntity<Object> becomeMaster(Integer userId) {
+        if (isUserMasterById(userId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User already master!");
+        }
+        Integer newMasterId = null;
+        try {
+            
+            String sql = "select turn_user_to_master(?)";
+            newMasterId = template.queryForObject(sql, Integer.class, userId);
+        } catch (DataIntegrityViolationException igonre) {
+            System.out.println(igonre.getClass());
+        } catch (DataAccessException dae) {
+            System.out.println(dae);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Serious error detected! Contact MT urgently!");
+        }
+
+        if (newMasterId != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(HttpStatus.OK.getReasonPhrase());
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot insert into database");
+    }
+
     public boolean isUserMasterById(Integer id) {
         try {
             String sql = "select is_user_master(?)";

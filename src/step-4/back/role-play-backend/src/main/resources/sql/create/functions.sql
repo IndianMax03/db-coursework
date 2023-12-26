@@ -50,6 +50,19 @@ begin
 end
 $$ language plpgsql;
 
+create or replace function turn_user_to_master(usr_id integer)
+returns integer
+as $$
+declare
+    master_id integer;
+    new_master_id integer;
+begin
+    select id from roles where name = 'master' into master_id;
+    insert into user_roles values (usr_id, master_id) returning usr_id into new_master_id;
+    return new_master_id;
+end
+$$ language plpgsql;
+
 create or replace function create_game(name varchar(32), game_system_id integer, picture bytea, master_id integer, current_status game_status, description text)
 returns integer
 as $$
