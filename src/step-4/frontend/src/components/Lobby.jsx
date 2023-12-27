@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { fetchLobbyByGame, selectLobby } from '../redux/slices/LobbySlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { selectSelf } from '../redux/slices/UserSlice';
-import { changeRequestStatus } from '../service/data.service';
+import { changeGameStatus } from '../service/data.service';
+import { getGameStatusValue } from '../util/enumHandler';
 
 const Lobby = () => {
   const { lobbyId } = useParams();
   const self = useSelector(selectSelf);
   const dispatch = useDispatch();
   const lobby = useSelector(selectLobby);
+  const options = ['started', 'not-started', 'finished'];
+  const [gameStatus, setGameStatus] = useState(lobby.game.currentStatus);
   const isMyLobby = self.login === lobby.master.login;
   const approvedRequests = lobby.requests.filter((request) => {
     return request.requestStatus === 'approved';
@@ -17,18 +20,47 @@ const Lobby = () => {
   const onReviewRequests = lobby.requests.filter((request) => {
     return request.requestStatus === 'on-review';
   });
+  const [update, setUpdate] = useState(true);
 
   useEffect(() => {
     dispatch(fetchLobbyByGame(lobbyId));
-  }, [dispatch, lobbyId]);
+  }, [dispatch, lobbyId, update]);
 
   const handleRequestStatusChange = (requestId, status) => {
-    changeRequestStatus(requestId, status);
+    changeGameStatus(requestId, status);
+    setUpdate(!update);
+  };
+
+  const handleGameStatusChange = () => {
+    changeGameStatus(lobby.game.id, gameStatus);
   };
 
   return (
     <div className="space-y-5 p-5 border-solid border-2 border-slate-500 rounded-lg">
       <div className="text-lg">Игра "{lobby.game.name}"</div>
+      <div className="space-x-10">
+        <label for="gameStatus">Cтатус игры:</label>
+        <select
+          name="gameStatus"
+          id="gameStatus"
+          value={gameStatus}
+          onChange={(e) => {
+            setGameStatus(e.target.value);
+            console.log(gameStatus);
+          }}
+        >
+          {options.map((option) => (
+            <option value={option}>{getGameStatusValue(option)}</option>
+          ))}
+        </select>
+        <button
+          className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "
+          onClick={handleGameStatusChange}
+        >
+          Изменить статус
+        </button>
+      </div>
+
       <div>Мастер </div>
       <div className="flex space-x-10">
         <img

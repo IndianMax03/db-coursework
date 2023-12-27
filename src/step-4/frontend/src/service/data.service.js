@@ -190,3 +190,16 @@ export const sendReview = async (reviewerId, recipientId, rating, content) => {
     throw error;
   }
 };
+
+export const changeGameStatus = async (id, currentStatus) => {
+  try {
+    const response = await axios.patch(API_BASE_URL + 'games/update/status', {
+      id,
+      currentStatus
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
