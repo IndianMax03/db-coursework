@@ -10,14 +10,9 @@ const Karma = ({ sender, receiver, isMyProfile }) => {
   const [visible, setVisible] = useState(true);
 
   const handleKarmaChange = (increase) => {
-    if (increase) {
-      changeKarma(sender.id, receiver.id, true);
-      setKarma(karma + 1);
-    } else {
-      setKarma(karma - 1);
-      changeKarma(sender.id, receiver.id, false, true);
-    }
-    setVisible(false);
+      changeKarma(sender.id, receiver.id, increase);
+      increase ?  setKarma(karma + 1) :  setKarma(karma - 1);
+         setVisible(false);
   };
 
   return (

@@ -55,7 +55,7 @@ const Character = ({ name, gameSystemId, status, characterId }) => {
         <div>Игровая система: {gameSystem()}</div>
         <div>Характеристики: файл</div>
         <div>Статус: {statusValue()}</div>
-        {lobby && (
+        {lobby && lobby.game && (
           <button className="mt-10 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
             <Link to={`/lobby/${lobby.game.id}`}>Перейти в лобби персонажа</Link>
           </button>
