@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getFriendshipRequests, getUserGames } from '../../service/data.service';
+import { getFriendshipRequests } from '../../service/data.service';
 
 export const fetchFriendshipRequests = createAsyncThunk(
   'friends/fetchFriendshipRequests',

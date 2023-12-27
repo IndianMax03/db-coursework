@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getLobbyByCharacter } from '../../service/data.service';
+import { getLobbyByCharacter, getLobbyByGame } from '../../service/data.service';
 
 export const fetchLobbyByCharacter = createAsyncThunk(
   'lobby/fetchLobbyByCharacter',
@@ -8,6 +8,11 @@ export const fetchLobbyByCharacter = createAsyncThunk(
     return res;
   }
 );
+
+export const fetchLobbyByGame = createAsyncThunk('lobby/fetchLobbyByGame', async (gameId) => {
+  const res = await getLobbyByGame(gameId);
+  return res;
+});
 
 export const LobbySlice = createSlice({
   name: 'lobby',
@@ -23,7 +28,16 @@ export const LobbySlice = createSlice({
         state.isLoading = true;
         state.hasError = false;
       })
+      .addCase(fetchLobbyByGame.pending, (state, action) => {
+        state.isLoading = true;
+        state.hasError = false;
+      })
       .addCase(fetchLobbyByCharacter.fulfilled, (state, action) => {
+        state.lobby = action.payload;
+        state.isLoading = false;
+        state.hasError = false;
+      })
+      .addCase(fetchLobbyByGame.fulfilled, (state, action) => {
         state.lobby = action.payload;
         state.isLoading = false;
         state.hasError = false;
@@ -31,10 +45,16 @@ export const LobbySlice = createSlice({
       .addCase(fetchLobbyByCharacter.rejected, (state, action) => {
         state.hasError = true;
         state.isLoading = false;
+      })
+      .addCase(fetchLobbyByGame.rejected, (state, action) => {
+        state.hasError = true;
+        state.isLoading = false;
       });
   }
 });
 
 export const selectLobby = (state) => state.lobby.lobby;
+export const selectLobbyLoading = (state) => state.lobby.isLoading;
+export const selectLobbyError = (state) => state.lobby.hasError;
 
 export default LobbySlice.reducer;

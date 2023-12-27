@@ -119,6 +119,15 @@ export const getLobbyByCharacter = async (characterId) => {
   }
 };
 
+export const getLobbyByGame = async (gameId) => {
+  try {
+    const response = await axios.get(API_BASE_URL + `games/lobby/${gameId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const changeKarma = async (
   senderUserId,
   receiverUserId,
@@ -126,7 +135,6 @@ export const changeKarma = async (
   decrease = false
 ) => {
   try {
-    console.log(senderUserId, receiverUserId, increase, decrease);
     const response = await axios.patch(API_BASE_URL + `users/update/karma`, {
       senderUserId,
       receiverUserId,
@@ -142,6 +150,18 @@ export const changeKarma = async (
 export const getReviews = async (login) => {
   try {
     const response = await axios.get(API_BASE_URL + `users/review/all/${login}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const changeRequestStatus = async (id, currentStatus) => {
+  try {
+    const response = await axios.patch(API_BASE_URL + 'characters/update/request', {
+      id,
+      currentStatus
+    });
     return response.data;
   } catch (error) {
     throw error;

@@ -9,7 +9,6 @@ const Reviews = ({ user }) => {
 
   useEffect(() => {
     dispatch(fetchReviews(user.login));
-    console.log(reviews);
   }, [dispatch, user.login]);
 
   return (

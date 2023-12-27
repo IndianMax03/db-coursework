@@ -4,18 +4,18 @@ import LoginForm from '../components/Auth/LoginForm';
 import Profile from '../components/Profile/Profile';
 import { Navigate } from 'react-router-dom';
 import RegisterForm from '../components/Auth/RegisterForm';
-import LobbyPage from '../components/LobbyPage';
 import CharacterCreationForm from '../components/CharacterCreationForm';
 import GameCreationForm from '../components/GameCreationForm';
 import CharacterSelection from '../components/CharacterSelection';
 import Requests from '../components/Requests/Requests';
+import Lobby from '../components/Lobby';
 
 export const privateRoutes = [
   { path: '/friends', element: <Friends /> },
   { path: '/catalog', element: <Catalog /> },
   { path: '/profile/:login', element: <Profile /> },
   { path: '*', element: <Navigate to="/profile" replace /> },
-  { path: '/lobby', element: <LobbyPage /> },
+  { path: '/lobby/:lobbyId', element: <Lobby /> },
   { path: '/character-creation', element: <CharacterCreationForm /> },
   { path: '/game-creation', element: <GameCreationForm /> },
   { path: '/character-selection', element: <CharacterSelection /> },

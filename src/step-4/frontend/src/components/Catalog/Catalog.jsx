@@ -69,16 +69,18 @@ const Catalog = () => {
       </div>
       {search === 'games' ? (
         games.map((game, index) => (
-          <Game
-            key={index}
-            name={game.name}
-            gameSystem={game.gameSystemId}
-            creationDate={game.creationDate}
-            status={game.currentStatus}
-            finishDate={game.finishDate}
-            description={game.description}
-            tags={[]}
-          />
+          <div className="mb-3">
+            <Game
+              key={index}
+              name={game.name}
+              gameSystem={game.gameSystemId}
+              creationDate={game.creationDate}
+              status={game.currentStatus}
+              finishDate={game.finishDate}
+              description={game.description}
+              tags={[]}
+            />
+          </div>
         ))
       ) : (
         <List array={users} position="horizontal" maxInRow={4} />
