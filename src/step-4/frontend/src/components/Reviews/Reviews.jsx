@@ -13,7 +13,7 @@ const Reviews = ({ user, isMyProfile }) => {
   const [content, setContent] = useState('');
   const self = useSelector(selectSelf);
 
-//   TODO: check if review already leaved 
+  //   TODO: check if review already leaved
 
   useEffect(() => {
     dispatch(fetchReviews(user.login));
@@ -72,7 +72,6 @@ const Reviews = ({ user, isMyProfile }) => {
           >
             Отправить
           </button>
-          
         </div>
       )}
     </div>

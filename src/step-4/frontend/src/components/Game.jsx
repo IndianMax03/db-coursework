@@ -42,7 +42,7 @@ const Game = ({
           ))}
         </div>
         <button className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
-          <Link to={`/lobby/${lobby.game.id}`}>Перейти в лобби игры</Link>
+          <Link to={`/lobby/${gameId}`}>Перейти в лобби игры</Link>
         </button>
         {status === 'not-started' && !isMyProfile && (
           <div>

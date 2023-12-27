@@ -87,18 +87,21 @@ export const createGame = async (
   masterId,
   picture,
   currentStatus,
-  finishDate,
   description
 ) => {
-  await axios.post(API_BASE_URL + `games/create`, {
-    name,
-    gameSystemId,
-    masterId,
-    picture,
-    currentStatus,
-    finishDate,
-    description
-  });
+  try {
+    const response = await axios.post(API_BASE_URL + `games/create`, {
+      name,
+      gameSystemId,
+      masterId,
+      picture,
+      currentStatus,
+      description
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getFriendshipRequests = async (login) => {
