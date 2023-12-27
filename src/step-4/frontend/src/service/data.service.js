@@ -173,3 +173,17 @@ export const sendCharacterLobbyRequest = async (gameId, characterId) => {
     throw error;
   }
 };
+
+export const sendReview = async (reviewerId, recipientId, rating, content) => {
+  try {
+    const response = await axios.post(API_BASE_URL + 'users/review/leave', {
+      reviewerId,
+      recipientId,
+      rating,
+      content
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -48,7 +48,7 @@ const Master = ({ user, isMyProfile }) => {
         )}
         <div className="space-y-3 mb-5">
           <div> Отзывы </div>
-          <Reviews user={user} />
+          <Reviews user={user} isMyProfile={isMyProfile} />
         </div>
       </div>
     );
