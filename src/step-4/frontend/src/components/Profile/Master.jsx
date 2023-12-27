@@ -28,6 +28,7 @@ const Master = ({ user, isMyProfile }) => {
         ) : (
           games.map((game, index) => (
             <Game
+              gameId={game.gameId}
               key={index}
               name={game.name}
               gameSystem={game.gameSystemId}

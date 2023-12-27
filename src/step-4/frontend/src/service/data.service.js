@@ -128,16 +128,12 @@ export const getLobbyByGame = async (gameId) => {
   }
 };
 
-export const changeKarma = async (
-  senderUserId,
-  receiverUserId,
-  increase
-) => {
+export const changeKarma = async (senderUserId, receiverUserId, increase) => {
   try {
     const response = await axios.patch(API_BASE_URL + `users/update/karma`, {
       senderUserId,
       receiverUserId,
-      increase,
+      increase
     });
     return response.data;
   } catch (error) {

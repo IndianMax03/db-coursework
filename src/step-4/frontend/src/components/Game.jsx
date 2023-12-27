@@ -1,8 +1,12 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchLobbyByGame, selectLobby } from '../redux/slices/LobbySlice';
+import { useEffect } from 'react';
 
 const Game = ({
   name,
   gameSystem,
+  gameId,
   image,
   creationDate,
   status,
@@ -12,6 +16,13 @@ const Game = ({
   tags,
   isMyProfile
 }) => {
+  const dispatch = useDispatch();
+  const lobby = useSelector(selectLobby);
+
+  useEffect(() => {
+    dispatch(fetchLobbyByGame(gameId));
+  }, [dispatch, gameId]);
+
   return (
     <div className="flex border-solid border-2 border-slate-500 rounded-lg">
       <div className=" w-128 p-3">
@@ -30,7 +41,7 @@ const Game = ({
           ))}
         </div>
         <button className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
-          <Link to="/lobby">Перейти в лобби игры</Link>
+          <Link to={`/lobby/${lobby.game.id}`}>Перейти в лобби игры</Link>
         </button>
         {status === 'not-started' && !isMyProfile && (
           <div>
