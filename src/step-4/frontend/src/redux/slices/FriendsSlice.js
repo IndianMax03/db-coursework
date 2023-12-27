@@ -13,6 +13,7 @@ export const FriendsSlice = createSlice({
   name: 'friends',
   initialState: {
     friendshipRequests: [],
+    friends: [],
     isLoading: false,
     hasError: false
   },
@@ -25,6 +26,9 @@ export const FriendsSlice = createSlice({
       })
       .addCase(fetchFriendshipRequests.fulfilled, (state, action) => {
         state.friendshipRequests = action.payload;
+        const friendsIncoming = state.friendshipRequests.income.filter((request) => {return request.friendshipStatus === 'approved'});
+        const friendsOutcoming = state.friendshipRequests.outcome.filter((request) => {return request.friendshipStatus === 'approved'});
+        state.friends = friendsIncoming.concat(friendsOutcoming);
         state.isLoading = false;
         state.hasError = false;
       })
@@ -36,5 +40,6 @@ export const FriendsSlice = createSlice({
 });
 
 export const selectFriendshipRequests = (state) => state.friends.friendshipRequests;
+export const selectFriends = (state) => state.friends.friends;
 
 export default FriendsSlice.reducer;

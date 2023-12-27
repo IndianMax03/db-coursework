@@ -12,6 +12,7 @@ import {
 } from '../../redux/slices/UserSlice';
 import { useParams } from 'react-router-dom';
 import Karma from './Karma';
+import Friends from '../Friends/Friends';
 
 const Profile = () => {
   const { login } = useParams();
@@ -60,18 +61,7 @@ const Profile = () => {
         </div>
         <div className="mb-5">Друзья</div>
         <div className="flex  mb-10">
-          <List
-            array={[
-              { name: 'friend1' },
-              { name: 'friend2' },
-              { name: 'friend2' },
-              { name: 'friend2' },
-              { name: 'friend2' },
-              { name: 'friend2' }
-            ]}
-            position="horizontal"
-            maxInRow={4}
-          />
+          <Friends user={user}/>
         </div>
         <div className=" flex space-x-5 justify-center mb-5">
           <button

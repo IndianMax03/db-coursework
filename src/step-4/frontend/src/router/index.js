@@ -9,9 +9,10 @@ import GameCreationForm from '../components/GameCreationForm';
 import CharacterSelection from '../components/CharacterSelection';
 import Requests from '../components/Requests/Requests';
 import Lobby from '../components/Lobby';
+import FriendsPage from '../components/Friends/FriendsPage';
 
 export const privateRoutes = [
-  { path: '/friends', element: <Friends /> },
+  { path: '/friends', element: <FriendsPage /> },
   { path: '/catalog', element: <Catalog /> },
   { path: '/profile/:login', element: <Profile /> },
   { path: '*', element: <Navigate to="/profile" replace /> },
