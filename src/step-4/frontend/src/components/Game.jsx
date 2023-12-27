@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchLobbyByGame, selectLobby } from '../redux/slices/LobbySlice';
 import { useEffect } from 'react';
+import { getGameStatusValue, getGameSystem } from '../util/enumHandler';
 
 const Game = ({
   name,
@@ -27,9 +28,9 @@ const Game = ({
     <div className="flex border-solid border-2 border-slate-500 rounded-lg">
       <div className=" w-128 p-3">
         <div className="text-lg">{name}</div>
-        <div>Игровая система: {gameSystem}</div>
-        <div>Тип игры: {gameType}</div>
-        <div>Статус: {status}</div>
+        <div>Игровая система: {getGameSystem(gameSystem)}</div>
+        {/* <div>Тип игры: {gameType}</div> */}
+        <div>Статус: {getGameStatusValue(status)}</div>
         <div>Дата создания: {creationDate} </div>
         {finishDate && <div>Дата завершения: {finishDate} </div>}
         <div className="w-72">Описание: {description} </div>

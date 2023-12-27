@@ -61,7 +61,7 @@ const Profile = () => {
         </div>
         <div className="mb-5">Друзья</div>
         <div className="flex  mb-10">
-          <Friends user={user}/>
+          <Friends user={user} />
         </div>
         <div className=" flex space-x-5 justify-center mb-5">
           <button

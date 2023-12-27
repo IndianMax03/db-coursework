@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { dataUrlToByteArray } from '../util/image.converter';
 import { byteArrayToImage } from '../util/image.converter';
 import { useNavigate } from 'react-router-dom';
+import { getGameSystem } from '../util/enumHandler';
 
 const CharacterCreationForm = () => {
   const [name, setName] = useState('');
@@ -14,9 +15,10 @@ const CharacterCreationForm = () => {
   const navigate = useNavigate();
 
   const handleCharacterCreation = () => {
+    const user = localStorage.getItem('myProfile');
     if (true) {
       createCharacter(name, 1, 1, imageByteArray, null);
-      navigate('profile');
+      navigate(`/profile/${user.login}`);
     }
   };
 
@@ -56,7 +58,7 @@ const CharacterCreationForm = () => {
             id="gameSystem"
           >
             {options.map((option) => (
-              <option value={option}>{option}</option>
+              <option value={option}>{getGameSystem(option)}</option>
             ))}
           </select>
         </div>

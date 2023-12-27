@@ -1,17 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchSelf } from '../../redux/slices/UserSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSelf, selectSelf } from '../../redux/slices/UserSlice';
 
 const LoginForm = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const self = useSelector(selectSelf);
 
   const handleLogin = () => {
     const isLoggingIn = true;
     dispatch(fetchSelf({ login, password, isLoggingIn })).then(() => {
+      localStorage.setItem('myProfile', JSON.stringify(self));
       navigate(`/profile/${login}`);
     });
   };

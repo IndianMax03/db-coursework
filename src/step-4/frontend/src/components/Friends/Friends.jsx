@@ -2,15 +2,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import List from '../List';
 import { selectSelf } from '../../redux/slices/UserSlice';
 import { useEffect } from 'react';
-import { fetchFriendshipRequests, selectFriends, selectFriendshipRequests } from '../../redux/slices/FriendsSlice';
+import {
+  fetchFriendshipRequests,
+  selectFriends,
+  selectFriendshipRequests
+} from '../../redux/slices/FriendsSlice';
 
-const Friends = ({user}) => {
+const Friends = ({ user }) => {
   const dispatch = useDispatch();
   const friends = useSelector(selectFriends);
 
   useEffect(() => {
     dispatch(fetchFriendshipRequests(user.login));
-  },[dispatch, user.login]);
+  }, [dispatch, user.login]);
 
   return (
     <div className="">

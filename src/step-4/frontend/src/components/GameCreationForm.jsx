@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createGame } from '../service/data.service';
+import { getGameSystem } from '../util/enumHandler';
 
 const GameCreationForm = () => {
   const gameTypes = ['online', 'offline'];
@@ -26,7 +27,7 @@ const GameCreationForm = () => {
           <label for="gameSystem">Игровая система</label>
           <select name="gameSystem" id="gameSystem">
             {options.map((option) => (
-              <option value={option}>{option}</option>
+              <option value={option}> {getGameSystem(option)}</option>
             ))}
           </select>
         </div>

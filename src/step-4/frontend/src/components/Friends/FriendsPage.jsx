@@ -3,11 +3,11 @@ import { selectSelf } from '../../redux/slices/UserSlice';
 import Friends from './Friends';
 
 const FriendsPage = () => {
-    const user = useSelector(selectSelf);
+  const user = useSelector(selectSelf);
 
   return (
     <div>
-        <Friends user={user}/>
+      <Friends user={user} />
     </div>
   );
 };

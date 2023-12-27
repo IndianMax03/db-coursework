@@ -19,7 +19,7 @@ export const privateRoutes = [
   { path: '/lobby/:lobbyId', element: <Lobby /> },
   { path: '/character-creation', element: <CharacterCreationForm /> },
   { path: '/game-creation', element: <GameCreationForm /> },
-  { path: '/character-selection', element: <CharacterSelection /> },
+  { path: '/character-selection/:gameId', element: <CharacterSelection /> },
   { path: '/requests', element: <Requests /> }
 ];
 

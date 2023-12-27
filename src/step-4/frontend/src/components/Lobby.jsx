@@ -6,7 +6,7 @@ import { selectSelf } from '../redux/slices/UserSlice';
 import { changeRequestStatus } from '../service/data.service';
 
 const Lobby = () => {
-  const lobbyId = useParams();
+  const { lobbyId } = useParams();
   const self = useSelector(selectSelf);
   const dispatch = useDispatch();
   const lobby = useSelector(selectLobby);
@@ -74,8 +74,7 @@ const Lobby = () => {
                     className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "
                     onClick={() => handleRequestStatusChange(character.lobbyRequestId, 'approved')}
                   >
-                    {' '}
-                    Принять{' '}
+                    Принять
                   </button>
                 )}
                 {isMyLobby && (
@@ -83,8 +82,7 @@ const Lobby = () => {
                     className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "
                     onClick={() => handleRequestStatusChange(character.lobbyRequestId, 'rejected')}
                   >
-                    {' '}
-                    Отклонить{' '}
+                    Отклонить
                   </button>
                 )}
               </div>
@@ -94,7 +92,7 @@ const Lobby = () => {
       )}
       {lobby.game.currentStatus === 'not-started' && !isMyLobby && (
         <button className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
-          <Link to="/character-selection">Подать заявку на участие</Link>
+          <Link to={`/character-selection/${lobby.game.id}`}>Подать заявку на участие</Link>
         </button>
       )}
     </div>

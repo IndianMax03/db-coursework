@@ -10,6 +10,7 @@ const CharacterSlice = createSlice({
   name: 'character',
   initialState: {
     characters: [],
+    freeCharacters: [],
     isLoading: false,
     hasError: false
   },
@@ -22,6 +23,9 @@ const CharacterSlice = createSlice({
       })
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.characters = action.payload;
+        state.freeCharacters = state.characters.filter((character) => {
+          return character.currentStatus === 'free';
+        });
         state.isLoading = false;
         state.hasError = false;
       })
@@ -33,6 +37,7 @@ const CharacterSlice = createSlice({
 });
 
 export const selectCharacters = (state) => state.character.characters;
+export const selectFreeCharacters = (state) => state.character.freeCharacters;
 export const selectLoading = (state) => state.character.isLoading;
 export const selectError = (state) => state.character.hasError;
 

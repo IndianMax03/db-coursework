@@ -161,3 +161,15 @@ export const changeRequestStatus = async (id, currentStatus) => {
     throw error;
   }
 };
+
+export const sendCharacterLobbyRequest = async (gameId, characterId) => {
+  try {
+    const response = await axios.post(API_BASE_URL + 'characters/request', {
+      gameId,
+      characterId
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
