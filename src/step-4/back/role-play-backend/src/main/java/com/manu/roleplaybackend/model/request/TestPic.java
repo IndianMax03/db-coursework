@@ -1,5 +1,6 @@
 package com.manu.roleplaybackend.model.request;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ public class TestPic {
     
     String login;
     MultipartFile file;
+    File dest;
     String filename;
     byte[] bytes;
     
