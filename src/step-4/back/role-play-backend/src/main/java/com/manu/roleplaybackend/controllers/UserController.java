@@ -2,6 +2,7 @@ package com.manu.roleplaybackend.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.manu.roleplaybackend.model.Friendship;
 import com.manu.roleplaybackend.model.Review;
+import com.manu.roleplaybackend.model.request.TestPic;
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
 import com.manu.roleplaybackend.services.UserService;
 
@@ -24,6 +26,12 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+
+    @PostMapping("/test")
+    public ResponseEntity<Object> testPic(@RequestBody TestPic test) {
+        test.convert();
+        return ResponseEntity.status(HttpStatus.OK).body(test);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<Object> getAll() {
