@@ -16,7 +16,7 @@ public class Game {
     private Integer id;
     private String name;
     private Integer gameSystemId;
-    private byte[][] picture;
+    private byte[] picture;
     private Integer masterId;
     private String creationDate;
     private String currentStatus = "not-started";

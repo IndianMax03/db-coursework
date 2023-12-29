@@ -15,11 +15,11 @@ public class CharacterRequest {
 
     private Integer characterId;
     private String name;
-    private byte[][] picture;
+    private byte[] picture;
     private Integer gameSystemId;
     private Integer userId;
     private String currentStatus = "free";
-    private byte[][] stats;
+    private byte[] stats;
     private Integer lobbyRequestId;
     private String requestStatus;
     

@@ -16,7 +16,7 @@ public class Reviewer {
     private Integer id;
     private String login;
     private String name;
-    private byte[][] picture;
+    private byte[] picture;
     private Integer karma;
     private String timezone;
     private String telegramTag;

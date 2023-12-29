@@ -14,7 +14,7 @@ public class Friend {
     private Integer id;
     private String login;
     private String name;
-    private byte[][] picture;
+    private byte[] picture;
     private Integer karma = 0;
     private String timezone;
     private String telegramTag;
