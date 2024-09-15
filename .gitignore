@@ -40,3 +40,9 @@
 
 ### Windows ###
 /**/mvnw.cmd
+
+### Main ###
+
+.idea/
+.DS_Store
+/node_modules
