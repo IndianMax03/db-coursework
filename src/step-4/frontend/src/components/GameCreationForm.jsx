@@ -12,15 +12,21 @@ const GameCreationForm = () => {
   const [name, setName] = useState('');
   const [gameSystem, setGameSystem] = useState('1');
   // const [gameType, setGameType] = useState('');
-  const [image, setImage] = useState(undefined);
+  const [img, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const self = useSelector(selectSelf);
   const navigate = useNavigate();
 
   const handleGameCreation = () => {
-    createGame(name, parseInt(gameSystem), self.id, null, status, description).then(
+    console.log(img);
+    createGame(name, parseInt(gameSystem), self.id, img, status, description).then(
       navigate(`/profile/${self.login}`)
     );
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
   };
 
   return (
@@ -64,7 +70,7 @@ const GameCreationForm = () => {
 
         <div className="flex justify-between space-x-5">
           <div>Загрузить картинку</div>
-          <input type="file" accept="image/png, image/jpeg"></input>
+          <input type="file" onChange={handleImageChange} />
         </div>
         <div className="flex justify-center">
           <button

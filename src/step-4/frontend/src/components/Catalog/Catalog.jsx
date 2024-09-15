@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchGames, selectGames } from '../../redux/slices/GamesSlice';
 import { fetchUsers, selectUsers } from '../../redux/slices/UsersSlice';
 import List from '../List';
+
 const Catalog = () => {
   const [search, setSearch] = useState('games');
   const dispatch = useDispatch();
@@ -77,6 +78,7 @@ const Catalog = () => {
               creationDate={game.creationDate}
               status={game.currentStatus}
               finishDate={game.finishDate}
+              picture={game.picture}
               description={game.description}
               tags={[]}
             />

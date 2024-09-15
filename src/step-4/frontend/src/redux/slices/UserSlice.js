@@ -15,6 +15,7 @@ export const fetchSelf = createAsyncThunk('user/fetchSelf', async (data) => {
     res = await register(
       data.login,
       data.name,
+      data.img,
       data.password,
       data.timezone,
       data.telegramTag,

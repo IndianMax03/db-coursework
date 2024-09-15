@@ -25,6 +25,6 @@ export const privateRoutes = [
 
 export const publicRoutes = [
   { path: '/login', element: <LoginForm /> },
-  { path: '/register', element: <RegisterForm /> },
-  { path: '*', element: <Navigate to="/login" replace /> }
+  { path: '/register', element: <RegisterForm /> }
+  // { path: '*', element: <Navigate to="/login" replace /> }
 ];

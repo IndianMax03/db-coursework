@@ -1,4 +1,4 @@
-const Review = ({ rating, name, content, date, pfp }) => {
+const Review = ({ rating, name, content, date, picture }) => {
   const checkedStars = Array.from({ length: rating }, (_, index) => index + 1);
   const uncheckedStars = Array.from({ length: 5 - rating }, (_, index) => index + 1);
 
@@ -6,7 +6,14 @@ const Review = ({ rating, name, content, date, pfp }) => {
     <div className="flex border-solid border-b-2  border-slate-500">
       <div className="flex space-x-10 w-128 p-3">
         <div>
-          <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
+          {picture && (
+            <img
+              src={`data:image/png;base64,${picture}`}
+              alt="pfp"
+              className=" h-20 w-20 rounded-full object-cover"
+            />
+          )}
+          {/* <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img> */}
           <div>{name}</div>
         </div>
         <div className="grid">

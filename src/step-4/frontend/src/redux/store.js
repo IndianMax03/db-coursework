@@ -7,6 +7,7 @@ import gamesReducer from './slices/GamesSlice';
 import friendsReducer from './slices/FriendsSlice';
 import lobbyReducer from './slices/LobbySlice';
 import reviewReducer from './slices/ReviewSlice';
+import rolesReducer from './slices/RolesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     games: gamesReducer,
     friends: friendsReducer,
     lobby: lobbyReducer,
-    review: reviewReducer
+    review: reviewReducer,
+    roles: rolesReducer
   }
 });

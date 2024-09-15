@@ -1,39 +1,34 @@
 import { useState } from 'react';
 import { createCharacter } from '../service/data.service';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { dataUrlToByteArray } from '../util/image.converter';
 import { byteArrayToImage } from '../util/image.converter';
 import { useNavigate } from 'react-router-dom';
 import { getGameSystem } from '../util/enumHandler';
+import { selectSelf } from '../redux/slices/UserSlice';
 
 const CharacterCreationForm = () => {
   const [name, setName] = useState('');
   const [gameSystem, setGameSystem] = useState('1');
   const [pdf, setPdf] = useState(undefined);
   const options = ['1', '2'];
-  const [imageByteArray, setImageByteArray] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
+  const self = useSelector(selectSelf);
 
   const handleCharacterCreation = () => {
-    const user = localStorage.getItem('myProfile');
-    if (true) {
-      createCharacter(name, 1, 1, imageByteArray, null);
-      navigate(`/profile/${user.login}`);
-    }
+    createCharacter(name, parseInt(gameSystem), selectedImage, self.id, pdf);
+    navigate(`/profile/${self.login}`);
   };
 
-  const handleImageInput = (event) => {
+  const handleImageChange = (event) => {
     const file = event.target.files[0];
+    setSelectedImage(file);
+  };
 
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        const dataUrl = reader.result;
-        setImageByteArray(dataUrlToByteArray(dataUrl));
-      };
-      reader.readAsDataURL(file);
-    }
+  const handlePdfChange = (event) => {
+    const file = event.target.files[0];
+    setPdf(file);
   };
 
   return (
@@ -52,7 +47,7 @@ const CharacterCreationForm = () => {
           <label for="gameSystem">Игровая система</label>
           <select
             onChange={(e) => {
-              setGameSystem(e.target.text);
+              setGameSystem(e.target.value);
             }}
             name="gameSystem"
             id="gameSystem"
@@ -63,12 +58,12 @@ const CharacterCreationForm = () => {
           </select>
         </div>
         <div className="flex justify-between space-x-5">
-          <div>Загрузить картинку</div>
-          <input type="file" accept="image/png, image/jpeg" onChange={handleImageInput}></input>
+          <div>Загрузить картинку персонажа</div>
+          <input type="file" onChange={handleImageChange} />
         </div>
         <div className="flex justify-between space-x-5">
           <div>Загрузить анкету в формате pdf</div>
-          <input type="file" accept="image/png, image/jpeg"></input>
+          <input type="file" onChange={handlePdfChange} />
         </div>
         <div className="flex justify-center">
           <button

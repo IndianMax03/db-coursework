@@ -4,6 +4,7 @@ import { fetchReviews, selectReviews } from '../../redux/slices/ReviewSlice';
 import Review from './Review';
 import { sendReview } from '../../service/data.service';
 import { selectSelf } from '../../redux/slices/UserSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Reviews = ({ user, isMyProfile }) => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const Reviews = ({ user, isMyProfile }) => {
   const [rating, setRating] = useState('1');
   const [content, setContent] = useState('');
   const self = useSelector(selectSelf);
+  const navigate = useNavigate();
 
   //   TODO: check if review already leaved
 
@@ -21,6 +23,7 @@ const Reviews = ({ user, isMyProfile }) => {
 
   const handleReviewSend = () => {
     sendReview(self.id, user.id, parseInt(rating), content);
+    navigate(`/profile/${self.login}`);
   };
 
   return (
@@ -32,6 +35,7 @@ const Reviews = ({ user, isMyProfile }) => {
           reviews.map((review, index) => (
             <Review
               key={index}
+              picture={review.picture}
               content={review.content}
               date={review.date}
               rating={review.rating}

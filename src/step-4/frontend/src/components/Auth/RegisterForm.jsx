@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { fetchSelf } from '../../redux/slices/UserSlice';
+
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const [login, setLogin] = useState('');
@@ -10,14 +11,19 @@ const RegisterForm = () => {
   const [timezone, setTimezone] = useState(null);
   const [telegramTag, setTelegramTag] = useState(null);
   const [vkTag, setVkTag] = useState(null);
+  const [img, setSelectedImage] = useState(null);
   const navigate = useNavigate();
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
+  };
 
   const handleRegister = () => {
     const isLoggingIn = false;
-    dispatch(fetchSelf({ login, isLoggingIn, name, password, timezone, telegramTag, vkTag }));
-    // navigate(`profile/${login}`).then(() => {
-    //   navigate(`/profile/${login}`);
-    // });
+    dispatch(
+      fetchSelf({ login, isLoggingIn, img, name, password, timezone, telegramTag, vkTag })
+    ).then(navigate(`/profile/${login}`));
   };
 
   return (
@@ -61,7 +67,7 @@ const RegisterForm = () => {
         </div>
         <div className="flex justify-between space-x-5">
           <div>Загрузить аватарку</div>
-          <input type="file" accept="image/png, image/jpeg"></input>
+          <input type="file" onChange={handleImageChange} />
         </div>
         <div className="flex justify-center space-x-5">
           <div> У меня уже есть аккаунт </div>

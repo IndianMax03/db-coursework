@@ -8,14 +8,14 @@ const Game = ({
   name,
   gameSystem,
   gameId,
-  image,
   creationDate,
   status,
   gameType,
   finishDate,
   description,
   tags,
-  isMyProfile
+  isMyProfile,
+  picture
 }) => {
   const dispatch = useDispatch();
   const lobby = useSelector(selectLobby);
@@ -50,7 +50,14 @@ const Game = ({
           </div>
         )}
       </div>
-      <img src="/gameImage.jpg" alt="character" className="w-48 h-48 rounded object-cover p-2" />
+
+      {picture !== '' && (
+        <img
+          src={`data:image/png;base64,${picture}`}
+          alt="game"
+          className="w-48 h-48 rounded object-cover p-2"
+        />
+      )}
       <div></div>
     </div>
   );

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Player from './Player';
 import Master from './Master';
-import List from '../List';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchUser,
@@ -47,7 +46,13 @@ const Profile = () => {
     <div className="w-128flex items-center justify-center">
       <div>
         <div className="flex space-x-20 mb-10">
-          <img src="/pfp.jpg" alt="profile" className=" h-44 w-44 rounded-full"></img>
+          {user.picture !== '' && (
+            <img
+              src={`data:image/png;base64,${user.picture}`}
+              alt="profile"
+              className=" h-44 w-44 rounded-full"
+            ></img>
+          )}
           <div className="w-44">
             <div className="flex text-2xl mb-3 space-x-3 justify-left">
               <div>{user.name}</div>

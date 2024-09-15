@@ -50,6 +50,8 @@ const CharacterSelection = () => {
               name={character.name}
               status={character.currentStatus}
               gameSystemId={character.gameSystemId}
+              picture={character.picture}
+              stats={character.stats}
               button={
                 <button
                   className="mt-10 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "

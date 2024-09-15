@@ -51,53 +51,40 @@ export const getUserGames = async (login) => {
   }
 };
 
-export const createCharacter = async (name, gameSystemId, userId, picture, stats) => {
-  // const formData = new FormData();
+export const createCharacter = async (name, gameSystemId, img, userId, pdf) => {
+  const formData = new FormData();
+  formData.append('img', img);
+  formData.append('name', name);
+  formData.append('gameSystemId', gameSystemId);
+  formData.append('userId', userId);
+  formData.append('pdf', pdf);
 
-  // const blob = new Blob([picture], { type: 'image/jpeg' });
-  // formData.append('picture', blob, 'character_image.jpg');
-
-  // formData.append('name', name);
-  // formData.append('gameSystemId', gameSystemId);
-  // formData.append('userId', userId);
-  // formData.append('stats', stats);
-
-  // return await axios.post(
-  //   API_BASE_URL + `characters/create`, formData,
-  //   {
-  //     headers: {
-  //       'Content-Type' : 'multipart/form-data',
-  //       token: '123'
-  //     }
-  //   }
-  // );
-
-  return await axios.post(API_BASE_URL + `characters/create`, {
-    name,
-    gameSystemId,
-    userId,
-    picture,
-    stats
+  const response = await axios.post(API_BASE_URL + `characters/create`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   });
+  console.log(response.data);
+  return response.data;
 };
 
-export const createGame = async (
-  name,
-  gameSystemId,
-  masterId,
-  picture,
-  currentStatus,
-  description
-) => {
+export const createGame = async (name, gameSystemId, masterId, img, currentStatus, description) => {
   try {
-    const response = await axios.post(API_BASE_URL + `games/create`, {
-      name,
-      gameSystemId,
-      masterId,
-      picture,
-      currentStatus,
-      description
+    console.log(img);
+    const formData = new FormData();
+    formData.append('img', img);
+    formData.append('name', name);
+    formData.append('gameSystemId', gameSystemId);
+    formData.append('masterId', masterId);
+    formData.append('currentStatus', currentStatus);
+    formData.append('description', description);
+
+    const response = await axios.post(API_BASE_URL + `games/create`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw error;
@@ -197,7 +184,24 @@ export const changeGameStatus = async (id, currentStatus) => {
       id,
       currentStatus
     });
-    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getRoles = async (login) => {
+  try {
+    const response = await axios.get(API_BASE_URL + `users/roles/${login}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const addMasterRole = async (login) => {
+  try {
+    const response = await axios.get(API_BASE_URL + `users/roles/become-master/${login}`);
     return response.data;
   } catch (error) {
     throw error;

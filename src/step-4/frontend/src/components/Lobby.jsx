@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { fetchLobbyByGame, selectLobby } from '../redux/slices/LobbySlice';
 import { useEffect, useState } from 'react';
 import { selectSelf } from '../redux/slices/UserSlice';
-import { changeGameStatus } from '../service/data.service';
+import { changeGameStatus, changeRequestStatus } from '../service/data.service';
 import { getGameStatusValue } from '../util/enumHandler';
 
 const Lobby = () => {
@@ -27,7 +27,7 @@ const Lobby = () => {
   }, [dispatch, lobbyId, update]);
 
   const handleRequestStatusChange = (requestId, status) => {
-    changeGameStatus(requestId, status);
+    changeRequestStatus(requestId, status);
     setUpdate(!update);
   };
 
@@ -63,11 +63,18 @@ const Lobby = () => {
 
       <div>Мастер </div>
       <div className="flex space-x-10">
-        <img
+        {lobby.master.picture && (
+          <img
+            src={`data:image/png;base64,${lobby.master.picture}`}
+            alt="master"
+            className=" h-20 w-20 rounded-full object-cover"
+          />
+        )}
+        {/* <img
           src={lobby.master.image}
           className=" h-20 w-20 rounded-full object-cover "
           alt=""
-        ></img>
+        ></img> */}
         <div>{lobby.master.name} </div>
       </div>
       <div>Игроки</div>
@@ -76,11 +83,18 @@ const Lobby = () => {
       ) : (
         approvedRequests.map((character, i) => (
           <div className="flex space-x-10" key={i}>
-            <img
+            {character.picture && (
+              <img
+                src={`data:image/png;base64,${character.picture}`}
+                alt="character"
+                className=" h-20 w-20 rounded-full object-cover"
+              />
+            )}
+            {/* <img
               src={character.picture}
               alt=""
               className=" h-20 w-20 rounded-full object-cover "
-            ></img>
+            ></img> */}
             <div className="">
               <div>{character.name} </div>
             </div>
@@ -93,11 +107,18 @@ const Lobby = () => {
       ) : (
         onReviewRequests.map((character, i) => (
           <div className="flex space-x-10" key={i}>
-            <img
+            {character.picture && (
+              <img
+                src={`data:image/png;base64,${character.picture}`}
+                alt="character"
+                className=" h-20 w-20 rounded-full object-cover"
+              />
+            )}
+            {/* <img
               src={character.picture}
               alt=""
               className=" h-20 w-20 rounded-full object-cover "
-            ></img>
+            ></img> */}
             <div className="">
               <div>{character.name} </div>
               <div className="flex space-x-5">

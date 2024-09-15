@@ -9,14 +9,17 @@ import {
 import { useEffect } from 'react';
 import { getGameSystem, getCharacterStatusValue } from '../util/enumHandler';
 
-const Character = ({ name, gameSystemId, status, characterId, button }) => {
+const Character = ({ name, gameSystemId, status, characterId, button, picture, stats }) => {
   const dispatch = useDispatch();
   const lobby = useSelector(selectLobby);
+
   const loading = useSelector(selectLobbyLoading);
   const hasError = useSelector(selectLobbyError);
 
   useEffect(() => {
     // TODO: fix lobby render only after characted rendered;
+    console.log(picture);
+    console.log(stats);
     setTimeout(() => {}, 1000);
     dispatch(fetchLobbyByCharacter(characterId));
   }, [characterId, dispatch]);
@@ -43,7 +46,14 @@ const Character = ({ name, gameSystemId, status, characterId, button }) => {
         )}
         {button}
       </div>
-      <img src="/astarion.jpg" alt="character" className="w-48 h-48 rounded object-cover p-2" />
+      {picture !== '' && (
+        <img
+          alt="character"
+          src={`data:image/png;base64,${picture}`}
+          className="w-48 h-48 rounded object-cover p-2"
+        ></img>
+      )}
+      {/* <img src={picture} alt="character" className="w-48 h-48 rounded object-cover p-2" /> */}
     </div>
   );
 };

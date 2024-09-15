@@ -37,6 +37,8 @@ const Player = ({ user, isMyProfile }) => {
               name={character.name}
               status={character.currentStatus}
               gameSystemId={character.gameSystemId}
+              picture={character.picture}
+              stats={character.stats}
             />
           ))
         )}

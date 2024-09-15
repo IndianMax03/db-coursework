@@ -1,19 +1,31 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Game from '../Game';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { selectError, selectLoading, fetchUserGames } from '../../redux/slices/GameSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Reviews from '../Reviews/Reviews';
+import { addMasterRole } from '../../service/data.service';
+import { fetchRoles, selectHasMasterRole } from '../../redux/slices/RolesSlice';
+import { selectSelf } from '../../redux/slices/UserSlice';
 
 const Master = ({ user, isMyProfile }) => {
   const dispatch = useDispatch();
   const games = useSelector((state) => state.game.games);
   const hasError = useSelector(selectError);
   const loading = useSelector(selectLoading);
+  const hasMasterRole = useSelector(selectHasMasterRole);
+  const navigate = useNavigate();
+  const self = useSelector(selectSelf);
 
   useEffect(() => {
     dispatch(fetchUserGames(user.login));
-  }, [dispatch, user.login]);
+    dispatch(fetchRoles(user.login));
+  }, [dispatch, user.login, hasMasterRole]);
+
+  const handleAddMasterRole = () => {
+    addMasterRole(user.login);
+    navigate(`/profile/${self.login}`);
+  };
 
   if (loading) {
     return <div>Загрузка...</div>;
@@ -37,11 +49,22 @@ const Master = ({ user, isMyProfile }) => {
               finishDate={game.finishDate}
               description={game.description}
               tags={[]}
+              picture={game.picture}
               isMyProfile={isMyProfile}
             />
           ))
         )}
-        {isMyProfile && (
+        {!hasMasterRole && (
+          <div>
+            <div> У вас нет роли мастера! </div>
+            <button
+              onClick={handleAddMasterRole}
+              className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "
+            > Стать мастером
+            </button>
+          </div>
+        )}
+        {isMyProfile && hasMasterRole && (
           <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
             <Link to="/game-creation">Создать игру</Link>
           </button>

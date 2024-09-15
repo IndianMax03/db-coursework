@@ -10,7 +10,14 @@ const List = ({ array, position, maxInRow }) => {
               to={`/profile/${item.login}`}
               className="grid justify-center align justify-items-center"
             >
-              <img src="/pfp.jpg" alt="profile" className=" h-14 rounded-full"></img>
+              {item.picture && (
+                <img
+                  src={`data:image/png;base64,${item.picture}`}
+                  alt="profile"
+                  className=" h-14 rounded-full"
+                />
+              )}
+              {/* <img src={item.picture} alt="profile" className=" h-14 rounded-full"></img> */}
               <div>{item.login}</div>
             </Link>
           </div>
