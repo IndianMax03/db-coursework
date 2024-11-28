@@ -60,7 +60,8 @@ const Master = ({ user, isMyProfile }) => {
             <button
               onClick={handleAddMasterRole}
               className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "
-            > Стать мастером
+            >
+              Стать мастером
             </button>
           </div>
         )}

@@ -37,5 +37,4 @@ export const RolesSlice = createSlice({
 export const selectRoles = (state) => state.roles.roles;
 export const selectHasMasterRole = (state) => state.roles.hasMasterRole;
 
-
 export default RolesSlice.reducer;
