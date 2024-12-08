@@ -1,8 +1,37 @@
-create type user_status as enum ('exists', 'deleted');
-create type game_status as enum ('not-started', 'started', 'finished');
-create type request_status as enum ('on-review', 'rejected', 'approved');
-create type game_format as enum ('online', 'offline');
-create type character_status as enum ('free', 'busy');
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'user_status') then
+      create type user_status as enum ('exists', 'deleted');
+   end if;
+end $$;
+
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'game_status') then
+      create type game_status as enum ('not-started', 'started', 'finished');
+   end if;
+end $$;
+
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'request_status') then
+      create type request_status as enum ('on-review', 'rejected', 'approved');
+   end if;
+end $$;
+
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'game_format') then
+      create type game_format as enum ('online', 'offline');
+   end if;
+end $$;
+
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'character_status') then
+      create type character_status as enum ('free', 'busy');
+   end if;
+end $$;
 
 create table if not exists users (
     id serial primary key,
