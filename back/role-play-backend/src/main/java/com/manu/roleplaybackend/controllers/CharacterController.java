@@ -2,6 +2,7 @@ package com.manu.roleplaybackend.controllers;
 
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,13 +27,15 @@ import com.manu.roleplaybackend.services.CharacterService;
 @RestController
 @RequestMapping("/characters")
 @CrossOrigin(origins = "http://localhost:3000")
+@Slf4j
 public class CharacterController {
 
     @Autowired
     CharacterService characterService;
     
-    @PostMapping( value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> createCharacter(@RequestParam(value = "img", required = false) MultipartFile img, @RequestParam(value = "pdf", required = false) MultipartFile pdf, @ModelAttribute Character character) {
+        log.info("Got request: POST: characters/");
         if (img != null) {
             try {
                 character.setPicture(img.isEmpty() ? null : img.getBytes());
@@ -54,16 +57,19 @@ public class CharacterController {
 
     @PostMapping("/request")
     public ResponseEntity<Object> createRequest(@RequestBody LobbyRequest lobbyRequest) {
+        log.info("Got request: POST: characters/request");
         return characterService.createRequest(lobbyRequest);
     }
 
-    @PatchMapping("/update/request")
+    @PatchMapping("/request/update")
     public ResponseEntity<Object> updateRequestStatus(@RequestBody LobbyRequest lobbyRequest) {
+        log.info("Got request: PATCH: characters/request/update");
         return characterService.updateRequest(lobbyRequest);
     }
 
-    @GetMapping("/lobby/{characterId}")
+    @GetMapping("/{characterId}/lobby")
     public ResponseEntity<Object> getLobbyInformation(@PathVariable Integer characterId) {
+        log.info("Got request: GET: characters/{}/lobby", characterId);
         return characterService.getLobbyInformation(characterId);
     }
 

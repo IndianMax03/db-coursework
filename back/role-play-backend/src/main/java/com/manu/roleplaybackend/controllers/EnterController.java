@@ -5,6 +5,7 @@ import com.manu.roleplaybackend.services.UserService;
 
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/enter")
 @CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "token")
+@Slf4j
 public class EnterController {
 
     @Autowired
@@ -30,6 +32,7 @@ public class EnterController {
 
     @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> registerWithIMG(@RequestParam(value = "img", required = false) MultipartFile img, @ModelAttribute User user) {
+        log.info("Got request: POST: enter/register from user '{}'", user.getLogin());
         if (img != null) {
             try {
                 user.setPicture(img.isEmpty() ? null : img.getBytes());
@@ -43,6 +46,7 @@ public class EnterController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody User user) {
+        log.info("Got request: POST: enter/login from user '{}'", user.getLogin());
         return userService.login(user);
     }
 

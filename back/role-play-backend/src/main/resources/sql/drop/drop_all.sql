@@ -3,7 +3,7 @@
 drop index lobby_game_idx;
 drop index games_user_idx;
 drop index character_user_idx;
-drop index lobby_request_character_idx
+drop index lobby_request_character_idx;
 drop index lobby_request_lobby_idx;
 
 --  запросы для удаления таблиц
@@ -31,9 +31,6 @@ drop function turn_user_to_master;
 drop function create_game;
 drop function create_lobby_request;
 drop function create_lobby;
-drop function update_characters_status_while_changing_request_status;
-drop function update_characters_status_after_changing_game_status;
-drop function update_game_finish_date;
 
 --  запросы для удаления енамов
 
