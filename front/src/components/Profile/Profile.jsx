@@ -12,6 +12,7 @@ import {
 import { useParams } from 'react-router-dom';
 import Karma from './Karma';
 import Friends from '../Friends/Friends';
+import pfp from '../../../public/pfp.jpg';
 
 const Profile = () => {
   const { login } = useParams();
@@ -46,12 +47,14 @@ const Profile = () => {
     <div className="w-128flex items-center justify-center">
       <div>
         <div className="flex space-x-20 mb-10">
-          {user.picture !== '' && (
+          {user.picture !== null ? (
             <img
               src={`data:image/png;base64,${user.picture}`}
               alt="profile"
               className=" h-44 w-44 rounded-full"
             ></img>
+          ) : (
+            <img src={pfp} alt="profile" className=" h-44 w-44 rounded-full"></img>
           )}
           <div className="w-44">
             <div className="flex text-2xl mb-3 space-x-3 justify-left">
