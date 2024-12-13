@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import pfp from '../../public/pfp.jpg';
 
 const List = ({ array, position, maxInRow }) => {
   return (
@@ -10,12 +11,14 @@ const List = ({ array, position, maxInRow }) => {
               to={`/profile/${item.login}`}
               className="grid justify-center align justify-items-center"
             >
-              {item.picture && (
+              {item.picture !== null ? (
                 <img
                   src={`data:image/png;base64,${item.picture}`}
                   alt="profile"
-                  className=" h-14 rounded-full"
-                />
+                  className=" h-14 w-14 rounded-full"
+                ></img>
+              ) : (
+                <img src={pfp} alt="profile" className=" h-14 w-14 rounded-full"></img>
               )}
               {/* <img src={item.picture} alt="profile" className=" h-14 rounded-full"></img> */}
               <div>{item.login}</div>
