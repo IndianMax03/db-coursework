@@ -46,13 +46,20 @@ const Character = ({ name, gameSystemId, status, characterId, button, picture, s
         )}
         {button}
       </div>
-      {picture !== '' && (
-        <img
-          alt="character"
-          src={`data:image/png;base64,${picture}`}
-          className="w-48 h-48 rounded object-cover p-2"
-        ></img>
-      )}
+    
+       {picture !== null ? (
+                 <img
+                 alt="character"
+                 src={`data:image/png;base64,${picture}`}
+                 className="w-48 h-48 rounded object-cover p-2"
+               ></img>
+              ) : (
+                <img
+                alt="character"
+                src="/gale.jpg"
+                className="w-48 h-48 rounded object-cover p-2"
+              ></img>
+              )}
       {/* <img src={picture} alt="character" className="w-48 h-48 rounded object-cover p-2" /> */}
     </div>
   );

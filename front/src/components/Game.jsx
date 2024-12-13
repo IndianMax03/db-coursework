@@ -50,14 +50,16 @@ const Game = ({
           </div>
         )}
       </div>
-
-      {picture !== '' && (
+      {picture !== null ? (
         <img
           src={`data:image/png;base64,${picture}`}
           alt="game"
           className="w-48 h-48 rounded object-cover p-2"
-        />
+        ></img>
+      ) : (
+        <img src="gameImage.jpg" alt="game" className="w-48 h-48 rounded object-cover p-2"></img>
       )}
+
       <div></div>
     </div>
   );
