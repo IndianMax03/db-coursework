@@ -1,0 +1,610 @@
+openapi: '3.0.3'
+
+info:
+  title: 'Role play API'
+  description: 'Description'
+  version: '1.0'
+
+servers:
+  - url: 'http://localhost:8081/'
+
+paths:
+
+  /enter/register:
+    post:
+      summary: 'Registration'
+      description: 'Register new user'
+      operationId: 'register'
+      tags:
+        - 'Security'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: 'Token'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+
+  /enter/login:
+    post:
+      summary: 'Login'
+      description: 'Authorize existing user'
+      operationId: 'login'
+      tags:
+        - 'Security'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: 'Token'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+
+  /users:
+    get:
+      summary: 'Get users'
+      description: 'Get all users'
+      operationId: 'getAll'
+      tags:
+        - 'Users'
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'The list of users'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserArray'
+
+  /users/{login}:
+    get:
+      summary: 'Get user by login'
+      description: 'Get single user'
+      operationId: 'getUserByLogin'
+      tags:
+        - 'Users'
+      parameters:
+        - name: login
+          in: path
+          schema:
+            description: 'User login'
+            type: string
+            example: 'ksunya_221'
+          required: true
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'The user with login'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{login}/roles:
+    get:
+      summary: 'Get user roles by login'
+      description: 'Get roles of user with login'
+      operationId: 'getUserRoles'
+      tags:
+        - 'Users'
+      parameters:
+        - name: login
+          in: path
+          schema:
+            description: 'User login'
+            type: string
+            example: 'ksunya_221'
+          required: true
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'The user roles'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoles'
+
+  /users/{login}/characters:
+    get:
+      summary: 'Get user characters by login'
+      description: 'Get characters of user with login'
+      operationId: 'getUserCharacters'
+      tags:
+        - 'Users'
+      parameters:
+        - name: login
+          in: path
+          schema:
+            description: 'User login'
+            type: string
+            example: 'ksunya_221'
+          required: true
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'The user characters'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterArray'
+
+  /users/{login}/games:
+    get:
+      summary: 'Get user games by login'
+      description: 'Get games of user with login'
+      operationId: 'getUserGames'
+      tags:
+        - 'Users'
+      parameters:
+        - name: login
+          in: path
+          schema:
+            description: 'User login'
+            type: string
+            example: 'ksunya_221'
+          required: true
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'The user games'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameArray'
+
+  /users/karma:
+    patch:
+      summary: 'Update karma request'
+      description: 'Updates user karma'
+      operationId: 'updateKarma'
+      tags:
+        - 'Users'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateKarmaRequest'
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'New value for user karma'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateKarmaResponse'
+
+  /users/friendship:
+    patch:
+      summary: 'Update friendship status'
+      description: 'Updates friendship status'
+      operationId: 'updateFriendRequestStatus'
+      tags:
+        - 'Users'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendshipRequest'
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'New value for user karma'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FriendshipResponse'
+
+  /characters:
+    post:
+      summary: 'Create character'
+      description: 'Creates character'
+      operationId: 'createCharacter'
+      tags:
+        - 'Characters'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Character'
+      security:
+        - token: [ ]
+      responses:
+        '201':
+          description: 'Created character'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Character'
+
+  /characters/{characterId}/lobby:
+    get:
+      summary: 'Get character lobby information'
+      description: 'Get lobby of the character'
+      operationId: 'getLobbyInformation'
+      tags:
+        - 'Characters'
+      parameters:
+        - name: characterId
+          in: path
+          schema:
+            description: 'Character id'
+            type: number
+            format: integer
+            example: 2
+            minimum: 1
+          required: true
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'The lobby'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lobby'
+
+  /games:
+    get:
+      summary: 'Get games'
+      description: 'Get all games'
+      operationId: 'getAllGames'
+      tags:
+        - 'Games'
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'The list of games'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameArray'
+
+  /games/{gameId}/lobby:
+    get:
+      summary: 'Get game lobby information'
+      description: 'Get lobby in game'
+      operationId: 'getLobbyInformation'
+      tags:
+        - 'Games'
+      parameters:
+        - name: gameId
+          in: path
+          schema:
+            description: 'Game id'
+            type: number
+            format: integer
+            example: 2
+            minimum: 1
+          required: true
+      security:
+        - token: [ ]
+      responses:
+        '200':
+          description: 'The lobby'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lobby'
+
+components:
+  schemas:
+    UserStatus:
+      title: 'User Status'
+      description: 'If user exists'
+      type: string
+      enum:
+        - EXISTS
+        - DELETED
+      example: DELETED
+      default: EXISTS
+
+    UserRole:
+      title: 'User Role'
+      description: 'Role of user'
+      type: string
+      enum:
+        - ADMIN
+        - MASTER
+        - PLAYER
+        - NONE
+      example: MASTER
+      default: NONE
+
+    UserRoles:
+      title: 'User roles'
+      type: object
+      properties:
+        roles:
+          title: 'Array of user roles'
+          type: array
+          items:
+            $ref: '#/components/schemas/UserRole'
+
+    User:
+      title: 'User'
+      type: object
+      properties:
+        id:
+          description: 'User id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        login:
+          description: 'User login'
+          type: string
+          example: 'ksunya_221'
+        name:
+          description: 'User name'
+          type: string
+          example: 'Ксюша'
+        password:
+          description: 'Hashed user password'
+          type: string
+          example: 'asl$d=kj%nvuiakwejhfnakjwehfniauwe#hfkjalwe344kwefnawkejfn1akwj$ef'
+        picture:
+          description: 'User profile picture in bytes'
+          type: string
+          format: byte
+          example: [3, 14, 15, 92, 6, 1, 66, 8]
+        karma:
+          description: 'User karma'
+          type: number
+          format: integer
+          example: -12
+        timezone:
+          description: 'User timezone'
+          type: string
+          example: 'UTC+03:00'
+        telegramTag:
+          description: 'User telegram tag'
+          type: string
+          example: '@alesha_popovich'
+        vkTag:
+          description: 'User vk tag'
+          type: string
+          example: '@iliya_muromec'
+        currentStatus:
+          $ref: '#/components/schemas/UserStatus'
+
+    UserArray:
+      title: 'Users'
+      type: object
+      properties:
+        tickets:
+          title: 'Array of users'
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+
+    Token:
+      title: 'Access token'
+      type: object
+      properties:
+        token:
+          description: 'User token to access application'
+          type: string
+          example: "d71jnd0%=dhqvb$112hd0d1nc91"
+
+    Character:
+      title: 'Character'
+      type: object
+      properties:
+        id:
+          description: 'Character id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        name:
+          description: 'Character name'
+          type: string
+          example: 'Леприкон великий'
+        picture:
+          description: 'Character picture in bytes'
+          type: string
+          format: byte
+          example: [ 3, 14, 15, 92, 6, 1, 66, 8 ]
+        gameSystemId:
+          description: 'Character game system id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        userId:
+          description: 'Character user-owner id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        currentStatus:
+          description: 'Character status'
+          type: string
+          example: 'free'
+        stats:
+          description: 'Character stats in bytes'
+          type: string
+          format: byte
+          example: [ 3, 14, 15, 92, 6, 1, 66, 8 ]
+
+    CharacterArray:
+      title: 'Characters'
+      type: object
+      properties:
+        characters:
+          title: 'Array of characters'
+          type: array
+          items:
+            $ref: '#/components/schemas/Character'
+
+    Game:
+      title: 'Game'
+      type: object
+      properties:
+        id:
+          description: 'Game id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        name:
+          description: 'Game name'
+          type: string
+          example: 'Поиск сокровищ'
+        gameSystemId:
+          description: 'Game game system id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        picture:
+          description: 'Game picture in bytes'
+          type: string
+          format: byte
+          example: [ 3, 14, 15, 92, 6, 1, 66, 8 ]
+        masterId:
+          description: 'Game master-user id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        creationDate:
+          description: 'Game creation date'
+          type: string
+          format: date-time
+          nullable: false
+          example: '2024-09-13T19:57:43.961423'
+        currentStatus:
+          description: 'Game status'
+          type: string
+          example: 'free'
+        finishDate:
+          description: 'Game finish date'
+          type: string
+          format: date-time
+          nullable: false
+          example: '2024-09-20T19:57:43.961423'
+        description:
+          description: 'Game description'
+          type: string
+          example: 'Игра о том, чтобы найти сокровища, вы оказываетесь в мире, полном загадок и недоброжелателей!'
+
+    GameArray:
+      title: 'Games'
+      type: object
+      properties:
+        characters:
+          title: 'Array of games'
+          type: array
+          items:
+            $ref: '#/components/schemas/Game'
+
+    UpdateKarmaRequest:
+      title: 'Request for update karma action'
+      type: object
+      properties:
+        senderUserId:
+          description: 'Update karma request sender user id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        receiverUserId:
+          description: 'Update karma request receiver user id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        increase:
+          description: 'Is karma increase by update karma request'
+          type: boolean
+          example: true
+          default: false
+
+    UpdateKarmaResponse:
+      title: 'Response for update karma action'
+      type: object
+      properties:
+        karma:
+          description: 'Update karma new value'
+          type: number
+          format: integer
+          example: -12
+
+    FriendshipRequest:
+      title: 'Request for make friends'
+      type: object
+      properties:
+        senderId:
+          description: 'Update karma request sender user id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        receiverId:
+          description: 'Update karma request receiver user id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+
+    FriendshipResponse:
+      title: 'Response for make friends'
+      type: object
+      properties:
+        currentStatus:
+          description: 'Friendship status'
+          type: string
+          example: 'approved'
+
+    Lobby:
+      title: 'Lobby'
+      type: object
+      properties:
+        id:
+          description: 'Lobby id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        gameId:
+          description: 'Lobby game id'
+          type: number
+          format: integer
+          example: 2
+          minimum: 1
+        format:
+          description: 'Lobby format'
+          type: string
+          example: 'online'
+
+    securitySchemes:
+      token:
+        type: apiKey
+        description: 'Token'
+        name: 'Token'
+        in: header
+

@@ -135,25 +135,29 @@ React application stack:
     └── util/ ───────────────────> Утилитные функции
 ```
 
-## Предложения по рефакторингу
+## Рефакторинг
 
 ### Этап 1 (v.1)
 
+Ссылка на отчет (docs.google)
+
+- https://docs.google.com/document/d/1oiNN4O1Gf33xgSukXvaEc-iWNWjXpuuH9RfdXXW0NqI/edit?usp=sharing
+
 Общее
 
-- [ ] Декомпозиция кода
-- [ ] Реструктуризация репозитория
-- [ ] Применение [соглашения о ветвлении](img/branching.png)
+- [x] Декомпозиция кода
+- [x] Реструктуризация репозитория
+- [x] Применение [соглашения о ветвлении](img/branching.png)
 
 Backend
 
-- [ ] OpenAPI спецификация для backend (Swagger)
-- [ ] Добавление корректного логгирования (sl4j)
+- [x] OpenAPI спецификация для backend ([Swagger](https://se.ifmo.ru/~s333057/role-play-swagger/))
+- [x] Добавление корректного логгирования (sl4j)
 
 Frontend
 
-- [ ] Добавить обработку ошибок
-- [ ] Миграция: webpack -> vite
+- [x] Добавить обработку ошибок
+- [x] Миграция: webpack -> vite
 
 ### Этап 2 (v.2)
 
