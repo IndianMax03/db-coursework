@@ -135,9 +135,13 @@ React application stack:
     └── util/ ───────────────────> Утилитные функции
 ```
 
-## Предложения по рефакторингу
+## Рефакторинг
 
 ### Этап 1 (v.1)
+
+Ссылка на отчет (docs.google)
+
+- https://docs.google.com/document/d/1oiNN4O1Gf33xgSukXvaEc-iWNWjXpuuH9RfdXXW0NqI/edit?usp=sharing
 
 Общее
 
@@ -147,7 +151,7 @@ React application stack:
 
 Backend
 
-- [x] OpenAPI спецификация для backend (Swagger)
+- [x] OpenAPI спецификация для backend ([Swagger](https://se.ifmo.ru/~s333057/role-play-swagger/))
 - [x] Добавление корректного логгирования (sl4j)
 
 Frontend
