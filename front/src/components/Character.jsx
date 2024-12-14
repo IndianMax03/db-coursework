@@ -60,7 +60,6 @@ const Character = ({ name, gameSystemId, status, characterId, button, picture, s
                 className="w-48 h-48 rounded object-cover p-2"
               ></img>
               )}
-      {/* <img src={picture} alt="character" className="w-48 h-48 rounded object-cover p-2" /> */}
     </div>
   );
 };
