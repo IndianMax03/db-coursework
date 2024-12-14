@@ -58,7 +58,7 @@ public class CharacterController {
     @PostMapping("/request")
     public ResponseEntity<Object> createRequest(@RequestBody LobbyRequest lobbyRequest) {
         log.info("Got request: POST: characters/request");
-        return characterService.createRequest(lobbyRequest);
+        return characterService.createLobbyRequest(lobbyRequest);
     }
 
     @PatchMapping("/request/update")
@@ -70,7 +70,7 @@ public class CharacterController {
     @GetMapping("/{characterId}/lobby")
     public ResponseEntity<Object> getLobbyInformation(@PathVariable Integer characterId) {
         log.info("Got request: GET: characters/{}/lobby", characterId);
-        return characterService.getLobbyInformation(characterId);
+        return characterService.getLobbyInformationByCharacterId(characterId);
     }
 
 }
