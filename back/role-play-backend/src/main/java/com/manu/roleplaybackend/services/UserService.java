@@ -11,13 +11,20 @@ import com.manu.roleplaybackend.model.Character;
 import com.manu.roleplaybackend.model.request.Friend;
 import com.manu.roleplaybackend.model.request.Reviewer;
 import com.manu.roleplaybackend.repositories.*;
+import com.manu.roleplaybackend.security.JwtUtils;
 import io.micrometer.common.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.manu.roleplaybackend.model.request.UpdateKarmaRequest;
@@ -52,26 +59,60 @@ public class UserService {
     @Autowired
     FriendshipRepository friendshipRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
     public ResponseEntity<Object> register(User user) {
-        if (!user.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user data");
+        final String mainPassword = user.getPassword();
+        UserDetailsImpl userDetails = UserDetailsImpl.fromUser(user);
+        userDetails.setUsername(userDetails.getUsername());
+        userDetails.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+        user.setPassword(userDetails.getPassword());
+
+        try {
+            userRepository.save(user);
+
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    userDetails.getUsername(), mainPassword
+            ));
+
+            String token = jwtUtils.generateJwtToken(authentication);
+
+            userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+            return ResponseEntity.status(HttpStatus.CREATED).header("token", token).body(user);
+        } catch (DataIntegrityViolationException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: cannot create user");
         }
-
-        User newUser = userRepository.save(user);
-        String token = generateToken(newUser.getPassword());
-
-        return ResponseEntity.status(HttpStatus.CREATED).header("token", token).body(newUser);
     }
 
     public ResponseEntity<Object> login(User user) {
-        if (user.validLogin() && user.validPassword()) {
-            Optional<User> opUser = userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
-            if (opUser.isPresent()) {
-                User existingUser = opUser.get();
-                return ResponseEntity.status(HttpStatus.OK).header("token", generateToken(existingUser.getPassword())).body(existingUser);
-            }
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    user.getLogin(), user.getPassword()
+            ));
+            String token = jwtUtils.generateJwtToken(authentication);
+
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+            return ResponseEntity.status(HttpStatus.OK).header("token", token).body(user);
+
+        } catch (BadCredentialsException exception) {
+            return ResponseEntity.status(401).body("Permission denied");
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: cannot create user");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login or password");
     }
 
     public ResponseEntity<Object> getAll() {
