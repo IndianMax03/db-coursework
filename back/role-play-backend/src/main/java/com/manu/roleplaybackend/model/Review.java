@@ -2,6 +2,8 @@ package com.manu.roleplaybackend.model;
 
 import java.sql.Timestamp;
 
+import com.manu.roleplaybackend.model.keys.ReviewId;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,12 +13,26 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
+@Entity
+@Table(name = "reviews")
+@IdClass(ReviewId.class)
 public class Review {
-    
+
+    @Id
+    @Column(name = "reviewer_id")
     private Integer reviewerId;
+
+    @Id
+    @Column(name = "recipient_id")
     private Integer recipientId;
+
+    @Column(name = "content")
     private String content;
+
+    @Column(name = "date")
     private Timestamp date;
+
+    @Column(name = "rating")
     private Integer rating;
 
     public boolean validReviewerId() {
