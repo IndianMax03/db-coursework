@@ -51,3 +51,35 @@ curl -i -X POST http://localhost:8081/characters \
 -F "name=Дюймовочка" \
 -F "gameSystemId=1" \
 -F "userId=2"
+
+curl -i -X POST http://localhost:8081/characters/request \
+-H "Content-Type: application/json" \
+-H "token: $token" \
+-k \
+-d '{
+  "lobbyId": 1,
+  "gameId": 1,
+  "characterId": 1,
+  "currentStatus": "on-review"
+}'
+
+curl -i -X POST http://localhost:8081/users/friendship \
+-H "Content-Type: application/json" \
+-H "token: $token" \
+-k \
+-d '{
+  "senderId": 1,
+  "receiverId": 2,
+  "currentStatus": "approved"
+}'
+
+curl -i -X POST http://localhost:8081/users/reviews \
+-H "Content-Type: application/json" \
+-H "token: $token" \
+-k \
+-d '{
+  "reviewerId": 2,
+  "recipientId": 1,
+  "content": "Блин вообще крутой мастер никогда таких не встречал!",
+  "rating": 5
+}'
