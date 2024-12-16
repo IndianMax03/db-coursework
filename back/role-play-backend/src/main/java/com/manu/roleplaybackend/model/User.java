@@ -3,6 +3,7 @@ package com.manu.roleplaybackend.model;
 import java.util.Arrays;
 import java.util.List;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,17 +13,40 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
+@Entity
+@Table(name = "users")
 public class User {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "picture")
     private byte[] picture;
+
+    @Column(name = "karma")
     private Integer karma = 0;
+
+    @Column(name = "timezone")
     private String timezone;
+
+    @Column(name = "telegram_tag")
     private String telegramTag;
+
+    @Column(name = "vk_tag")
     private String vkTag;
+
+    @Column(name = "current_status")
     private String currentStatus = "exists";
 
     public boolean validLogin() {
