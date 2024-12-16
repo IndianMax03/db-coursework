@@ -33,7 +33,7 @@ public class Character {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "cuurent_status")
+    @Column(name = "current_status")
     private String currentStatus = "free";
 
     @Column(name = "stats")

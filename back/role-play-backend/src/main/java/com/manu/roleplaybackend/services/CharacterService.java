@@ -99,7 +99,7 @@ public class CharacterService {
     }
 
     public ResponseEntity<Object> getLobbyInformationByCharacterId(Integer characterId) {
-        String sql = "select characters.id chid, characters.name name , characters.picture picture, characters.game_system_id game_system_id, characters.user_id user_id, characters.current_status chstatus, characters.stats stats, lobby_requests.id lobreqid, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id join lobbies on lobby_requests.lobby_id=lobbies.id join games on lobbies.game_id=games.id where (lobby_requests.character_id=" + characterId + " and lobby_requests.current_status <> cast('rejected' as request_status) and games.current_status <> cast('finished' as game_status))";
+        String sql = "select characters.id chid, characters.name name , characters.picture picture, characters.game_system_id game_system_id, characters.user_id user_id, characters.current_status chstatus, characters.stats stats, lobby_requests.id lobreqid, lobby_requests.current_status lobreqstat from characters join lobby_requests on characters.id=lobby_requests.character_id join lobbies on lobby_requests.lobby_id=lobbies.id join games on lobbies.game_id=games.id where (lobby_requests.character_id=" + characterId + " and lobby_requests.current_status <> 'rejected' and games.current_status <> 'finished')";
         CharacterRequest characterRequest = null;
         try {
             characterRequest = template.queryForObject(sql, new RowMapper<CharacterRequest>() {
@@ -128,7 +128,7 @@ public class CharacterService {
         }
 
         Integer gameId = null;
-        sql = "select games.id from characters join lobby_requests on lobby_requests.character_id=characters.id join lobbies on lobby_requests.lobby_id=lobbies.id join games on lobbies.game_id=games.id where (lobby_requests.character_id=" + characterId + " and lobby_requests.current_status <> cast('rejected' as request_status) and games.current_status <> cast('finished' as game_status))";
+        sql = "select games.id from characters join lobby_requests on lobby_requests.character_id=characters.id join lobbies on lobby_requests.lobby_id=lobbies.id join games on lobbies.game_id=games.id where (lobby_requests.character_id=" + characterId + " and lobby_requests.current_status <> 'rejected' and games.current_status <> 'finished')";
 
         try {
             gameId = template.queryForObject(sql, Integer.class);
