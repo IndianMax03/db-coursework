@@ -17,11 +17,11 @@ import lombok.ToString;
 public class Friendship {
 
     @Id
-    @Column(name = "sender_id")
+    @Column(name = "sender_user_id")
     private Integer senderId;
 
     @Id
-    @Column(name = "receiver_id")
+    @Column(name = "receiver_user_id")
     private Integer receiverId;
 
     @Column(name = "current_status")

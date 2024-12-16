@@ -45,7 +45,10 @@ public class GameService {
         if (!game.isValid()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid game data");
         }
-        return new ResponseEntity<>(gameRepository.save(game), HttpStatus.CREATED);
+        Game createdGame = gameRepository.save(game);
+        Lobby gameLobby = new Lobby(null, createdGame.getId(), "online");
+        lobbyRepository.save(gameLobby);
+        return new ResponseEntity<>(createdGame, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Object> getGames() {

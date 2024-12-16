@@ -19,18 +19,18 @@ import lombok.ToString;
 public class Review {
 
     @Id
-    @Column(name = "reviewer_id")
+    @Column(name = "reviewer_user_id")
     private Integer reviewerId;
 
     @Id
-    @Column(name = "recipient_id")
+    @Column(name = "recipient_user_id")
     private Integer recipientId;
 
     @Column(name = "content")
     private String content;
 
     @Column(name = "date")
-    private Timestamp date;
+    private Timestamp date = new Timestamp(System.currentTimeMillis());;
 
     @Column(name = "rating")
     private Integer rating;
