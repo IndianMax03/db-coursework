@@ -86,7 +86,7 @@ public class UserService {
 
             userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-            return ResponseEntity.status(HttpStatus.CREATED).header("token", token).body(user);
+            return ResponseEntity.status(HttpStatus.CREATED).header("token", token).body(userRepository.findByLogin(user.getLogin()).get());
         } catch (DataIntegrityViolationException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
         } catch (Exception exception) {
@@ -104,7 +104,7 @@ public class UserService {
 
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-            return ResponseEntity.status(HttpStatus.OK).header("token", token).body(user);
+            return ResponseEntity.status(HttpStatus.OK).header("token", token).body(userRepository.findByLogin(user.getLogin()).get());
 
         } catch (BadCredentialsException exception) {
             return ResponseEntity.status(401).body("Permission denied");
