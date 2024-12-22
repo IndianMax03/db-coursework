@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: role-play
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: role-play
+  template:
+    metadata:
+      labels:
+        app: role-play
+    spec:
+      containers:
+        - name: role-play-backend
+          image: indianmax03/role-play-backend:latest
+          ports:
+            - containerPort: 8081
+        - name: postgres
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: course_test
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+        - name: role-play-frontend
+          image: indianmax03/role-play-frontend:latest
+          ports:
+            - containerPort: 3000
+      volumes:
+        - name: postgres-data
+          emptyDir: {}
