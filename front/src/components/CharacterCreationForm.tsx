@@ -19,12 +19,12 @@ const CharacterCreationForm = () => {
     navigate(`/profile/${self.login}`);
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event: any) => {
     const file = event.target.files[0];
     setSelectedImage(file);
   };
 
-  const handlePdfChange = (event) => {
+  const handlePdfChange = (event: any) => {
     const file = event.target.files[0];
     setPdf(file);
   };

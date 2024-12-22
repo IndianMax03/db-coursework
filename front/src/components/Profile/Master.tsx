@@ -1,16 +1,25 @@
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Game from '../Game';
 import { Link, useNavigate } from 'react-router-dom';
-import { selectError, selectLoading, fetchUserGames } from '../../redux/slices/GameSlice';
-import { useEffect } from 'react';
+import { fetchUserGames, selectError, selectLoading } from '../../redux/slices/GameSlice';
 import Reviews from '../Reviews/Reviews';
 import { addMasterRole } from '../../service/data.service';
 import { fetchRoles, selectHasMasterRole } from '../../redux/slices/RolesSlice';
 import { selectSelf } from '../../redux/slices/UserSlice';
+import { RootState, AppDispatch } from '../../redux/store';
 
-const Master = ({ user, isMyProfile }) => {
-  const dispatch = useDispatch();
-  const games = useSelector((state) => state.game.games);
+interface MasterProps {
+  user: {
+    id: number;
+    login: string;
+  };
+  isMyProfile: boolean;
+}
+
+const Master: React.FC<MasterProps> = ({ user, isMyProfile }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const games = useSelector((state: RootState) => state.game.games);
   const hasError = useSelector(selectError);
   const loading = useSelector(selectLoading);
   const hasMasterRole = useSelector(selectHasMasterRole);
@@ -38,17 +47,17 @@ const Master = ({ user, isMyProfile }) => {
         {games.length === 0 ? (
           <div> Игры отсутствуют! </div>
         ) : (
-          games.map((game, index) => (
+          games.map((game: any) => (
             <Game
               gameId={game.id}
-              key={index}
+              key={game.id}
               name={game.name}
               gameSystem={game.gameSystemId}
               creationDate={game.creationDate}
               status={game.currentStatus}
               finishDate={game.finishDate}
               description={game.description}
-              tags={[]}
+              tags={[]} // Assuming tags are handled elsewhere
               picture={game.picture}
               isMyProfile={isMyProfile}
             />
@@ -59,14 +68,14 @@ const Master = ({ user, isMyProfile }) => {
             <div> У вас нет роли мастера! </div>
             <button
               onClick={handleAddMasterRole}
-              className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "
+              className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg px-2"
             >
               Стать мастером
             </button>
           </div>
         )}
         {isMyProfile && hasMasterRole && (
-          <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 ">
+          <button className="border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg px-2">
             <Link to="/game-creation">Создать игру</Link>
           </button>
         )}
@@ -78,4 +87,5 @@ const Master = ({ user, isMyProfile }) => {
     );
   }
 };
+
 export default Master;

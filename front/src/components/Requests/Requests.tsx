@@ -3,7 +3,7 @@ import { useState } from 'react';
 const Requests = () => {
   const [status, setStatus] = useState('incoming');
 
-  const handleStatusChange = (newStatus) => {
+  const handleStatusChange = (newStatus: any) => {
     if (newStatus === status) {
       return;
     }

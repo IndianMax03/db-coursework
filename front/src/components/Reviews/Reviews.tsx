@@ -37,7 +37,7 @@ const Reviews: React.FC<ReviewsProps> = ({ user, isMyProfile }) => {
         {reviews.length === 0 ? (
           <div> Отзывы отсутствуют! </div>
         ) : (
-          reviews.map((review, index) => (
+          reviews.map((review, index: number) => (
             <Review
               key={index}
               picture={review.picture}

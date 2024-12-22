@@ -18,13 +18,12 @@ const GameCreationForm = () => {
   const navigate = useNavigate();
 
   const handleGameCreation = () => {
-    console.log(img);
     createGame(name, parseInt(gameSystem), self.id, img, status, description).then(
       navigate(`/profile/${self.login}`)
     );
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event: any) => {
     const file = event.target.files[0];
     setImage(file);
   };
