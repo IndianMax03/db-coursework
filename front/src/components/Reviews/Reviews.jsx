@@ -13,16 +13,14 @@ const Reviews = ({ user, isMyProfile }) => {
   const [rating, setRating] = useState('1');
   const [content, setContent] = useState('');
   const self = useSelector(selectSelf);
-  const navigate = useNavigate();
-
-  //   TODO: check if review already leaved
 
   useEffect(() => {
     dispatch(fetchReviews(user.login));
-  }, [content, dispatch, user.login]);
+  }, [dispatch, user.login]);
 
-  const handleReviewSend = () => {
-    sendReview(self.id, user.id, parseInt(rating), content);
+  const handleReviewSend = async () => {
+    await sendReview(self.id, user.id, parseInt(rating), content);
+    dispatch(fetchReviews(user.login));
   };
 
   return (
