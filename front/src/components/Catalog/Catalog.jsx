@@ -58,9 +58,8 @@ const Catalog = () => {
 
       {search === 'games' ? (
         games.map((game, index) => (
-          <div className="mb-3">
+          <div className="mb-3" key={index}>
             <Game
-              key={index}
               name={game.name}
               gameId={game.id}
               gameSystem={game.gameSystemId}

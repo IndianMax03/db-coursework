@@ -17,12 +17,11 @@ const Character = ({ name, gameSystemId, status, characterId, button, picture, s
   const hasError = useSelector(selectLobbyError);
 
   useEffect(() => {
-    // TODO: fix lobby render only after characted rendered;
     setTimeout(() => {}, 1000);
     if (status !== 'free') {
       dispatch(fetchLobbyByCharacter(characterId));
     }
-  }, [characterId, dispatch]);
+  }, [characterId, dispatch, status]);
 
   if (loading) {
     return <div>Загрузка... </div>;

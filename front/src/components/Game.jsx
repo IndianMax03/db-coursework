@@ -1,7 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchLobbyByGame, selectLobby } from '../redux/slices/LobbySlice';
-import { useEffect } from 'react';
 import { getGameStatusValue, getGameSystem } from '../util/enumHandler';
 
 const Game = ({

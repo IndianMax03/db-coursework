@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Game from '../Game';
 import { Link, useNavigate } from 'react-router-dom';
 import { selectError, selectLoading, fetchUserGames } from '../../redux/slices/GameSlice';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Reviews from '../Reviews/Reviews';
 import { addMasterRole } from '../../service/data.service';
 import { fetchRoles, selectHasMasterRole } from '../../redux/slices/RolesSlice';

@@ -4,7 +4,6 @@ import { fetchReviews, selectReviews } from '../../redux/slices/ReviewSlice';
 import Review from './Review';
 import { sendReview } from '../../service/data.service';
 import { selectSelf } from '../../redux/slices/UserSlice';
-import { useNavigate } from 'react-router-dom';
 
 const Reviews = ({ user, isMyProfile }) => {
   const dispatch = useDispatch();
@@ -54,8 +53,10 @@ const Reviews = ({ user, isMyProfile }) => {
               name="rating"
               id="rating"
             >
-              {options.map((option) => (
-                <option value={option}>{option}</option>
+              {options.map((option, index) => (
+                <option value={option} key={index}>
+                  {option}
+                </option>
               ))}
             </select>
           </div>
