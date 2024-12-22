@@ -5,11 +5,22 @@ import { useState } from 'react';
 
 //   TODO: remove visibility after db karma fix
 
-const Karma = ({ sender, receiver, isMyProfile }) => {
+interface Props {
+  sender: {
+    id: number;
+  };
+  receiver: {
+    id: number;
+    karma: number;
+  };
+  isMyProfile: boolean;
+}
+
+const Karma: React.FC<Props> = ({ sender, receiver, isMyProfile }) => {
   const [karma, setKarma] = useState(receiver.karma);
   const [visible, setVisible] = useState(true);
 
-  const handleKarmaChange = (increase) => {
+  const handleKarmaChange = (increase: boolean) => {
     changeKarma(sender.id, receiver.id, increase);
     increase ? setKarma(karma + 1) : setKarma(karma - 1);
     setVisible(false);

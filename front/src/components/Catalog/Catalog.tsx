@@ -11,7 +11,7 @@ const Catalog = () => {
   const games = useSelector(selectGames);
   const users = useSelector(selectUsers);
 
-  const handleCatalogChange = (type) => {
+  const handleCatalogChange = (type: any) => {
     if (search === type) {
       return;
     }
@@ -24,7 +24,7 @@ const Catalog = () => {
   }, [dispatch]);
 
   return (
-    <div className>
+    <div>
       <div className="flex space-x-10 mb-5">
         <div> Поиск </div>
         <input className="border-2 rounded-lg" placeholder="Введите название"></input>
@@ -57,7 +57,7 @@ const Catalog = () => {
       </div>
 
       {search === 'games' ? (
-        games.map((game, index) => (
+        games.map((game, index: number) => (
           <div className="mb-3" key={index}>
             <Game
               name={game.name}
