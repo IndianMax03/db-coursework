@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSelf } from '../redux/slices/UserSlice';
 import Catalog from '../components/Catalog/Catalog';
-import Friends from '../components/Friends/Friends';
 import LoginForm from '../components/Auth/LoginForm';
 import Profile from '../components/Profile/Profile';
 import { Navigate } from 'react-router-dom';
@@ -31,7 +30,6 @@ export const privateRoutes = [
 export const publicRoutes = [
   { path: '/login', element: <LoginForm /> },
   { path: '/register', element: <RegisterForm /> }
-  // { path: '*', element: <Navigate to="/login" replace /> }
 ];
 
 const AppRouter = () => {
@@ -42,9 +40,9 @@ const AppRouter = () => {
   useEffect(() => {
     const token = Cookies.get('token');
     setIsLoggedIn(token !== undefined);
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
+    // if (!isLoggedIn) {
+    //   navigate('/login');
+    // }
   }, [isLoggedIn, navigate, user]);
 
   return (

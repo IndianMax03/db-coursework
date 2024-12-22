@@ -3,7 +3,15 @@ import Cookies from 'js-cookie';
 
 const API_BASE_URL = 'http://localhost:8081/';
 
-export const register = async (login, name, img, password, timezone, telegramTag, vkTag) => {
+export const register = async (
+  login: string,
+  name: string,
+  img: any,
+  password: string,
+  timezone: any,
+  telegramTag: string,
+  vkTag: string
+) => {
   try {
     const formData = new FormData();
     formData.append('login', login);
@@ -33,7 +41,7 @@ export const register = async (login, name, img, password, timezone, telegramTag
   }
 };
 
-export const login = async (login, password) => {
+export const login = async (login: string, password: string) => {
   try {
     const response = await axios.post(API_BASE_URL + `enter/login`, {
       login,
