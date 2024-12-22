@@ -1,6 +1,14 @@
 import pfp from '../../../public/pfp.jpg';
 
-const Review = ({ rating, name, content, date, picture }) => {
+interface ReviewProps {
+  rating: number;
+  name: string;
+  content: string;
+  date: any;
+  picture: any;
+}
+
+const Review: React.FC<ReviewProps> = ({ rating, name, content, date, picture }) => {
   const checkedStars = Array.from({ length: rating }, (_, index) => index + 1);
   const uncheckedStars = Array.from({ length: 5 - rating }, (_, index) => index + 1);
 

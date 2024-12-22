@@ -14,7 +14,7 @@ const RegisterForm = () => {
   const [img, setSelectedImage] = useState(null);
   const navigate = useNavigate();
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event: any) => {
     const file = event.target.files[0];
     setSelectedImage(file);
   };

@@ -19,7 +19,7 @@ interface ReviewState {
 const initialState: ReviewState = {
   reviews: [],
   isLoading: false,
-  hasError: false,
+  hasError: false
 };
 
 export const fetchReviews = createAsyncThunk<Review[], string>(
@@ -49,7 +49,7 @@ export const ReviewSlice = createSlice({
         state.hasError = true;
         state.isLoading = false;
       });
-  },
+  }
 });
 
 export const selectReviews = (state: RootState) => state.review.reviews;

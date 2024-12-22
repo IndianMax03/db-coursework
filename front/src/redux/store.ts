@@ -19,8 +19,8 @@ export const store = configureStore({
     friends: friendsReducer,
     lobby: lobbyReducer,
     review: reviewReducer,
-    roles: rolesReducer,
-  },
+    roles: rolesReducer
+  }
 });
 
 export type RootState = ReturnType<typeof store.getState>;

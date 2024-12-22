@@ -63,7 +63,9 @@ const Reviews: React.FC<ReviewsProps> = ({ user, isMyProfile }) => {
               id="rating"
             >
               {options.map((option, index) => (
-                <option value={option} key={index}>{option}</option>
+                <option value={option} key={index}>
+                  {option}
+                </option>
               ))}
             </select>
           </div>
