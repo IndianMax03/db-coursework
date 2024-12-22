@@ -54,7 +54,7 @@ const Master = ({ user, isMyProfile }) => {
             />
           ))
         )}
-        {!hasMasterRole && (
+        {!hasMasterRole && isMyProfile && (
           <div>
             <div> У вас нет роли мастера! </div>
             <button
