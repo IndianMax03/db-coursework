@@ -3,7 +3,11 @@ import List from '../List';
 import { useEffect } from 'react';
 import { fetchFriendshipRequests, selectFriends } from '../../redux/slices/FriendsSlice';
 
-const Friends = ({ user }) => {
+interface Props {
+  user: any;
+}
+
+const Friends: React.FC<Props> = ({ user }) => {
   const dispatch = useDispatch();
   const friends = useSelector(selectFriends);
 

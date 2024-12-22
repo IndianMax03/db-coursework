@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   fetchUser,
-  selectLoading,
+  selectUserLoading,
   selectUser,
-  selectError,
+  selectUserError,
   selectSelf
 } from '../../redux/slices/UserSlice';
 import { useParams } from 'react-router-dom';
@@ -24,8 +24,8 @@ const Profile = () => {
   const [role, setRole] = useState('player');
   const navigate = useNavigate();
 
-  const loading = useSelector(selectLoading);
-  const hasError = useSelector(selectError);
+  const loading = useSelector(selectUserLoading);
+  const hasError = useSelector(selectUserError);
 
   useEffect(() => {
     dispatch(fetchUser(login));

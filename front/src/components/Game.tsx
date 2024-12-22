@@ -1,7 +1,21 @@
 import { Link } from 'react-router-dom';
 import { getGameStatusValue, getGameSystem } from '../util/enumHandler';
 
-const Game = ({
+interface Props {
+  name: string;
+  gameSystem: any;
+  gameId: number;
+  creationDate: any;
+  status: any;
+  gameType: any;
+  finishDate: any;
+  description: string;
+  tags: string[];
+  isMyProfile: boolean;
+  picture: any;
+}
+
+const Game: React.FC<Props> = ({
   name,
   gameSystem,
   gameId,

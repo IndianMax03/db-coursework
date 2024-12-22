@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <div className="grid h-32 sticky top-10">
-      <Link to={`/profile/${user.login}`} className="flex space-x-4">
+      <Link to={`/profile/${user?.login}`} className="flex space-x-4">
         <CgProfile className="h-6" />
         <div>Мой профиль</div>
       </Link>

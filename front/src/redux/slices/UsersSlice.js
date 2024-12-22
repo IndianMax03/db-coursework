@@ -33,7 +33,7 @@ export const UsersSlice = createSlice({
 });
 
 export const selectUsers = (state) => state.users.users;
-export const selectLoading = (state) => state.users.isLoading;
-export const selectError = (state) => state.users.hasError;
+export const selectUserLoading = (state) => state.users.isLoading;
+export const selectUserError = (state) => state.users.hasError;
 
 export default UsersSlice.reducer;

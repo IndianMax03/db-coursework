@@ -79,8 +79,8 @@ const UserSlice = createSlice({
 
 export const selectUser = (state) => state.user.user;
 export const selectSelf = (state) => state.user.self;
-export const selectLoading = (state) => state.user.isLoading;
-export const selectError = (state) => state.user.hasError;
+export const selectUserLoading = (state) => state.user.isLoading;
+export const selectUserError = (state) => state.user.hasError;
 export const selectSelfError = (state) => state.user.hasSelfError;
 export const selectSelfLoading = (state) => state.user.isSelfLoading;
 export const { logout } = UserSlice.actions;

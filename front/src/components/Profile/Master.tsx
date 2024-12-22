@@ -57,7 +57,7 @@ const Master: React.FC<MasterProps> = ({ user, isMyProfile }) => {
               status={game.currentStatus}
               finishDate={game.finishDate}
               description={game.description}
-              tags={[]} // Assuming tags are handled elsewhere
+              tags={[]}
               picture={game.picture}
               isMyProfile={isMyProfile}
             />

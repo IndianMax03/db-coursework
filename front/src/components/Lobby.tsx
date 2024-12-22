@@ -23,7 +23,6 @@ const Lobby = () => {
   const [update, setUpdate] = useState(true);
 
   useEffect(() => {
-    console.log(lobbyId);
     dispatch(fetchLobbyByGame(lobbyId));
   }, [dispatch, lobbyId, update]);
 
