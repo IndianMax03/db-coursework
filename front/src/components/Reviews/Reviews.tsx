@@ -1,17 +1,26 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchReviews, selectReviews } from '../../redux/slices/ReviewSlice';
 import Review from './Review';
 import { sendReview } from '../../service/data.service';
 import { selectSelf } from '../../redux/slices/UserSlice';
+import { RootState, AppDispatch } from '../../redux/store';
 
-const Reviews = ({ user, isMyProfile }) => {
-  const dispatch = useDispatch();
+interface ReviewsProps {
+  user: {
+    id: number;
+    login: string;
+  };
+  isMyProfile: boolean;
+}
+
+const Reviews: React.FC<ReviewsProps> = ({ user, isMyProfile }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const reviews = useSelector(selectReviews);
   const options = [1, 2, 3, 4, 5];
-  const [rating, setRating] = useState('1');
-  const [content, setContent] = useState('');
-  const self = useSelector(selectSelf);
+  const [rating, setRating] = useState<string>('1');
+  const [content, setContent] = useState<string>('');
+  const self = useSelector((state: RootState) => selectSelf(state));
 
   useEffect(() => {
     dispatch(fetchReviews(user.login));
@@ -54,9 +63,7 @@ const Reviews = ({ user, isMyProfile }) => {
               id="rating"
             >
               {options.map((option, index) => (
-                <option value={option} key={index}>
-                  {option}
-                </option>
+                <option value={option} key={index}>{option}</option>
               ))}
             </select>
           </div>
@@ -69,7 +76,7 @@ const Reviews = ({ user, isMyProfile }) => {
             }}
           ></textarea>
           <button
-            className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg  px-2 "
+            className="mt-2 border-solid border-2 bg-slate-500 text-white border-slate-500 rounded-lg px-2"
             onClick={handleReviewSend}
           >
             Отправить
