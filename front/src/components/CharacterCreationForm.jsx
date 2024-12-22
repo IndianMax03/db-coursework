@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { createCharacter } from '../service/data.service';
-import { useDispatch, useSelector } from 'react-redux';
-import { dataUrlToByteArray } from '../util/image.converter';
-import { byteArrayToImage } from '../util/image.converter';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getGameSystem } from '../util/enumHandler';
 import { selectSelf } from '../redux/slices/UserSlice';

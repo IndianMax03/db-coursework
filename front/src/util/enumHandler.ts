@@ -1,4 +1,4 @@
-export const getCharacterStatusValue = (status) => {
+export const getCharacterStatusValue = (status: string) => {
   switch (status) {
     case 'busy':
       return 'занят';
@@ -9,7 +9,7 @@ export const getCharacterStatusValue = (status) => {
   }
 };
 
-export const getGameSystem = (gameSystemId) => {
+export const getGameSystem = (gameSystemId: any) => {
   gameSystemId = parseInt(gameSystemId);
   switch (gameSystemId) {
     case 1:
@@ -20,7 +20,7 @@ export const getGameSystem = (gameSystemId) => {
       return 'не определена';
   }
 };
-export const getGameStatusValue = (status) => {
+export const getGameStatusValue = (status: string) => {
   switch (status) {
     case 'not-started':
       return 'не началась';
