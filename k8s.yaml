@@ -1,10 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: role-play-backend
+  name: role-play
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: role-play
   template:
+    metadata:
+      labels:
+        app: role-play
     spec:
       containers:
         - name: role-play-backend
@@ -31,4 +37,4 @@ spec:
             - containerPort: 3000
       volumes:
         - name: postgres-data
-          emptyDir: { }
+          emptyDir: {}
