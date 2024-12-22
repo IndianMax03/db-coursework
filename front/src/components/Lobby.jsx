@@ -12,17 +12,18 @@ const Lobby = () => {
   const dispatch = useDispatch();
   const lobby = useSelector(selectLobby);
   const options = ['started', 'not-started', 'finished'];
-  const [gameStatus, setGameStatus] = useState(lobby.game.currentStatus);
-  const isMyLobby = self.login === lobby.master.login;
-  const approvedRequests = lobby.requests.filter((request) => {
+  const [gameStatus, setGameStatus] = useState(lobby?.game?.currentStatus);
+  const isMyLobby = self.login === lobby?.master?.login;
+  const approvedRequests = lobby?.requests?.filter((request) => {
     return request.requestStatus === 'approved';
   });
-  const onReviewRequests = lobby.requests.filter((request) => {
+  const onReviewRequests = lobby?.requests?.filter((request) => {
     return request.requestStatus === 'on-review';
   });
   const [update, setUpdate] = useState(true);
 
   useEffect(() => {
+    console.log(lobbyId)
     dispatch(fetchLobbyByGame(lobbyId));
   }, [dispatch, lobbyId, update]);
 
@@ -35,9 +36,13 @@ const Lobby = () => {
     changeGameStatus(lobby.game.id, gameStatus);
   };
 
+  if(!lobby || !lobby.master || !lobby.game){
+    return <div>Loading</div>
+  }
+
   return (
     <div className="space-y-5 p-5 border-solid border-2 border-slate-500 rounded-lg">
-      <div className="text-lg">Игра "{lobby.game.name}"</div>
+      <div className="text-lg">Игра "{lobby?.game?.name}"</div>
       <div className="space-x-10">
         <label for="gameStatus">Cтатус игры:</label>
         <select
@@ -50,7 +55,7 @@ const Lobby = () => {
           }}
         >
           {options.map((option) => (
-            <option value={option}>{getGameStatusValue(option)}</option>
+            <option value={option} key={option}>{getGameStatusValue(option)}</option>
           ))}
         </select>
         <button
@@ -63,9 +68,9 @@ const Lobby = () => {
 
       <div>Мастер </div>
       <div className="flex space-x-10">
-        {lobby.master.picture && (
+        {lobby?.master?.picture && (
           <img
-            src={`data:image/png;base64,${lobby.master.picture}`}
+            src={`data:image/png;base64,${lobby?.master?.picture}`}
             alt="master"
             className=" h-20 w-20 rounded-full object-cover"
           />

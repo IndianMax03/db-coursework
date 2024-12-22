@@ -43,7 +43,7 @@ const AppRouter = () => {
     const token = Cookies.get('token');
     setIsLoggedIn(token !== undefined);
     if (!isLoggedIn) {
-      // navigate('/login');
+      navigate('/login');
     }
   }, [isLoggedIn, navigate, user]);
 

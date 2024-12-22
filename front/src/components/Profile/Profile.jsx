@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Player from './Player';
 import Master from './Master';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import {
   fetchUser,
   selectLoading,
@@ -21,6 +22,7 @@ const Profile = () => {
   const self = useSelector(selectSelf);
   const isMyProfile = self.login === user.login;
   const [role, setRole] = useState('player');
+  const navigate = useNavigate();
 
   const loading = useSelector(selectLoading);
   const hasError = useSelector(selectError);
@@ -34,6 +36,10 @@ const Profile = () => {
       setRole(newRole);
     }
   };
+
+  if(login === undefined){
+    navigate("/login")
+  }
 
   if (loading) {
     return <div>Загрузка... </div>;
