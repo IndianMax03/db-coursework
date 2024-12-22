@@ -65,9 +65,9 @@ export const getUserGames = async (login: string) => {
 
 export const createCharacter = async (
   name: string,
-  gameSystemId: number | string,
+  gameSystemId: any,
   img: any,
-  userId: number,
+  userId: any,
   pdf: any
 ) => {
   const formData = new FormData();
@@ -88,8 +88,8 @@ export const createCharacter = async (
 
 export const createGame = async (
   name: string,
-  gameSystemId: number,
-  masterId: number,
+  gameSystemId: any,
+  masterId: any,
   img: any,
   currentStatus: any,
   description: string
@@ -142,6 +142,9 @@ export const getLobbyByCharacter = async (characterId: number) => {
 
 export const getLobbyByGame = async (gameId: number) => {
   try {
+    if (!gameId) {
+      return;
+    }
     const response = await axios.get(API_BASE_URL + `games/${gameId}/lobby`);
     return response.data;
   } catch (error) {
