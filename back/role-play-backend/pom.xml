@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.manu</groupId>
 	<artifactId>role-play-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>3.0.1</version>
 	<name>role-play-backend</name>
 	<description>A system for data management and interaction between users of role-playing board games.</description>
 	<properties>
