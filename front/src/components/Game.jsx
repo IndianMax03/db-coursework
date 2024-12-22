@@ -57,7 +57,7 @@ const Game = ({
           className="w-48 h-48 rounded object-cover p-2"
         ></img>
       ) : (
-        <img src="gameImage.jpg" alt="game" className="w-48 h-48 rounded object-cover p-2"></img>
+        <img src="/gameImage.jpg" alt="game" className="w-48 h-48 rounded object-cover p-2"></img>
       )}
 
       <div></div>

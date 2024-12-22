@@ -12,12 +12,11 @@ const Review = ({ rating, name, content, date, picture }) => {
             <img
               src={`data:image/png;base64,${picture}`}
               alt="profile"
-              className="h-44  rounded-full"
+              className=" rounded-full"
             ></img>
           ) : (
-            <img src={pfp} alt="profile" className=" h-44 rounded-full"></img>
+            <img src={pfp} alt="profile" className="  rounded-full"></img>
           )}
-          {/* <img src="pfp.jpg" alt="profile" className=" h-14 rounded-full"></img> */}
           <div>{name}</div>
         </div>
         <div className="grid">
