@@ -17,7 +17,7 @@ interface GameState {
 const initialGameState: GameState = {
   games: [],
   isLoading: false,
-  hasError: false,
+  hasError: false
 };
 
 export const fetchGames = createAsyncThunk<Game[]>('games/fetchGames', async () => {
@@ -43,7 +43,7 @@ export const GamesSlice = createSlice({
         state.isLoading = false;
         state.hasError = true;
       });
-  },
+  }
 });
 
 export const selectGames = (state: RootState) => state.games.games;

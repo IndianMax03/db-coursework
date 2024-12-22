@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getUser } from '../../service/data.service';
 import { login as enter, register } from '../../auth/auth.service';
+import { RootState } from '../store';
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async (login) => {
   const res = await getUser(login);
@@ -77,12 +78,12 @@ const UserSlice = createSlice({
   }
 });
 
-export const selectUser = (state) => state.user.user;
-export const selectSelf = (state) => state.user.self;
-export const selectUserLoading = (state) => state.user.isLoading;
-export const selectUserError = (state) => state.user.hasError;
-export const selectSelfError = (state) => state.user.hasSelfError;
-export const selectSelfLoading = (state) => state.user.isSelfLoading;
+export const selectUser = (state: RootState) => state.user.user;
+export const selectSelf = (state: RootState) => state.user.self;
+export const selectUserLoading = (state: RootState) => state.user.isLoading;
+export const selectUserError = (state: RootState) => state.user.hasError;
+export const selectSelfError = (state: RootState) => state.user.hasSelfError;
+export const selectSelfLoading = (state: RootState) => state.user.isSelfLoading;
 export const { logout } = UserSlice.actions;
 
 export default UserSlice.reducer;

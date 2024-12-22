@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store'; 
+import { RootState } from '../store';
 import { getFriendshipRequests } from '../../service/data.service';
 
 interface FriendshipRequest {
@@ -23,7 +23,7 @@ const initialFriendState: FriendState = {
   friendshipRequests: { income: [], outcome: [] },
   friends: [],
   isLoading: false,
-  hasError: false,
+  hasError: false
 };
 
 export const fetchFriendshipRequests = createAsyncThunk<FriendshipRequests, string>(
@@ -44,18 +44,25 @@ export const FriendsSlice = createSlice({
         state.isLoading = true;
         state.hasError = false;
       })
-      .addCase(fetchFriendshipRequests.fulfilled, (state, action: PayloadAction<FriendshipRequests>) => {
-        state.friendshipRequests = action.payload;
-        const friendsIncoming = state.friendshipRequests.income.filter((req) => req.friendshipStatus === 'approved');
-        const friendsOutgoing = state.friendshipRequests.outcome.filter((req) => req.friendshipStatus === 'approved');
-        state.friends = [...friendsIncoming, ...friendsOutgoing];
-        state.isLoading = false;
-      })
+      .addCase(
+        fetchFriendshipRequests.fulfilled,
+        (state, action: PayloadAction<FriendshipRequests>) => {
+          state.friendshipRequests = action.payload;
+          const friendsIncoming = state.friendshipRequests.income.filter(
+            (req) => req.friendshipStatus === 'approved'
+          );
+          const friendsOutgoing = state.friendshipRequests.outcome.filter(
+            (req) => req.friendshipStatus === 'approved'
+          );
+          state.friends = [...friendsIncoming, ...friendsOutgoing];
+          state.isLoading = false;
+        }
+      )
       .addCase(fetchFriendshipRequests.rejected, (state) => {
         state.isLoading = false;
         state.hasError = true;
       });
-  },
+  }
 });
 
 export const selectFriendshipRequests = (state: RootState) => state.friends.friendshipRequests;

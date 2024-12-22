@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getUsers } from '../../service/data.service';
+import { RootState } from '../store';
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   const res = await getUsers();
@@ -32,8 +33,8 @@ export const UsersSlice = createSlice({
   }
 });
 
-export const selectUsers = (state) => state.users.users;
-export const selectUserLoading = (state) => state.users.isLoading;
-export const selectUserError = (state) => state.users.hasError;
+export const selectUsers = (state: RootState) => state.users.users;
+export const selectUserLoading = (state: RootState) => state.users.isLoading;
+export const selectUserError = (state: RootState) => state.users.hasError;
 
 export default UsersSlice.reducer;
