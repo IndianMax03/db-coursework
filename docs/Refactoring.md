@@ -73,7 +73,7 @@
 
 ### Даталогическая модель
 
-![v_3_db-course-work-data.drawio.png](..%2Fimg%2Fv_3_db-course-work-data.drawio.png)
+![v_3_db-course-work-data.drawio.png](img/v_3_db-course-work-data.drawio.png)
 
 ### Backend
 
@@ -163,12 +163,12 @@ Frontend
 
 Backend
 
-- [ ] Добавить поддержку Spring security (вместо костыля-перехватчика запросов)
-- [ ] Миграция: статический sql -> DTO
+- [x] Добавить поддержку Spring security (вместо костыля-перехватчика запросов)
+- [x] Миграция: статический sql -> DTO
 
 Frontend
 
-- [ ] Миграция на TypeScript
+- [x] Миграция на TypeScript
 
 ### Этап 3 (v.3)
 
