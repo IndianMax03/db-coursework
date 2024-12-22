@@ -23,7 +23,6 @@ const Reviews = ({ user, isMyProfile }) => {
 
   const handleReviewSend = () => {
     sendReview(self.id, user.id, parseInt(rating), content);
-    navigate(`/profile/${self.login}`);
   };
 
   return (

@@ -23,7 +23,7 @@ const Lobby = () => {
   const [update, setUpdate] = useState(true);
 
   useEffect(() => {
-    console.log(lobbyId)
+    console.log(lobbyId);
     dispatch(fetchLobbyByGame(lobbyId));
   }, [dispatch, lobbyId, update]);
 
@@ -36,8 +36,8 @@ const Lobby = () => {
     changeGameStatus(lobby.game.id, gameStatus);
   };
 
-  if(!lobby || !lobby.master || !lobby.game){
-    return <div>Loading</div>
+  if (!lobby || !lobby.master || !lobby.game) {
+    return <div>Loading</div>;
   }
 
   return (
@@ -55,7 +55,9 @@ const Lobby = () => {
           }}
         >
           {options.map((option) => (
-            <option value={option} key={option}>{getGameStatusValue(option)}</option>
+            <option value={option} key={option}>
+              {getGameStatusValue(option)}
+            </option>
           ))}
         </select>
         <button

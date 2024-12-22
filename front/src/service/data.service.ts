@@ -11,9 +11,9 @@ export async function getUsers() {
   }
 }
 
-export const getUser = async (login : string) => {
+export const getUser = async (login: string) => {
   try {
-    if (!login){
+    if (!login) {
       return;
     }
     const response = await axios.get(API_BASE_URL + `users/${login}`);
@@ -24,7 +24,7 @@ export const getUser = async (login : string) => {
 };
 
 export const getUserRoles = async (login: string) => {
-  if (!login){
+  if (!login) {
     return;
   }
   await axios.get(API_BASE_URL + `users/roles/${login}`);
@@ -32,7 +32,7 @@ export const getUserRoles = async (login: string) => {
 
 export const getUserCharacters = async (login: string) => {
   try {
-    if (!login){
+    if (!login) {
       return;
     }
     const response = await axios.get(API_BASE_URL + `users/${login}/characters`);
@@ -53,7 +53,7 @@ export const getAllGames = async () => {
 
 export const getUserGames = async (login: string) => {
   try {
-    if (!login){
+    if (!login) {
       return;
     }
     const response = await axios.get(API_BASE_URL + `users/${login}/games`);
@@ -63,7 +63,13 @@ export const getUserGames = async (login: string) => {
   }
 };
 
-export const createCharacter = async (name: string, gameSystemId : number | string, img : any, userId : number, pdf : any) => {
+export const createCharacter = async (
+  name: string,
+  gameSystemId: number | string,
+  img: any,
+  userId: number,
+  pdf: any
+) => {
   const formData = new FormData();
   formData.append('img', img);
   formData.append('name', name);
@@ -80,7 +86,14 @@ export const createCharacter = async (name: string, gameSystemId : number | stri
   return response.data;
 };
 
-export const createGame = async (name : string, gameSystemId : number, masterId : number, img : any, currentStatus : any, description : string) => {
+export const createGame = async (
+  name: string,
+  gameSystemId: number,
+  masterId: number,
+  img: any,
+  currentStatus: any,
+  description: string
+) => {
   try {
     console.log(img);
     const formData = new FormData();
@@ -105,7 +118,7 @@ export const createGame = async (name : string, gameSystemId : number, masterId 
 
 export const getFriendshipRequests = async (login: string) => {
   try {
-    if (!login){
+    if (!login) {
       return;
     }
     const response = await axios.get(API_BASE_URL + `users/${login}/friends`);
@@ -115,8 +128,11 @@ export const getFriendshipRequests = async (login: string) => {
   }
 };
 
-export const getLobbyByCharacter = async (characterId : number) => {
+export const getLobbyByCharacter = async (characterId: number) => {
   try {
+    if (!characterId) {
+      return;
+    }
     const response = await axios.get(API_BASE_URL + `characters/${characterId}/lobby`);
     return response.data;
   } catch (error) {
@@ -124,7 +140,7 @@ export const getLobbyByCharacter = async (characterId : number) => {
   }
 };
 
-export const getLobbyByGame = async (gameId : string | number) => {
+export const getLobbyByGame = async (gameId: number) => {
   try {
     const response = await axios.get(API_BASE_URL + `games/${gameId}/lobby`);
     return response.data;
@@ -133,7 +149,11 @@ export const getLobbyByGame = async (gameId : string | number) => {
   }
 };
 
-export const changeKarma = async (senderUserId : number, receiverUserId : number, increase : boolean) => {
+export const changeKarma = async (
+  senderUserId: number,
+  receiverUserId: number,
+  increase: boolean
+) => {
   try {
     const response = await axios.patch(API_BASE_URL + `users/karma`, {
       senderUserId,
@@ -146,9 +166,9 @@ export const changeKarma = async (senderUserId : number, receiverUserId : number
   }
 };
 
-export const getReviews = async (login : string) => {
+export const getReviews = async (login: string) => {
   try {
-    if (!login){
+    if (!login) {
       return;
     }
     const response = await axios.get(API_BASE_URL + `users/${login}/reviews`);
@@ -158,7 +178,7 @@ export const getReviews = async (login : string) => {
   }
 };
 
-export const changeRequestStatus = async (id : number, currentStatus : any) => {
+export const changeRequestStatus = async (id: number, currentStatus: any) => {
   try {
     const response = await axios.patch(API_BASE_URL + 'characters/request/update', {
       id,
@@ -170,7 +190,7 @@ export const changeRequestStatus = async (id : number, currentStatus : any) => {
   }
 };
 
-export const sendCharacterLobbyRequest = async (gameId : number, characterId : number) => {
+export const sendCharacterLobbyRequest = async (gameId: number, characterId: number) => {
   try {
     const response = await axios.post(API_BASE_URL + 'characters/request', {
       gameId,
@@ -182,7 +202,12 @@ export const sendCharacterLobbyRequest = async (gameId : number, characterId : n
   }
 };
 
-export const sendReview = async (reviewerId : number, recipientId: number, rating: number, content: string) => {
+export const sendReview = async (
+  reviewerId: number,
+  recipientId: number,
+  rating: number,
+  content: string
+) => {
   try {
     const response = await axios.post(API_BASE_URL + 'users/reviews', {
       reviewerId,
@@ -196,7 +221,7 @@ export const sendReview = async (reviewerId : number, recipientId: number, ratin
   }
 };
 
-export const changeGameStatus = async (id: number, currentStatus : any) => {
+export const changeGameStatus = async (id: number, currentStatus: any) => {
   try {
     const response = await axios.patch(API_BASE_URL + 'games/status', {
       id,
@@ -210,7 +235,7 @@ export const changeGameStatus = async (id: number, currentStatus : any) => {
 
 export const getRoles = async (login: string) => {
   try {
-    if (!login){
+    if (!login) {
       return;
     }
     const response = await axios.get(API_BASE_URL + `users/${login}/roles`);
@@ -222,7 +247,7 @@ export const getRoles = async (login: string) => {
 
 export const addMasterRole = async (login: string) => {
   try {
-    if (!login){
+    if (!login) {
       return;
     }
     const response = await axios.get(API_BASE_URL + `users/${login}/roles/become-master`);

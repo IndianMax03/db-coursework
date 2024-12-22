@@ -20,7 +20,7 @@ export const privateRoutes = [
   { path: '/friends', element: <FriendsPage /> },
   { path: '/catalog', element: <Catalog /> },
   { path: '/profile/:login', element: <Profile /> },
-  { path: '*', element: <Navigate to="/profile" replace /> },
+  { path: '*', element: <Navigate to="/login" replace /> },
   { path: '/lobby/:lobbyId', element: <Lobby /> },
   { path: '/character-creation', element: <CharacterCreationForm /> },
   { path: '/game-creation', element: <GameCreationForm /> },

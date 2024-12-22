@@ -55,25 +55,14 @@ const Catalog = () => {
           Игроки
         </button>
       </div>
-      {/* <div> Теги </div>
-      <div>
-        <input id="default-checkbox" type="checkbox" value="" />
-        <label for="default-checkbox" className="ms-2 ">
-          DnD
-        </label>
-      </div> */}
-      {/* <div>
-        <input id="default-checkbox" type="checkbox" value="" />
-        <label for="default-checkbox" className="ms-2 ">
-          Долгая
-        </label>
-      </div> */}
+
       {search === 'games' ? (
         games.map((game, index) => (
           <div className="mb-3">
             <Game
               key={index}
               name={game.name}
+              gameId={game.id}
               gameSystem={game.gameSystemId}
               creationDate={game.creationDate}
               status={game.currentStatus}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Player from './Player';
 import Master from './Master';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import {
   fetchUser,
   selectLoading,
@@ -37,8 +37,8 @@ const Profile = () => {
     }
   };
 
-  if(login === undefined){
-    navigate("/login")
+  if (login === undefined) {
+    navigate('/login');
   }
 
   if (loading) {

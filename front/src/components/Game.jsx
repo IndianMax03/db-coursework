@@ -17,21 +17,12 @@ const Game = ({
   isMyProfile,
   picture
 }) => {
-  const dispatch = useDispatch();
-  const lobby = useSelector(selectLobby);
-
-  useEffect(() => {
-    dispatch(fetchLobbyByGame(gameId));
-  }, [dispatch, gameId]);
-
   return (
     <div className="flex border-solid border-2 border-slate-500 rounded-lg">
       <div className=" w-128 p-3">
         <div className="text-lg">{name}</div>
         <div>Игровая система: {getGameSystem(gameSystem)}</div>
-        {/* <div>Тип игры: {gameType}</div> */}
         <div>Статус: {getGameStatusValue(status)}</div>
-        <div>Дата создания: {creationDate} </div>
         {finishDate && <div>Дата завершения: {finishDate} </div>}
         <div className="w-72">Описание: {description} </div>
         <div className="flex">

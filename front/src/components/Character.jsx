@@ -18,19 +18,19 @@ const Character = ({ name, gameSystemId, status, characterId, button, picture, s
 
   useEffect(() => {
     // TODO: fix lobby render only after characted rendered;
-    console.log(picture);
-    console.log(stats);
     setTimeout(() => {}, 1000);
-    dispatch(fetchLobbyByCharacter(characterId));
+    if (status !== 'free') {
+      dispatch(fetchLobbyByCharacter(characterId));
+    }
   }, [characterId, dispatch]);
 
-  // if (loading) {
-  //   return <div>Загрузка... </div>;
-  // }
+  if (loading) {
+    return <div>Загрузка... </div>;
+  }
 
-  // if (hasError) {
-  //   return <div>Ошибка!</div>;
-  // }
+  if (hasError) {
+    return <div>Ошибка!</div>;
+  }
 
   return (
     <div className="flex border-solid border-2 border-slate-500 rounded-lg">
@@ -46,20 +46,16 @@ const Character = ({ name, gameSystemId, status, characterId, button, picture, s
         )}
         {button}
       </div>
-    
-       {picture !== null ? (
-                 <img
-                 alt="character"
-                 src={`data:image/png;base64,${picture}`}
-                 className="w-48 h-48 rounded object-cover p-2"
-               ></img>
-              ) : (
-                <img
-                alt="character"
-                src="/gale.jpg"
-                className="w-48 h-48 rounded object-cover p-2"
-              ></img>
-              )}
+
+      {picture !== null ? (
+        <img
+          alt="character"
+          src={`data:image/png;base64,${picture}`}
+          className="w-48 h-48 rounded object-cover p-2"
+        ></img>
+      ) : (
+        <img alt="character" src="/gale.jpg" className="w-48 h-48 rounded object-cover p-2"></img>
+      )}
     </div>
   );
 };
