@@ -11,41 +11,37 @@ insert into tags values (nextval('tags_id_seq'), 'short');
 insert into game_systems values (nextval('game_systems_id_seq'), 'DnD');
 insert into game_systems values (nextval('game_systems_id_seq'), 'Pathfinder');
 
--- Создание пользователей
-select create_user('indian_max03', 'Maxim', 'cors123', null, 112, 'Russia/Moscow', 'tg_max', 'vk_max', 'exists');
-select create_user('deaad', 'Ksenia', 'react123', null, 12, 'Russia/Moscow', 'tg_ksenia', 'vk_ksenia', 'exists');
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'user_status') then
+      create type user_status as enum ('exists', 'deleted');
+   end if;
+end $$;
 
--- Присвоение роли пользователю
-insert into user_roles values (2, 1);
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'game_status') then
+      create type game_status as enum ('not-started', 'started', 'finished');
+   end if;
+end $$;
 
--- Создание игры
-select create_game(
-    'Игра игрулька',
-    1,
-    null,
-    2,
-    cast ('not-started' as game_status),
-    'Игра для любителей темных лесов и таинственных путешествий! Будь осторожен путник, на твоей дороге могут встретиться самые страшные создания!!!'
-);
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'request_status') then
+      create type request_status as enum ('on-review', 'rejected', 'approved');
+   end if;
+end $$;
 
--- Создание лобби для игры
-insert into lobbies (id, game_id, format)
-values (1, 1, 'online');
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'game_format') then
+      create type game_format as enum ('online', 'offline');
+   end if;
+end $$;
 
--- Создание персонажа
-select create_character('Липрикон', null, 1, 1, cast ('busy' as character_status), null);
-
--- Создание запроса в лобби
-select create_lobby_request(1, 1, cast('on-review' as request_status));
-
--- Создание дружбы между пользователями
-select create_friendship(1, 2, cast('approved' as request_status));
-
--- Добавление отзыва
-insert into reviews values (
-    1,
-    2,
-    'Больше всего зашла последняя часть с мнением автора. было приятно читать и четко виден поинт. прости за рейтинг 3, чуть ли не рандомом определял. спасибо за игру и хорошего дня',
-    now(),
-    3
-);
+DO $$
+begin
+   if not exists (select 1 from pg_type where typname = 'character_status') then
+      create type character_status as enum ('free', 'busy');
+   end if;
+end $$;
