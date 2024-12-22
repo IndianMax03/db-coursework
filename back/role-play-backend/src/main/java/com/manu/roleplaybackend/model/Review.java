@@ -4,14 +4,12 @@ import java.sql.Timestamp;
 
 import com.manu.roleplaybackend.model.keys.ReviewId;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "reviews")
@@ -30,7 +28,7 @@ public class Review {
     private String content;
 
     @Column(name = "date")
-    private Timestamp date = new Timestamp(System.currentTimeMillis());;
+    private Timestamp date = new Timestamp(System.currentTimeMillis());
 
     @Column(name = "rating")
     private Integer rating;

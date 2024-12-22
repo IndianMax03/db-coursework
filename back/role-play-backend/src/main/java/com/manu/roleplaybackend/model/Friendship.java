@@ -2,14 +2,12 @@ package com.manu.roleplaybackend.model;
 
 import com.manu.roleplaybackend.model.keys.FriendshipId;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "friendships")
